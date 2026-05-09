@@ -45,9 +45,18 @@
 <body class="antialiased text-gray-800">
 
     <div id="main-landing">
-        <!-- HERO SECTION (El Pitch de Venta para el alumno) -->
-        <header class="hero-bg text-white py-20 px-6 min-h-screen flex flex-col justify-center items-center text-center">
-            <div class="max-w-4xl mx-auto">
+        <!-- HERO SECTION -->
+        <header class="hero-bg text-white min-h-screen flex flex-col items-center relative pb-20">
+            
+            <!-- LOGOS INSTITUCIONALES (Nuevos) -->
+            <div class="w-full max-w-7xl mx-auto flex justify-between items-center pt-8 px-6 mb-10">
+                <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
+                <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg=='">
+                <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4='">
+            </div>
+
+            <!-- CONTENIDO HERO -->
+            <div class="max-w-4xl mx-auto text-center px-6 mt-auto mb-auto">
                 <!-- Botón Secreto del Administrador -->
                 <span id="secret-admin-trigger" class="cursor-pointer bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
                     Evento Académico con Valor Curricular
@@ -73,11 +82,6 @@
                         <p class="text-sm text-gray-300">Integra conocimientos. Conecta con expertos, directivos y compañeros de ambas licenciaturas.</p>
                     </div>
                 </div>
-                <div class="mt-14">
-                    <a href="#registro" class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105">
-                        ¡Quiero Inscribirme Ahora! ↓
-                    </a>
-                </div>
             </div>
         </header>
 
@@ -85,74 +89,74 @@
         <section class="py-20 px-6 max-w-6xl mx-auto bg-white">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Programa Oficial de Actividades</h2>
-                <p class="mt-4 text-gray-600 text-lg">Una agenda diseñada para transformar tu visión profesional.</p>
+                <p class="mt-4 text-gray-600 text-lg">Una agenda diseñada para transformar tu visión profesional. <span class="font-bold text-emerald-600 block mt-2">Da clic sobre cualquier actividad para ver los detalles.</span></p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Lunes -->
-                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Lunes</div>
-                    <div class="mb-5">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2">El Huerto como Atractivo: Paisajismo Urbano y Agroturismo</p>
+                    <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-1')">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">El Huerto como Atractivo: Paisajismo Urbano y Agroturismo</p>
                     </div>
-                    <div>
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Introducción a la Hidroponía</p>
+                    <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-1')">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Introducción a la Hidroponía</p>
                     </div>
                 </div>
 
                 <!-- Martes -->
-                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Martes</div>
-                    <div class="mb-5">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Economía Circular y Reducción de Desperdicios en la Cocina</p>
+                    <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-2')">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Economía Circular y Reducción de Desperdicios en la Cocina</p>
                     </div>
-                    <div>
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Estación de Compostaje: Armado y Manejo</p>
+                    <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-2')">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Estación de Compostaje: Armado y Manejo</p>
                     </div>
                 </div>
 
                 <!-- Miércoles -->
-                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Miércoles</div>
-                    <div class="mb-5">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Botánica Culinaria: El Valor del Entorno en la Alta Cocina</p>
+                    <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-3')">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Botánica Culinaria: El Valor del Entorno en la Alta Cocina</p>
                     </div>
-                    <div>
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Producción de Germinados y Brotes</p>
+                    <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-3')">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Producción de Germinados y Brotes</p>
                     </div>
                 </div>
 
                 <!-- Jueves -->
-                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Jueves</div>
-                    <div class="mb-5">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Comunidad y Espacios Universitarios Sustentables</p>
+                    <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-4')">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Comunidad y Espacios Universitarios Sustentables</p>
                     </div>
-                    <div>
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2">Ensaladas, Aderezos y Emplatados Técnicos</p>
+                    <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-4')">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Ensaladas, Aderezos y Emplatados Técnicos</p>
                     </div>
                 </div>
             </div>
 
-            <!-- VIERNES: EL GRAN CIERRE (Institucional) -->
-            <div class="mt-12 bg-gray-900 rounded-3xl p-8 md:p-12 border border-gray-700 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-10 opacity-10">
+            <!-- VIERNES: EL GRAN CIERRE -->
+            <div class="mt-12 bg-gray-900 rounded-3xl p-8 md:p-12 border border-gray-700 shadow-2xl relative overflow-hidden cursor-pointer group hover:bg-gray-800 transition-colors" onclick="openActivityModal('gran-cierre')">
+                <div class="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-20 transition-opacity">
                     <svg width="250" height="250" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M11 20A7 7 0 0 1 4 13v-5a2 2 0 0 1 2-2h5a7 7 0 0 1 7 7v5a2 2 0 0 1-2 2h-5Z"></path>
                         <path d="M11 20V12"></path>
                     </svg>
                 </div>
                 <div class="relative z-10 text-center">
-                    <span class="bg-emerald-900 text-emerald-300 text-sm font-bold px-5 py-2 rounded-full border border-emerald-700 uppercase tracking-widest shadow-inner">Día Viernes</span>
-                    <h3 class="text-3xl md:text-5xl font-extrabold text-white mt-8 mb-4 tracking-tight">El Gran Cierre Institucional</h3>
+                    <span class="bg-emerald-900 text-emerald-300 text-sm font-bold px-5 py-2 rounded-full border border-emerald-700 uppercase tracking-widest shadow-inner group-hover:bg-emerald-800 transition-colors">Día Viernes</span>
+                    <h3 class="text-3xl md:text-5xl font-extrabold text-white mt-8 mb-4 tracking-tight group-hover:text-emerald-400 transition-colors">El Gran Cierre Institucional</h3>
                     <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
                         Ceremonia oficial de inauguración del <strong class="text-emerald-400">Huerto Académico</strong> y la <strong class="text-emerald-400">Estación de Compostaje</strong> de la Unidad Académica de Turismo y Gastronomía.
                     </p>
@@ -283,7 +287,7 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN DEL QR GENERADO (Oculto inicialmente) -->
+                <!-- SECCIÓN DEL QR GENERADO -->
                 <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
                     <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
@@ -309,6 +313,30 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <!-- ACTIVITY DETAILS MODAL (NUEVO) -->
+    <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative transform transition-all">
+            <button onclick="closeActivityModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="activity-modal-badge" class="text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border"></div>
+            <h3 class="text-2xl font-black text-gray-900 mb-5 leading-tight" id="activity-modal-title">Título</h3>
+            
+            <div class="mb-5 bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                <h4 class="font-bold text-emerald-700 flex items-center gap-2 mb-1 text-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span id="activity-modal-speaker">Expositor</span>
+                </h4>
+                <p class="text-sm text-gray-600 font-medium" id="activity-modal-credentials">Credenciales</p>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-gray-800 mb-2 border-b pb-2">Acerca de esta sesión</h4>
+                <p class="text-gray-600 text-sm leading-relaxed" id="activity-modal-desc">Descripción...</p>
+            </div>
+        </div>
     </div>
 
     <!-- CUSTOM MODAL ALERTS -->
@@ -341,9 +369,8 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD (Oculto por defecto) -->
+    <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden min-h-screen bg-gray-100 pb-20">
-        <!-- NavBar Admin -->
         <div class="bg-gray-900 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
             <div class="font-bold text-lg flex items-center">
                 <span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span>
@@ -353,10 +380,9 @@
         </div>
 
         <div class="max-w-4xl mx-auto px-4 py-8">
-            <!-- Tabs -->
             <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8">
                 <button id="tab-scanner" class="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
-                <button id="tab-database" class="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos Final</button>
+                <button id="tab-database" class="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos</button>
             </div>
 
             <!-- SCANNER VIEW -->
@@ -393,7 +419,6 @@
                             <button id="stop-scan-btn" class="bg-red-100 text-red-700 font-bold py-3 px-6 rounded-xl hover:bg-red-200 transition">Detener Acceso</button>
                         </div>
                         
-                        <!-- Último escaneo info -->
                         <div class="mt-6 text-left bg-emerald-50 p-4 rounded-xl border border-emerald-100 hidden" id="last-scan-info">
                             <p class="text-xs text-emerald-600 font-bold uppercase mb-1">Último Acceso Registrado:</p>
                             <p class="text-lg font-bold text-gray-900" id="scan-result-matricula">-</p>
@@ -437,7 +462,6 @@
                                 </tr>
                             </thead>
                             <tbody id="db-table-body" class="text-sm">
-                                <!-- Filas inyectadas por JS -->
                                 <tr><td colspan="5" class="p-4 text-center text-gray-500">Cargando base de datos...</td></tr>
                             </tbody>
                         </table>
@@ -447,38 +471,164 @@
         </div>
     </div>
 
+    <!-- Script de Interfaz de Actividades (NUEVO) -->
+    <script>
+        const activitiesInfo = {
+            'conf-1': {
+                type: 'Conferencia',
+                title: 'El Huerto como Atractivo: Paisajismo Urbano y Agroturismo',
+                speaker: 'Dr. Roberto Silva',
+                credentials: 'Doctor en Desarrollo Urbano Sustentable y Arquitecto Paisajista.',
+                desc: 'Descubre cómo integrar espacios verdes y huertos dentro de entornos urbanos y proyectos turísticos, convirtiéndolos en un ancla para el turismo ecológico y el desarrollo local.'
+            },
+            'conf-2': {
+                type: 'Conferencia',
+                title: 'Economía Circular y Reducción de Desperdicios en la Cocina',
+                speaker: 'Chef Mariana López',
+                credentials: 'Chef Ejecutiva, experta en gastronomía Zero Waste.',
+                desc: 'Aprenderás estrategias comprobadas para optimizar insumos, reducir la merma en restaurantes y transformar "desperdicios" en ingredientes de alto valor culinario.'
+            },
+            'conf-3': {
+                type: 'Conferencia',
+                title: 'Botánica Culinaria: El Valor del Entorno en la Alta Cocina',
+                speaker: 'Biol. Alejandro Torres',
+                credentials: 'Biólogo y consultor de restaurantes de alta cocina.',
+                desc: 'Un recorrido por la flora comestible nativa y cómo el entendimiento biológico de las plantas eleva la creatividad y autenticidad en los platillos de vanguardia.'
+            },
+            'conf-4': {
+                type: 'Conferencia',
+                title: 'Comunidad y Espacios Universitarios Sustentables',
+                speaker: 'Mtra. Elena Gómez',
+                credentials: 'Coordinadora de Sostenibilidad Universitaria.',
+                desc: 'Análisis de casos de éxito sobre cómo las comunidades estudiantiles pueden transformar sus campus en modelos vivos de sustentabilidad y responsabilidad ambiental.'
+            },
+            'taller-1': {
+                type: 'Taller',
+                title: 'Introducción a la Hidroponía',
+                speaker: 'Ing. Carlos Mendoza',
+                credentials: 'Ingeniero Agrónomo especialista en cultivos sin suelo.',
+                desc: 'Taller práctico donde armarás tu primer sistema hidropónico casero, entenderás las soluciones nutritivas y conocerás las plantas ideales para cultivar en este sistema.'
+            },
+            'taller-2': {
+                type: 'Taller',
+                title: 'Estación de Compostaje: Armado y Manejo',
+                speaker: 'Lic. Ana Ruiz',
+                credentials: 'Gestora Ambiental y activista ecológica.',
+                desc: 'Aprende ensuciándote las manos. Construiremos juntos una estación de composta funcional, aprendiendo las proporciones exactas para evitar malos olores y generar tierra fértil.'
+            },
+            'taller-3': {
+                type: 'Taller',
+                title: 'Producción de Germinados y Brotes',
+                speaker: 'Nut. Sofía Vargas',
+                credentials: 'Nutrióloga Clínica enfocada en alimentos funcionales.',
+                desc: 'Técnicas sencillas para cultivar microgreens, germinados y brotes en espacios reducidos, aportando máxima nutrición, textura y estética a los platillos gastronómicos.'
+            },
+            'taller-4': {
+                type: 'Taller',
+                title: 'Ensaladas, Aderezos y Emplatados Técnicos',
+                speaker: 'Chef Diego Castro',
+                credentials: 'Chef Instructor con especialidad en cocina fría.',
+                desc: 'Práctica intensiva de cocina enfocada en potenciar vegetales frescos y cosechas del huerto mediante técnicas de corte, emulsiones de aderezos y diseño visual del plato.'
+            },
+            'gran-cierre': {
+                type: 'Evento Especial',
+                title: 'Ceremonia Institucional de Inauguración',
+                speaker: 'Dirección UATyG / Autoridades UAN',
+                credentials: 'Cuerpo Directivo de la Unidad Académica.',
+                desc: 'Corte de listón oficial del nuevo Huerto Académico. Incluye un recorrido guiado por las instalaciones sustentables y una degustación de bocadillos ecológicos preparados por los alumnos.'
+            }
+        };
+
+        function openActivityModal(id) {
+            const data = activitiesInfo[id];
+            if (!data) return;
+
+            const badge = document.getElementById('activity-modal-badge');
+            badge.textContent = data.type;
+            
+            // Estilos del "badge" (etiqueta) según el tipo de actividad
+            if (data.type === 'Conferencia') {
+                badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-emerald-600 bg-emerald-50 border-emerald-200';
+            } else if (data.type === 'Taller') {
+                badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-blue-600 bg-blue-50 border-blue-200';
+            } else {
+                badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-purple-600 bg-purple-50 border-purple-200';
+            }
+
+            document.getElementById('activity-modal-title').textContent = data.title;
+            document.getElementById('activity-modal-speaker').textContent = data.speaker;
+            document.getElementById('activity-modal-credentials').textContent = data.credentials;
+            document.getElementById('activity-modal-desc').textContent = data.desc;
+
+            document.getElementById('activity-modal').classList.remove('hidden');
+        }
+
+        function closeActivityModal() {
+            document.getElementById('activity-modal').classList.add('hidden');
+        }
+    </script>
+
+    <!-- Scripts de Firebase y Logica Principal -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Configuration (Using Canvas Environment globals)
+        // ============================================================================
+        // ⚠️ ATENCIÓN: CONFIGURACIÓN DE FIREBASE PARA TU GITHUB PAGES
+        // ============================================================================
+        // Si alojas tu código en GitHub, necesitas reemplazar los valores de este objeto
+        // con los de tu proyecto de Firebase. De lo contrario, marcará error de conexión.
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPPmCxAdm57MlXPJL5u_5gs60djn4Uhss",
+            authDomain: "ecosemanauatyg.firebaseapp.com",
+            projectId: "ecosemanauatyg",
+            storageBucket: "ecosemanauatyg.firebasestorage.app",
+            messagingSenderId: "492337695292",
+            appId: "1:492337695292:web:7968d12096880ef5f09139"
+            };
+        // ============================================================================
+
+        // Detección automática (Permite que funcione aquí en Canvas o en tu GitHub)
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         
         let db, auth;
-        let isFirebaseReady = false;
+        let currentUser = null;
 
         try {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
             auth = getAuth(app);
             
-            // Authentication is strictly required for any Firestore operations
-            signInAnonymously(auth).then(() => {
-                isFirebaseReady = true;
-                console.log("Sistema Conectado a la Nube (Firebase Auth Success)");
-            }).catch(e => {
-                console.error("Firebase Auth Error", e);
+            // Iniciar sesión requerida para acceder a la base de datos
+            const initAuth = async () => {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (e) {
+                    console.error("Error al autenticar Firebase:", e);
+                }
+            };
+            initAuth();
+
+            // Mantener un rastreo en tiempo real del usuario
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if(user) console.log("Sistema conectado a Base de Datos");
             });
+
         } catch(e) {
-            console.error("Firebase Init Error (App might be running outside Canvas)", e);
+            console.error("Firebase no pudo iniciar. ¿Configuraste correctamente externalFirebaseConfig?", e);
         }
 
-        // --- GLOBAL VARIABLES & DOM ELEMENTS ---
-        const registrosRef = isFirebaseReady || db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
+        // --- VARIABLES GLOBALES Y DOM ---
+        // Referencia a la colección en base a las reglas obligatorias
+        const registrosRef = db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
         
-        // Registration Elements
         const userInputs = document.querySelectorAll('.user-input');
         const confCheckboxes = document.querySelectorAll('.conf-checkbox');
         const workshopCheckboxes = document.querySelectorAll('.workshop-checkbox');
@@ -489,14 +639,12 @@
         const qrResultSection = document.getElementById('qr-result-section');
         const spinner = document.getElementById('loading-spinner');
         
-        // Modal Elements
         const alertModal = document.getElementById('custom-alert-modal');
         const alertTitle = document.getElementById('alert-title');
         const alertMessage = document.getElementById('alert-message');
         const alertIcon = document.getElementById('alert-icon');
         const alertCloseBtn = document.getElementById('alert-close-btn');
 
-        // Admin Elements
         const mainLanding = document.getElementById('main-landing');
         const adminTrigger = document.getElementById('secret-admin-trigger');
         const pwdModal = document.getElementById('admin-pwd-modal');
@@ -507,7 +655,6 @@
         const adminDashboard = document.getElementById('admin-dashboard');
         const exitAdminBtn = document.getElementById('exit-admin-btn');
         
-        // Scanner Elements
         let html5QrCode = null;
         const startScanBtn = document.getElementById('start-scan-btn');
         const stopScanBtn = document.getElementById('stop-scan-btn');
@@ -516,7 +663,7 @@
         const lastScanInfo = document.getElementById('last-scan-info');
         const scanResultMatricula = document.getElementById('scan-result-matricula');
 
-        // --- HELPER FUNCTIONS ---
+        // --- FUNCIONES HELPER ---
         function showAlert(title, message, isError = false) {
             alertTitle.textContent = title;
             alertMessage.textContent = message;
@@ -530,15 +677,12 @@
                 alertIcon.innerHTML = `<svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
                 alertCloseBtn.className = "w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-emerald-600 text-base font-medium text-white shadow-sm hover:bg-emerald-700 sm:text-sm";
             }
-            
             alertModal.classList.remove('hidden');
         }
 
-        alertCloseBtn.addEventListener('click', () => {
-            alertModal.classList.add('hidden');
-        });
+        alertCloseBtn.addEventListener('click', () => alertModal.classList.add('hidden'));
 
-        // --- REGISTRATION LOGIC (The "Magic" Checkboxes) ---
+        // --- LÓGICA DE REGISTRO (Checkboxes) ---
         function evaluateFormState() {
             const selectedConfs = document.querySelectorAll('.conf-checkbox:checked').length;
             const selectedWorkshops = document.querySelectorAll('.workshop-checkbox:checked').length;
@@ -549,41 +693,26 @@
             confCountSpan.className = selectedConfs === 3 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
             workshopCountSpan.className = selectedWorkshops === 2 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
 
-            // Bloqueo visual de opciones restantes
             confCheckboxes.forEach(cb => {
                 const label = cb.parentElement;
                 if (!cb.checked) {
-                    if (selectedConfs >= 3) {
-                        cb.disabled = true;
-                        label.classList.add('locked-option');
-                    } else {
-                        cb.disabled = false;
-                        label.classList.remove('locked-option');
-                    }
+                    if (selectedConfs >= 3) { cb.disabled = true; label.classList.add('locked-option'); } 
+                    else { cb.disabled = false; label.classList.remove('locked-option'); }
                 }
             });
 
             workshopCheckboxes.forEach(cb => {
                 const label = cb.parentElement;
                 if (!cb.checked) {
-                    if (selectedWorkshops >= 2) {
-                        cb.disabled = true;
-                        label.classList.add('locked-option');
-                    } else {
-                        cb.disabled = false;
-                        label.classList.remove('locked-option');
-                    }
+                    if (selectedWorkshops >= 2) { cb.disabled = true; label.classList.add('locked-option'); } 
+                    else { cb.disabled = false; label.classList.remove('locked-option'); }
                 }
             });
 
             let allInputsFilled = true;
-            userInputs.forEach(input => {
-                if (input.value.trim() === '') allInputsFilled = false;
-            });
+            userInputs.forEach(input => { if (input.value.trim() === '') allInputsFilled = false; });
 
-            const isPerfect = (selectedConfs === 3 && selectedWorkshops === 2 && allInputsFilled);
-
-            if (isPerfect) {
+            if (selectedConfs === 3 && selectedWorkshops === 2 && allInputsFilled) {
                 submitBtn.disabled = false;
                 submitBtn.className = "w-full md:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-5 px-14 rounded-full text-xl shadow-[0_10px_25px_rgba(16,185,129,0.4)] transition-all duration-300 transform hover:scale-105 cursor-pointer";
                 statusMessage.innerHTML = "<span class='text-emerald-600 font-bold'>¡Excelente! Tu pase está listo para generarse.</span>";
@@ -598,10 +727,15 @@
         workshopCheckboxes.forEach(cb => cb.addEventListener('change', evaluateFormState));
         userInputs.forEach(input => input.addEventListener('input', evaluateFormState));
 
-        // Generar QR y guardar en Firebase
+        // --- GENERACIÓN DEL CÓDIGO QR ---
         submitBtn.addEventListener('click', async () => {
-            if(!auth.currentUser) {
-                showAlert("Error de Conexión", "Por favor espera un momento a que el sistema se conecte al servidor e intenta de nuevo.", true);
+            // VERIFICACIÓN CLAVE: Si Firebase no se inicializó bien, se bloquea y avisa al usuario
+            if(!currentUser || !registrosRef) {
+                showAlert(
+                    "Error de Conexión a Base de Datos", 
+                    "El sistema no está conectado a Firebase. Si estás ejecutando esto en GitHub Pages, asegúrate de colocar tus credenciales en la variable 'externalFirebaseConfig' dentro del código.", 
+                    true
+                );
                 return;
             }
 
@@ -611,7 +745,6 @@
             const carreraSelect = document.getElementById('program');
             const carrera = carreraSelect.options[carreraSelect.selectedIndex].text;
             
-            // Recopilar selección
             const confsElegidas = Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb => cb.value);
             const talleresElegidos = Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb => cb.value);
 
@@ -619,7 +752,6 @@
             spinner.classList.remove('hidden');
 
             try {
-                // Verificar si ya existe
                 const docRef = doc(registrosRef, matricula);
                 const docSnap = await getDoc(docRef);
 
@@ -630,7 +762,7 @@
                     return;
                 }
 
-                // Guardar en Firestore
+                // Guardar
                 await setDoc(docRef, {
                     nombre: nombre,
                     matricula: matricula,
@@ -638,33 +770,27 @@
                     carrera: carrera,
                     conferencias_seleccionadas: confsElegidas,
                     talleres_seleccionados: talleresElegidos,
-                    asistencias: [], // Array vacío para el escáner posterior
+                    asistencias: [],
                     fecha_registro: new Date().toISOString()
                 });
 
-                // Llenar UI del QR
                 document.getElementById('res-name').textContent = nombre;
                 document.getElementById('res-id').textContent = matricula;
                 document.getElementById('res-group').textContent = grupo;
                 document.getElementById('res-program').textContent = carrera;
 
-                // Limpiar QR anterior
                 document.getElementById('qrcode').innerHTML = "";
-
-                // String de datos simple para escanear rápido: UATYG2026|MATRICULA
                 const qrData = `UATYG2026|${matricula}`;
 
-                // Crear QR
                 new QRCode(document.getElementById("qrcode"), {
                     text: qrData,
                     width: 200,
                     height: 200,
-                    colorDark : "#064e3b", // Verde muy oscuro
+                    colorDark : "#064e3b",
                     colorLight : "#ffffff",
                     correctLevel : QRCode.CorrectLevel.H
                 });
 
-                // Mostrar sección
                 spinner.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
                 submitBtn.disabled = true;
@@ -676,17 +802,15 @@
 
             } catch (error) {
                 console.error("Error saving doc:", error);
-                showAlert("Error", "Hubo un problema al guardar tu registro. Intenta nuevamente.", true);
+                showAlert("Error", "Hubo un problema al guardar tu registro. Verifica los permisos de tu base de datos Firebase e intenta nuevamente.", true);
                 submitBtn.classList.remove('hidden');
                 spinner.classList.add('hidden');
             }
         });
 
-        // Botones de la sección QR
         document.getElementById('print-btn').addEventListener('click', () => window.print());
         document.getElementById('close-qr-btn').addEventListener('click', () => {
             qrResultSection.classList.add('hidden');
-            // Resetear formulario
             userInputs.forEach(i => i.value = '');
             confCheckboxes.forEach(cb => cb.checked = false);
             workshopCheckboxes.forEach(cb => cb.checked = false);
@@ -702,16 +826,13 @@
             setTimeout(() => pwdInput.focus(), 100);
         });
 
-        pwdCancelBtn.addEventListener('click', () => {
-            pwdModal.classList.add('hidden');
-        });
+        pwdCancelBtn.addEventListener('click', () => pwdModal.classList.add('hidden'));
 
         pwdLoginBtn.addEventListener('click', () => {
             if (pwdInput.value === 'luix0738') {
                 pwdModal.classList.add('hidden');
                 mainLanding.classList.add('d-none');
                 adminDashboard.classList.remove('hidden');
-                // Asegurarse de que las pestañas están correctas
                 document.getElementById('tab-scanner').click();
             } else {
                 pwdError.classList.remove('hidden');
@@ -719,9 +840,7 @@
         });
 
         exitAdminBtn.addEventListener('click', async () => {
-            if (html5QrCode && html5QrCode.isScanning) {
-                await html5QrCode.stop();
-            }
+            if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
             adminDashboard.classList.add('hidden');
             mainLanding.classList.remove('d-none');
             window.scrollTo(0,0);
@@ -736,49 +855,34 @@
         tabScanner.addEventListener('click', () => {
             tabScanner.className = "flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition";
             tabDb.className = "flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
-            viewScanner.classList.remove('hidden');
-            viewScanner.classList.add('block');
-            viewDb.classList.add('hidden');
-            viewDb.classList.remove('block');
+            viewScanner.classList.remove('hidden'); viewScanner.classList.add('block');
+            viewDb.classList.add('hidden'); viewDb.classList.remove('block');
         });
 
         tabDb.addEventListener('click', () => {
             tabDb.className = "flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition";
             tabScanner.className = "flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
-            viewDb.classList.remove('hidden');
-            viewDb.classList.add('block');
-            viewScanner.classList.add('hidden');
-            viewScanner.classList.remove('block');
-            generateDatabaseReport(); // Autocargar al cambiar de tab
+            viewDb.classList.remove('hidden'); viewDb.classList.add('block');
+            viewScanner.classList.add('hidden'); viewScanner.classList.remove('block');
+            generateDatabaseReport();
         });
 
-        // --- SCANNER LOGIC ---
+        // --- ESCÁNER ---
         adminActivitySelect.addEventListener('change', () => {
-            if(adminActivitySelect.value !== "") {
-                startScanBtn.disabled = false;
-            } else {
-                startScanBtn.disabled = true;
-            }
+            startScanBtn.disabled = adminActivitySelect.value === "";
         });
 
         let isProcessingScan = false;
 
         async function onScanSuccess(decodedText, decodedResult) {
-            // Prevenir doble escaneo rápido
-            if (isProcessingScan) return;
-            
-            // Validar formato del QR
-            if (!decodedText.startsWith('UATYG2026|')) {
-                return; // Ignorar QRs que no son nuestros
-            }
+            if (isProcessingScan || !decodedText.startsWith('UATYG2026|') || !currentUser) return;
 
             isProcessingScan = true;
             const matricula = decodedText.split('|')[1];
             const actividadId = adminActivitySelect.value;
             
-            // Pausar UI del escáner visualmente (efecto flash)
             const readerEl = document.getElementById('qr-reader');
-            readerEl.style.border = "4px solid #10b981"; // Borde verde
+            readerEl.style.border = "4px solid #10b981";
             
             try {
                 const docRef = doc(registrosRef, matricula);
@@ -788,18 +892,9 @@
                     alert(`La matrícula ${matricula} no está registrada en el sistema.`);
                 } else {
                     const data = docSnap.data();
-                    
-                    // Verificar si ya tiene registrada esta asistencia para evitar duplicados en el array
-                    if(data.asistencias && data.asistencias.includes(actividadId)) {
-                        console.log("Ya había registrado asistencia previamente.");
-                    } else {
-                        // Actualizar en Firebase agregando la actividad al array
-                        await updateDoc(docRef, {
-                            asistencias: arrayUnion(actividadId)
-                        });
+                    if(!data.asistencias || !data.asistencias.includes(actividadId)) {
+                        await updateDoc(docRef, { asistencias: arrayUnion(actividadId) });
                     }
-
-                    // Mostrar info en pantalla
                     lastScanInfo.classList.remove('hidden');
                     scanResultMatricula.innerHTML = `${matricula} <span class="text-sm font-normal text-gray-600 block">${data.nombre}</span>`;
                 }
@@ -808,7 +903,6 @@
                 alert("Error de red al registrar asistencia. Intenta de nuevo.");
             }
 
-            // Restaurar estado después de 2 segundos
             setTimeout(() => {
                 readerEl.style.border = "4px solid #1f2937";
                 isProcessingScan = false;
@@ -816,10 +910,7 @@
         }
 
         startScanBtn.addEventListener('click', async () => {
-            if (!adminActivitySelect.value) {
-                alert("Primero debes seleccionar una actividad.");
-                return;
-            }
+            if (!adminActivitySelect.value) return alert("Primero debes seleccionar una actividad.");
 
             adminActivitySelect.disabled = true;
             startScanBtn.classList.add('hidden');
@@ -827,26 +918,17 @@
             lastScanInfo.classList.add('hidden');
 
             html5QrCode = new Html5Qrcode("qr-reader");
-            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
             try {
-                // Forzar cámara trasera (environment)
-                await html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+                await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess);
             } catch (err) {
                 console.error("Error iniciando cámara", err);
-                alert("No se pudo acceder a la cámara trasera. Verifica los permisos de tu dispositivo.");
+                alert("No se pudo acceder a la cámara trasera. Verifica los permisos.");
                 stopScannerUI();
             }
         });
 
         stopScanBtn.addEventListener('click', async () => {
-            if (html5QrCode && html5QrCode.isScanning) {
-                try {
-                    await html5QrCode.stop();
-                } catch(err) {
-                    console.error("Error deteniendo", err);
-                }
-            }
+            if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
             stopScannerUI();
         });
 
@@ -856,7 +938,7 @@
             adminActivitySelect.disabled = false;
         }
 
-        // --- DATABASE REPORTS LOGIC ---
+        // --- REPORTE BASE DE DATOS ---
         const refreshDbBtn = document.getElementById('refresh-db-btn');
         const tbody = document.getElementById('db-table-body');
         const countAccredited = document.getElementById('count-accredited');
@@ -865,37 +947,27 @@
         refreshDbBtn.addEventListener('click', generateDatabaseReport);
 
         async function generateDatabaseReport() {
-            if(!auth.currentUser) return;
-            
+            if(!currentUser) return;
             tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Descargando registros...</td></tr>';
             
             try {
                 const querySnapshot = await getDocs(registrosRef);
-                
-                let html = '';
-                let acreditados = 0;
-                let noAcreditados = 0;
+                let html = '', acreditados = 0, noAcreditados = 0;
 
                 if (querySnapshot.empty) {
                     tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Aún no hay alumnos registrados.</td></tr>';
-                    countAccredited.textContent = '0';
-                    countFailed.textContent = '0';
+                    countAccredited.textContent = '0'; countFailed.textContent = '0';
                     return;
                 }
 
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     const asistencias = data.asistencias || [];
-                    
-                    // Contar tipos de asistencia
                     const confsAsistidas = asistencias.filter(a => a.startsWith('conf')).length;
                     const talleresAsistidos = asistencias.filter(a => a.startsWith('taller')).length;
-                    
-                    // Evaluar acreditación (Meta: 3 conf, 2 talleres)
                     const isAccredited = (confsAsistidas >= 3 && talleresAsistidos >= 2);
                     
-                    if(isAccredited) acreditados++;
-                    else noAcreditados++;
+                    if(isAccredited) acreditados++; else noAcreditados++;
 
                     const statusBadge = isAccredited 
                         ? '<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Acreditado</span>'
@@ -908,12 +980,8 @@
                                 <div class="font-semibold text-gray-800">${data.nombre}</div>
                                 <div class="text-xs text-gray-500">${data.carrera} (Gr: ${data.grupo})</div>
                             </td>
-                            <td class="p-3 text-center">
-                                <span class="${confsAsistidas >= 3 ? 'text-green-600 font-bold' : 'text-gray-500'}">${confsAsistidas}/3</span>
-                            </td>
-                            <td class="p-3 text-center">
-                                <span class="${talleresAsistidos >= 2 ? 'text-green-600 font-bold' : 'text-gray-500'}">${talleresAsistidos}/2</span>
-                            </td>
+                            <td class="p-3 text-center"><span class="${confsAsistidas >= 3 ? 'text-green-600 font-bold' : 'text-gray-500'}">${confsAsistidas}/3</span></td>
+                            <td class="p-3 text-center"><span class="${talleresAsistidos >= 2 ? 'text-green-600 font-bold' : 'text-gray-500'}">${talleresAsistidos}/2</span></td>
                             <td class="p-3 text-center">${statusBadge}</td>
                         </tr>
                     `;
