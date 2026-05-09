@@ -12,53 +12,58 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- HTML5 QR Code Scanner -->
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <!-- html2canvas para descargar el pase completo -->
+    <!-- html2canvas para descargar el pase y certificados -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-        }
-        /* Fondo inmersivo con temática verde/agrícola y filtro oscuro */
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .hero-bg {
             background-image: linear-gradient(rgba(6, 78, 59, 0.85), rgba(17, 24, 39, 0.95)), url('https://images.unsplash.com/photo-1530836369250-ef71a3f5e9cb?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
-        /* Estilos para scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #15803d; }
-        
-        /* Efecto de bloqueo para checkboxes no disponibles */
-        .locked-option {
-            opacity: 0.4;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
-        /* Ocultar elementos para las vistas de admin */
+        .locked-option { opacity: 0.4; pointer-events: none; transition: all 0.3s ease; }
         .d-none { display: none !important; }
+
+        /* Estilos del Certificado Generado */
+        #certificate-template {
+            width: 1100px; height: 750px; background: white; padding: 40px; position: relative;
+            background-image: radial-gradient(#f0fdf4 1px, transparent 1px); background-size: 20px 20px;
+        }
+        .cert-border { border: 12px solid #064e3b; padding: 30px; height: 100%; position: relative; }
+        .cert-border-inner { border: 2px solid #10b981; padding: 40px; height: 100%; text-align: center; }
+        .cert-title { font-family: 'Georgia', serif; font-size: 55px; color: #064e3b; font-weight: bold; margin-bottom: 10px; }
+        .cert-subtitle { font-size: 20px; color: #4b5563; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; }
+        .cert-name { font-family: 'Georgia', serif; font-size: 45px; color: #111827; border-bottom: 2px solid #10b981; display: inline-block; padding-bottom: 10px; margin-bottom: 30px; width: 80%; }
+        .cert-body { font-size: 22px; color: #374151; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .cert-signatures { display: flex; justify-content: space-around; margin-top: 60px; }
+        .cert-sign-block { text-align: center; width: 40%; }
+        .cert-sign-line { border-top: 1px solid #111827; margin-bottom: 10px; width: 100%; }
     </style>
 </head>
 <body class="antialiased text-gray-800">
 
     <div id="main-landing">
-        <!-- HERO SECTION (El Pitch de Venta para el alumno) -->
-        <header class="hero-bg text-white py-20 px-6 min-h-screen flex flex-col justify-center items-center text-center">
-            <div class="max-w-4xl mx-auto">
+        <!-- HERO SECTION -->
+        <header class="hero-bg text-white py-20 px-6 min-h-screen flex flex-col justify-center items-center text-center relative">
+            
+            <!-- Botón Portal Alumnos -->
+            <button id="student-portal-btn" class="absolute top-6 right-6 bg-white text-emerald-700 font-bold px-5 py-2 rounded-full shadow-lg hover:bg-emerald-50 transition border border-emerald-200 text-sm md:text-base flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Mi Estado y Reconocimiento
+            </button>
+
+            <div class="max-w-4xl mx-auto mt-10">
                 <!-- LOGOS INSTITUCIONALES -->
-                <div class="w-full max-w-7xl mx-auto flex justify-between items-center pt-8 px-6 mb-10">
-                    <!-- Logo UAN con resplandor intenso para unificar tono y quitar fondo blanco -->
+                <div class="w-full max-w-7xl mx-auto flex justify-between items-center px-6 mb-10">
                     <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.9)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
                     <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg=='">
                     <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4='">
                 </div>
 
-                <!-- Botón Secreto del Administrador -->
                 <span id="secret-admin-trigger" class="cursor-pointer bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
                     Evento Académico con Valor Curricular
                 </span>
@@ -66,6 +71,11 @@
                 <h1 class="mt-6 text-5xl md:text-7xl font-extrabold tracking-tight text-emerald-400">
                     1ra Eco-Semana UATyG 2026
                 </h1>
+                
+                <h2 class="mt-3 text-2xl md:text-3xl font-bold text-emerald-200 italic tracking-wide drop-shadow-md">
+                    "Cultivando conocimiento, cosechando futuro."
+                </h2>
+                
                 <p class="mt-4 text-xl md:text-2xl font-light text-gray-300">
                     Sustentabilidad, Entorno, Turismo y Gastronomía
                 </p>
@@ -90,7 +100,7 @@
         <section class="py-20 px-6 max-w-6xl mx-auto bg-white">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Programa Oficial de Actividades</h2>
-                <p class="mt-4 text-gray-600 text-lg">Una agenda diseñada para transformar tu visión profesional. <span class="font-bold text-emerald-600 block mt-2">Da clic sobre cualquier actividad para ver los detalles.</span></p>
+                <p class="mt-4 text-gray-600 text-lg">Una agenda diseñada para transformar tu visión profesional. <span class="font-bold text-emerald-600 block mt-2">Da clic sobre cualquier actividad para ver los detalles e insignias.</span></p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -98,11 +108,11 @@
                 <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Lunes</div>
                     <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-1')">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">El Huerto como Atractivo: Paisajismo Urbano y Agroturismo</p>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">El Huerto como Atractivo Turístico</p>
                     </div>
                     <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-1')">
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
                         <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Introducción a la Hidroponía</p>
                     </div>
                 </div>
@@ -111,12 +121,12 @@
                 <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Martes</div>
                     <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-2')">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Economía Circular y Reducción de Desperdicios en la Cocina</p>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Economía Circular y Desperdicios</p>
                     </div>
                     <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-2')">
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Estación de Compostaje: Armado y Manejo</p>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Estación de Compostaje</p>
                     </div>
                 </div>
 
@@ -124,12 +134,12 @@
                 <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Miércoles</div>
                     <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-3')">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Botánica Culinaria: El Valor del Entorno en la Alta Cocina</p>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Botánica Culinaria y Entorno</p>
                     </div>
                     <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-3')">
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Producción de Germinados y Brotes</p>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Producción de Germinados</p>
                     </div>
                 </div>
 
@@ -137,12 +147,12 @@
                 <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 transition-all">
                     <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Jueves</div>
                     <div class="mb-5 cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-emerald-200 hover:shadow-md transition-all" onclick="openActivityModal('conf-4')">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase group-hover:bg-emerald-200 transition-colors">Mañana (Conferencia)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Comunidad y Espacios Universitarios Sustentables</p>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-emerald-600 transition-colors">Comunidad y Espacios Sustentables</p>
                     </div>
                     <div class="cursor-pointer group bg-white p-3 rounded-xl border border-transparent hover:border-blue-200 hover:shadow-md transition-all" onclick="openActivityModal('taller-4')">
-                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase group-hover:bg-blue-200 transition-colors">Tarde (Taller)</span>
-                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Ensaladas, Aderezos y Emplatados Técnicos</p>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2 group-hover:text-blue-600 transition-colors">Ensaladas, Aderezos y Emplatados</p>
                     </div>
                 </div>
             </div>
@@ -227,38 +237,34 @@
                                 </div>
                                 <div class="space-y-3" id="conf-container">
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-1">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-1">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-1"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">El Huerto como Atractivo Turístico</span>
+                                            <span class="text-xs font-bold text-emerald-600 mt-1">🌍 Turista Responsable</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-1">Calculando espacios...</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-2">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-2">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-2"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Economía Circular y Desperdicios</span>
+                                            <span class="text-xs font-bold text-emerald-600 mt-1">♻️ Visión Circular</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-2">Calculando espacios...</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-3">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-3">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-3"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Botánica Culinaria y Entorno</span>
+                                            <span class="text-xs font-bold text-emerald-600 mt-1">🌺 Botánico</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-3">Calculando espacios...</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-4">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-4">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-4"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Comunidad y Espacios Sustentables</span>
+                                            <span class="text-xs font-bold text-emerald-600 mt-1">🤝 Líder Comunitario</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-4">Calculando espacios...</span>
                                         </div>
                                     </label>
@@ -275,38 +281,34 @@
                                 </div>
                                 <div class="space-y-3" id="workshop-container">
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-1">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-1">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-1"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Introducción a la Hidroponía</span>
+                                            <span class="text-xs font-bold text-blue-600 mt-1">💧 HydroLab</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-1">Calculando espacios...</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-2">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-2">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-2"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Estación de Compostaje</span>
+                                            <span class="text-xs font-bold text-blue-600 mt-1">♻️ Maestro Compostero</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-2">Calculando espacios...</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-3">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-3">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-3"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Producción de Germinados</span>
+                                            <span class="text-xs font-bold text-blue-600 mt-1">🌱 Explorador Verde</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-3">Calculando espacios...</span>
                                         </div>
                                     </label>
                                     <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-4">
-                                        <div class="pt-1">
-                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-4">
-                                        </div>
+                                        <div class="pt-1"><input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-4"></div>
                                         <div class="ml-3 flex flex-col w-full">
                                             <span class="text-sm font-medium text-gray-700 leading-tight">Aderezos y Emplatados</span>
+                                            <span class="text-xs font-bold text-blue-600 mt-1">🍃 EcoChef</span>
                                             <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-4">Calculando espacios...</span>
                                         </div>
                                     </label>
@@ -323,7 +325,7 @@
                         </button>
                         <!-- Indicador de carga -->
                         <div id="loading-spinner" class="hidden mt-4 text-emerald-600 text-sm font-bold animate-pulse">
-                            Conectando con el servidor y guardando registro...
+                            Procesando y registrando en sistema...
                         </div>
                     </div>
                 </div>
@@ -332,15 +334,15 @@
                 <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
                     <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
-                    <p class="text-gray-600 mb-8 font-medium">Descarga tu código QR o toma una captura de pantalla. Guárdalo en tu celular y preséntalo en la entrada de tus eventos. <span class="text-emerald-600 block mt-1 font-bold">¡Cuidemos el planeta, no lo imprimas! 🌎</span></p>
+                    <p class="text-gray-600 mb-6 font-medium">Descarga tu código QR o toma captura. <span class="text-emerald-600 block mt-1 font-bold">¡Cuidemos el planeta, no lo imprimas! 🌎</span></p>
                     
                     <!-- INICIO DEL PASE A DESCARGAR -->
-                    <div id="ticket-to-capture" class="bg-white p-6 rounded-3xl mx-auto inline-block shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-gray-100">
-                        <div class="bg-white p-4 rounded-2xl flex justify-center mb-6 shadow-inner border border-gray-100">
+                    <div id="ticket-to-capture" class="bg-white p-6 rounded-3xl mx-auto inline-block shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-gray-100 w-full">
+                        <div class="bg-white p-4 rounded-2xl flex justify-center mb-4 shadow-inner border border-gray-100">
                             <div id="qrcode"></div>
                         </div>
                         
-                        <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                        <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200 mb-4">
                             <p class="text-sm text-gray-700 mb-2"><strong>Titular:</strong> <span id="res-name" class="font-semibold text-gray-900"></span></p>
                             <p class="text-sm text-gray-700 mb-2 flex justify-between">
                                 <span><strong>Matrícula:</strong> <span id="res-id" class="font-semibold text-gray-900"></span></span>
@@ -348,13 +350,21 @@
                             </p>
                             <p class="text-sm text-gray-700"><strong>Licenciatura:</strong> <span id="res-program" class="font-semibold text-gray-900"></span></p>
                         </div>
+
+                        <!-- Contenedor de Insignias a Desbloquear -->
+                        <div class="text-left bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                            <p class="text-xs font-bold text-emerald-800 mb-2 uppercase">Insignias por Desbloquear:</p>
+                            <div id="badges-container" class="flex flex-wrap gap-2">
+                                <!-- Se llenará con JS -->
+                            </div>
+                        </div>
                     </div>
                     <!-- FIN DEL PASE A DESCARGAR -->
                     
                     <div class="mt-8 flex flex-col gap-3">
                         <button id="download-btn" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition flex justify-center items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            <span id="download-text">Guardar Pase QR</span>
+                            <span id="download-text">Guardar Pase QR Completo</span>
                         </button>
                         <button id="close-qr-btn" class="w-full bg-white text-emerald-600 font-bold py-3 rounded-xl border-2 border-emerald-600 hover:bg-emerald-50 transition">Cerrar y volver al inicio</button>
                     </div>
@@ -363,13 +373,96 @@
         </section>
     </div>
 
+    <!-- PORTAL ALUMNO MODAL (Consulta y Certificado) -->
+    <div id="student-portal-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md px-4">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative text-center">
+            <button id="close-portal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 rounded-full p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-2xl font-black text-emerald-700 mb-2">Portal del Alumno</h3>
+            <p class="text-gray-500 text-sm mb-6">Ingresa tu matrícula para revisar tus horas acreditadas y descargar tu reconocimiento.</p>
+            
+            <input type="text" id="portal-matricula" class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-emerald-500 bg-gray-50 mb-4 text-center font-bold text-xl tracking-widest" placeholder="Tu Matrícula">
+            <button id="check-status-btn" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition shadow-lg">Consultar Estado</button>
+            
+            <!-- Area de Resultados -->
+            <div id="portal-result" class="hidden mt-6 text-left bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                <h4 class="font-bold text-gray-900 border-b pb-2 mb-3" id="portal-nombre">Nombre Alumno</h4>
+                <div class="flex justify-between mb-2">
+                    <span class="text-sm text-gray-600">Conferencias Completadas:</span>
+                    <span class="font-bold text-emerald-600" id="portal-conf-score">0/3</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="text-sm text-gray-600">Talleres Completados:</span>
+                    <span class="font-bold text-emerald-600" id="portal-taller-score">0/2</span>
+                </div>
+                
+                <div id="portal-success-msg" class="hidden bg-emerald-100 p-3 rounded-xl text-center border border-emerald-200 mb-4">
+                    <p class="text-emerald-800 font-bold text-sm">¡Felicidades! Has completado todas las actividades requeridas.</p>
+                </div>
+                
+                <div id="portal-fail-msg" class="hidden bg-amber-50 p-3 rounded-xl text-center border border-amber-200 mb-4">
+                    <p class="text-amber-800 font-bold text-sm">Aún te faltan asistencias para acreditar.</p>
+                    <p class="text-xs text-amber-700 mt-1">Recuerda registrar Entrada y Salida en cada evento.</p>
+                </div>
+
+                <button id="download-cert-btn" class="hidden w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition shadow-lg flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Descargar Reconocimiento Oficial
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CERTIFICADO OCULTO (Renderizado Gráfico) -->
+    <div style="position: absolute; left: -9999px; top: -9999px;">
+        <div id="certificate-template">
+            <div class="cert-border">
+                <div class="cert-border-inner">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #064e3b; font-size: 10px; text-align:center;">UAN<br>LOGO</div>
+                        <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #064e3b; font-size: 10px; text-align:center;">CETYG<br>LOGO</div>
+                        <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #064e3b; font-size: 10px; text-align:center;">UNIDAD<br>LOGO</div>
+                    </div>
+                    
+                    <h1 class="cert-title">RECONOCIMIENTO</h1>
+                    <div class="cert-subtitle">Otorgado a:</div>
+                    
+                    <h2 class="cert-name" id="cert-student-name">NOMBRE DEL ALUMNO AQUI</h2>
+                    
+                    <div class="cert-body">
+                        Por haber completado exitosamente todas las conferencias, talleres e insignias correspondientes a la <strong>1ra Eco-Semana UATyG 2026</strong>.<br><br>
+                        <em>"Cultivando conocimiento, cosechando futuro."</em><br>
+                        Acreditando satisfactoriamente su participación con valor curricular.
+                    </div>
+                    
+                    <div class="cert-signatures">
+                        <div class="cert-sign-block">
+                            <div class="cert-sign-line"></div>
+                            <strong>Dra. María Celina Agras López</strong><br>
+                            <span style="font-size: 14px;">Directora de la Unidad Académica<br>Turismo y Gastronomía</span>
+                        </div>
+                        <div class="cert-sign-block">
+                            <div class="cert-sign-line"></div>
+                            <strong>C. Gloria Estefanía Barraza Taracena</strong><br>
+                            <span style="font-size: 14px;">Presidenta del Comité Estudiantil<br>Turismo y Gastronomía (CETYG)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
+        <!-- Contenido dinámico (Insignias agregadas en script) -->
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative transform transition-all">
             <button onclick="closeActivityModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             <div id="activity-modal-badge" class="text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border"></div>
+            <div id="activity-modal-insignia" class="ml-2 text-xs font-black px-3 py-1 rounded-full uppercase inline-block mb-4 bg-emerald-100 text-emerald-800 border border-emerald-300"></div>
+            
             <h3 class="text-2xl font-black text-gray-900 mb-5 leading-tight" id="activity-modal-title">Título</h3>
             
             <div class="mb-5 bg-gray-50 p-5 rounded-2xl border border-gray-100">
@@ -387,39 +480,6 @@
         </div>
     </div>
 
-    <!-- DELETE CONFIRM MODAL -->
-    <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
-            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
-                <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">¿Eliminar registro?</h3>
-            <p class="text-gray-600 mb-6" id="delete-confirm-text">Se liberarán los espacios en talleres y conferencias de este alumno.</p>
-            <div class="flex gap-3">
-                <button id="cancel-delete-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none transition">Cancelar</button>
-                <button id="confirm-delete-btn" class="flex-1 rounded-xl border border-transparent px-4 py-3 bg-red-600 text-white font-medium shadow-sm hover:bg-red-700 focus:outline-none transition">Eliminar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CUSTOM MODAL ALERTS -->
-    <div id="custom-alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
-            <div id="alert-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6">
-                <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-2" id="alert-title">Éxito</h3>
-            <p class="text-gray-600 mb-6" id="alert-message">Operación realizada correctamente.</p>
-            <button id="alert-close-btn" class="w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-emerald-600 text-base font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:text-sm">
-                Entendido
-            </button>
-        </div>
-    </div>
-
     <!-- ADMIN PASSWORD MODAL -->
     <div id="admin-pwd-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md">
         <div class="bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl">
@@ -434,12 +494,33 @@
         </div>
     </div>
 
+    <!-- CUSTOM MODAL ALERTS -->
+    <div id="custom-alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70] flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
+            <div id="alert-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6"></div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2" id="alert-title">Éxito</h3>
+            <p class="text-gray-600 mb-6" id="alert-message">Operación realizada.</p>
+            <button id="alert-close-btn" class="w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-emerald-600 text-base font-medium text-white shadow-sm hover:bg-emerald-700 sm:text-sm">Entendido</button>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRM MODAL -->
+    <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">¿Eliminar registro?</h3>
+            <p class="text-gray-600 mb-6" id="delete-confirm-text">Se liberarán los espacios.</p>
+            <div class="flex gap-3">
+                <button id="cancel-delete-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition">Cancelar</button>
+                <button id="confirm-delete-btn" class="flex-1 rounded-xl px-4 py-3 bg-red-600 text-white hover:bg-red-700 transition">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden min-h-screen bg-gray-100 pb-20">
         <div class="bg-gray-900 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
             <div class="font-bold text-lg flex items-center">
-                <span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span>
-                Panel de Control UATyG
+                <span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Control UATyG
             </div>
             <button id="exit-admin-btn" class="text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg border border-gray-700 transition">Cerrar Sesión</button>
         </div>
@@ -447,7 +528,7 @@
         <div class="max-w-4xl mx-auto px-4 py-8">
             <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8">
                 <button id="tab-scanner" class="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
-                <button id="tab-database" class="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos</button>
+                <button id="tab-database" class="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos Final</button>
             </div>
 
             <!-- SCANNER VIEW -->
@@ -456,192 +537,100 @@
                     <h2 class="text-2xl font-black text-gray-900 mb-6">Control de Acceso</h2>
                     
                     <div class="mb-6 text-left">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">1. Selecciona la Actividad Actual:</label>
-                        <select id="admin-activity-select" class="w-full p-4 rounded-xl border-2 border-emerald-200 focus:ring-0 focus:border-emerald-500 bg-emerald-50 font-semibold text-gray-800">
-                            <option value="">-- Elige una actividad para comenzar --</option>
-                            <optgroup label="Conferencias">
-                                <option value="conf-1">Conf 1: Paisajismo y Agroturismo</option>
-                                <option value="conf-2">Conf 2: Economía Circular</option>
-                                <option value="conf-3">Conf 3: Botánica Culinaria</option>
-                                <option value="conf-4">Conf 4: Espacios Sustentables</option>
-                            </optgroup>
-                            <optgroup label="Talleres">
-                                <option value="taller-1">Taller 1: Hidroponía</option>
-                                <option value="taller-2">Taller 2: Compostaje</option>
-                                <option value="taller-3">Taller 3: Germinados</option>
-                                <option value="taller-4">Taller 4: Emplatados</option>
-                            </optgroup>
-                            <optgroup label="Cierre">
-                                <option value="gran-cierre">El Gran Cierre (Viernes)</option>
-                            </optgroup>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">1. Selecciona la Actividad:</label>
+                        <select id="admin-activity-select" class="w-full p-4 rounded-xl border-2 border-emerald-200 focus:ring-0 bg-emerald-50 font-semibold mb-4">
+                            <option value="">-- Elige una actividad --</option>
+                            <optgroup label="Conferencias"><option value="conf-1">Conf 1: Paisajismo</option><option value="conf-2">Conf 2: Econ. Circular</option><option value="conf-3">Conf 3: Botánica</option><option value="conf-4">Conf 4: Espacios</option></optgroup>
+                            <optgroup label="Talleres"><option value="taller-1">Taller 1: Hidroponía</option><option value="taller-2">Taller 2: Compostaje</option><option value="taller-3">Taller 3: Germinados</option><option value="taller-4">Taller 4: Emplatados</option></optgroup>
+                            <optgroup label="Cierre"><option value="gran-cierre">El Gran Cierre</option></optgroup>
                         </select>
+                        
+                        <label class="block text-sm font-bold text-gray-700 mb-2">2. Tipo de Registro (Obligatorio ambos para acreditar):</label>
+                        <div class="flex gap-4 p-4 border border-gray-200 rounded-xl bg-gray-50 justify-center">
+                            <label class="flex items-center gap-2 cursor-pointer text-emerald-700 font-bold text-lg">
+                                <input type="radio" name="scan_type" value="entrada" checked class="w-6 h-6 text-emerald-600 focus:ring-emerald-500">
+                                ➡ ENTRADA
+                            </label>
+                            <span class="w-px h-8 bg-gray-300"></span>
+                            <label class="flex items-center gap-2 cursor-pointer text-red-700 font-bold text-lg">
+                                <input type="radio" name="scan_type" value="salida" class="w-6 h-6 text-red-600 focus:ring-red-500">
+                                ⬅ SALIDA
+                            </label>
+                        </div>
                     </div>
 
                     <div id="scanner-container-wrapper" class="hidden">
-                        <p class="text-sm text-gray-500 mb-4">Apunta la cámara trasera al código QR del alumno.</p>
+                        <p class="text-sm text-gray-500 mb-4 font-bold" id="scanner-status-text">Apunta al código QR...</p>
                         <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-2xl overflow-hidden border-4 border-gray-800 shadow-2xl bg-black"></div>
-                        <div class="mt-6 flex gap-4 justify-center">
-                            <button id="stop-scan-btn" class="bg-red-100 text-red-700 font-bold py-3 px-6 rounded-xl hover:bg-red-200 transition">Detener Acceso</button>
-                        </div>
-                        
+                        <div class="mt-6 flex justify-center"><button id="stop-scan-btn" class="bg-red-100 text-red-700 font-bold py-3 px-6 rounded-xl hover:bg-red-200">Detener Escáner</button></div>
                         <div class="mt-6 text-left bg-emerald-50 p-4 rounded-xl border border-emerald-100 hidden" id="last-scan-info">
-                            <p class="text-xs text-emerald-600 font-bold uppercase mb-1">Último Acceso Registrado:</p>
+                            <p class="text-xs text-emerald-600 font-bold uppercase mb-1">Registro Exitoso:</p>
                             <p class="text-lg font-bold text-gray-900" id="scan-result-matricula">-</p>
                         </div>
                     </div>
 
-                    <button id="start-scan-btn" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition shadow-lg mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Iniciar Escáner (Cámara Trasera)
-                    </button>
+                    <button id="start-scan-btn" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-gray-800 shadow-lg mt-4 disabled:opacity-50">Iniciar Escáner de Acceso</button>
                 </div>
             </div>
 
             <!-- DATABASE VIEW -->
             <div id="view-database" class="hidden">
-                <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200">
+                <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 overflow-x-auto">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-black text-gray-900">Reporte de Acreditación</h2>
-                        <button id="refresh-db-btn" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-200 transition">Actualizar</button>
+                        <button id="refresh-db-btn" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-lg font-bold text-sm">Actualizar</button>
                     </div>
-                    
                     <div class="mb-6 grid grid-cols-2 gap-4">
-                        <div class="bg-green-50 p-4 rounded-xl border border-green-200 text-center">
-                            <p class="text-xs font-bold text-green-600 uppercase">Acreditados</p>
-                            <p class="text-3xl font-black text-green-700" id="count-accredited">0</p>
-                        </div>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-200 text-center">
-                            <p class="text-xs font-bold text-red-600 uppercase">No Cumplieron</p>
-                            <p class="text-3xl font-black text-red-700" id="count-failed">0</p>
-                        </div>
+                        <div class="bg-green-50 p-4 rounded-xl border border-green-200 text-center"><p class="text-xs font-bold text-green-600 uppercase">Acreditados</p><p class="text-3xl font-black text-green-700" id="count-accredited">0</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200 text-center"><p class="text-xs font-bold text-red-600 uppercase">No Cumplieron</p><p class="text-3xl font-black text-red-700" id="count-failed">0</p></div>
                     </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-100 text-gray-700 text-sm">
-                                    <th class="p-3 rounded-tl-xl font-bold">Matrícula</th>
-                                    <th class="p-3 font-bold">Nombre</th>
-                                    <th class="p-3 font-bold text-center">Conf. (3)</th>
-                                    <th class="p-3 font-bold text-center">Taller (2)</th>
-                                    <th class="p-3 font-bold text-center">Estado</th>
-                                    <th class="p-3 rounded-tr-xl font-bold text-center">Borrar</th>
-                                </tr>
-                            </thead>
-                            <tbody id="db-table-body" class="text-sm">
-                                <tr><td colspan="6" class="p-4 text-center text-gray-500">Cargando base de datos...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="w-full text-left border-collapse min-w-[600px]">
+                        <thead><tr class="bg-gray-100 text-gray-700 text-sm"><th class="p-3 font-bold">Matrícula</th><th class="p-3 font-bold">Nombre</th><th class="p-3 font-bold text-center">Conf. (3)</th><th class="p-3 font-bold text-center">Taller (2)</th><th class="p-3 font-bold text-center">Estado</th><th class="p-3 font-bold text-center">Borrar</th></tr></thead>
+                        <tbody id="db-table-body" class="text-sm"><tr><td colspan="6" class="p-4 text-center">Cargando base de datos...</td></tr></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Script de Interfaz de Actividades -->
+    <!-- Script Data Base de Insignias y Actividades -->
     <script>
         const activitiesInfo = {
-            'conf-1': {
-                type: 'Conferencia',
-                title: 'El Huerto como Atractivo: Paisajismo Urbano y Agroturismo',
-                speaker: 'Dr. Roberto Silva',
-                credentials: 'Doctor en Desarrollo Urbano Sustentable y Arquitecto Paisajista.',
-                desc: 'Descubre cómo integrar espacios verdes y huertos dentro de entornos urbanos y proyectos turísticos, convirtiéndolos en un ancla para el turismo ecológico y el desarrollo local.'
-            },
-            'conf-2': {
-                type: 'Conferencia',
-                title: 'Economía Circular y Reducción de Desperdicios en la Cocina',
-                speaker: 'Chef Mariana López',
-                credentials: 'Chef Ejecutiva, experta en gastronomía Zero Waste.',
-                desc: 'Aprenderás estrategias comprobadas para optimizar insumos, reducir la merma en restaurantes y transformar "desperdicios" en ingredientes de alto valor culinario.'
-            },
-            'conf-3': {
-                type: 'Conferencia',
-                title: 'Botánica Culinaria: El Valor del Entorno en la Alta Cocina',
-                speaker: 'Biol. Alejandro Torres',
-                credentials: 'Biólogo y consultor de restaurantes de alta cocina.',
-                desc: 'Un recorrido por la flora comestible nativa y cómo el entendimiento biológico de las plantas eleva la creatividad y autenticidad en los platillos de vanguardia.'
-            },
-            'conf-4': {
-                type: 'Conferencia',
-                title: 'Comunidad y Espacios Universitarios Sustentables',
-                speaker: 'Mtra. Elena Gómez',
-                credentials: 'Coordinadora de Sostenibilidad Universitaria.',
-                desc: 'Análisis de casos de éxito sobre cómo las comunidades estudiantiles pueden transformar sus campus en modelos vivos de sustentabilidad y responsabilidad ambiental.'
-            },
-            'taller-1': {
-                type: 'Taller',
-                title: 'Introducción a la Hidroponía',
-                speaker: 'Ing. Carlos Mendoza',
-                credentials: 'Ingeniero Agrónomo especialista en cultivos sin suelo.',
-                desc: 'Taller práctico donde armarás tu primer sistema hidropónico casero, entenderás las soluciones nutritivas y conocerás las plantas ideales para cultivar en este sistema.'
-            },
-            'taller-2': {
-                type: 'Taller',
-                title: 'Estación de Compostaje: Armado y Manejo',
-                speaker: 'Lic. Ana Ruiz',
-                credentials: 'Gestora Ambiental y activista ecológica.',
-                desc: 'Aprende ensuciándote las manos. Construiremos juntos una estación de composta funcional, aprendiendo las proporciones exactas para evitar malos olores y generar tierra fértil.'
-            },
-            'taller-3': {
-                type: 'Taller',
-                title: 'Producción de Germinados y Brotes',
-                speaker: 'Nut. Sofía Vargas',
-                credentials: 'Nutrióloga Clínica enfocada en alimentos funcionales.',
-                desc: 'Técnicas sencillas para cultivar microgreens, germinados y brotes en espacios reducidos, aportando máxima nutrición, textura y estética a los platillos gastronómicos.'
-            },
-            'taller-4': {
-                type: 'Taller',
-                title: 'Ensaladas, Aderezos y Emplatados Técnicos',
-                speaker: 'Chef Diego Castro',
-                credentials: 'Chef Instructor con especialidad en cocina fría.',
-                desc: 'Práctica intensiva de cocina enfocada en potenciar vegetales frescos y cosechas del huerto mediante técnicas de corte, emulsiones de aderezos y diseño visual del plato.'
-            },
-            'gran-cierre': {
-                type: 'Evento Especial',
-                title: 'Ceremonia Institucional de Inauguración',
-                speaker: 'Dirección UATyG / Autoridades UAN',
-                credentials: 'Cuerpo Directivo de la Unidad Académica.',
-                desc: 'Corte de listón oficial del nuevo Huerto Académico. Incluye un recorrido guiado por las instalaciones sustentables y una degustación de bocadillos ecológicos preparados por los alumnos.'
-            }
+            'conf-1': { type: 'Conferencia', badge: '🌍 Turista Responsable', title: 'El Huerto como Atractivo Turístico', speaker: 'Dr. Roberto Silva', credentials: 'Doctor en Desarrollo Urbano', desc: 'Descubre cómo integrar espacios verdes en entornos urbanos turísticos.' },
+            'conf-2': { type: 'Conferencia', badge: '♻️ Visión Circular', title: 'Economía Circular y Desperdicios', speaker: 'Chef Mariana López', credentials: 'Chef Ejecutiva Zero Waste', desc: 'Aprenderás a optimizar insumos y reducir la merma en restaurantes.' },
+            'conf-3': { type: 'Conferencia', badge: '🌺 Botánico', title: 'Botánica Culinaria y Entorno', speaker: 'Biol. Alejandro Torres', credentials: 'Biólogo especialista en flora', desc: 'Un recorrido por la flora comestible nativa y cómo usarla en cocina.' },
+            'conf-4': { type: 'Conferencia', badge: '🤝 Líder Comunitario', title: 'Comunidad y Espacios Sustentables', speaker: 'Mtra. Elena Gómez', credentials: 'Coord. Sostenibilidad UAN', desc: 'Análisis de cómo las comunidades estudiantiles transforman sus campus.' },
+            'taller-1': { type: 'Taller', badge: '💧 HydroLab', title: 'Introducción a la Hidroponía', speaker: 'Ing. Carlos Mendoza', credentials: 'Ingeniero Agrónomo', desc: 'Armarás tu primer sistema hidropónico casero.' },
+            'taller-2': { type: 'Taller', badge: '♻️ Maestro Compostero', title: 'Estación de Compostaje', speaker: 'Lic. Ana Ruiz', credentials: 'Gestora Ambiental', desc: 'Construiremos juntos una estación de composta funcional y sin olores.' },
+            'taller-3': { type: 'Taller', badge: '🌱 Explorador Verde', title: 'Producción de Germinados', speaker: 'Nut. Sofía Vargas', credentials: 'Nutrióloga Clínica', desc: 'Técnicas sencillas para cultivar microgreens en espacios reducidos.' },
+            'taller-4': { type: 'Taller', badge: '🍃 EcoChef', title: 'Aderezos y Emplatados', speaker: 'Chef Diego Castro', credentials: 'Chef Instructor', desc: 'Práctica de cocina enfocada en potenciar vegetales frescos.' },
+            'gran-cierre': { type: 'Evento Especial', badge: '🌿 Guardián del Huerto', title: 'Ceremonia de Inauguración', speaker: 'Autoridades UAN', credentials: 'Cuerpo Directivo', desc: 'Corte de listón oficial y degustación de bocadillos ecológicos.' }
         };
 
         function openActivityModal(id) {
             const data = activitiesInfo[id];
             if (!data) return;
-
-            const badge = document.getElementById('activity-modal-badge');
-            badge.textContent = data.type;
+            const badgeEl = document.getElementById('activity-modal-badge');
+            badgeEl.textContent = data.type;
+            badgeEl.className = data.type === 'Conferencia' ? 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-emerald-600 bg-emerald-50 border-emerald-200' : 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-blue-600 bg-blue-50 border-blue-200';
             
-            if (data.type === 'Conferencia') {
-                badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-emerald-600 bg-emerald-50 border-emerald-200';
-            } else if (data.type === 'Taller') {
-                badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-blue-600 bg-blue-50 border-blue-200';
-            } else {
-                badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-purple-600 bg-purple-50 border-purple-200';
-            }
-
+            document.getElementById('activity-modal-insignia').textContent = "Insignia: " + data.badge;
             document.getElementById('activity-modal-title').textContent = data.title;
             document.getElementById('activity-modal-speaker').textContent = data.speaker;
             document.getElementById('activity-modal-credentials').textContent = data.credentials;
             document.getElementById('activity-modal-desc').textContent = data.desc;
-
             document.getElementById('activity-modal').classList.remove('hidden');
         }
-
-        function closeActivityModal() {
-            document.getElementById('activity-modal').classList.add('hidden');
-        }
+        function closeActivityModal() { document.getElementById('activity-modal').classList.add('hidden'); }
     </script>
 
-    <!-- Scripts de Firebase y Logica Principal -->
+    <!-- Scripts de Firebase y Lógica Principal -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // ============================================================================
-        // ⚠️ CONFIGURACIÓN DE FIREBASE PARA TU GITHUB PAGES
-        // ============================================================================
+        // CONFIGURACIÓN FIREBASE
         const externalFirebaseConfig = {
             apiKey: "AIzaSyAPPmCxAdm57MlXPJL5u_5gs60djn4Uhss",
             authDomain: "ecosemanauatyg.firebaseapp.com",
@@ -650,595 +639,347 @@
             messagingSenderId: "492337695292",
             appId: "1:492337695292:web:7968d12096880ef5f09139"
         };
-        // ============================================================================
-
-        // Firebase Configuration (Using Canvas Environment globals or fallback to explicit)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
+        let db, auth, isFirebaseReady = false;
         
-        let db, auth;
-        let isFirebaseReady = false;
-        
-        // --- LIMITES DE CAPACIDAD ---
-        const MAX_CONF = 90;
-        const MAX_TALLER = 40;
-        let currentCapacities = {};
-
         try {
             const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            // Authentication is strictly required for any Firestore operations
-            signInAnonymously(auth).then(() => {
-                isFirebaseReady = true;
-                console.log("Sistema Conectado a la Nube (Firebase Auth Success)");
-            }).catch(e => {
-                console.error("Firebase Auth Error", e);
-            });
-        } catch(e) {
-            console.error("Firebase Init Error", e);
-        }
+            db = getFirestore(app); auth = getAuth(app);
+            signInAnonymously(auth).then(() => { isFirebaseReady = true; }).catch(console.error);
+        } catch(e) { console.error("Firebase Error", e); }
 
-        // --- GLOBAL VARIABLES & DOM ELEMENTS ---
-        const registrosRef = isFirebaseReady || db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
-        
-        // --- LECTURA EN TIEMPO REAL DE CAPACIDADES ---
+        const registrosRef = isFirebaseReady || db ? collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'registros') : null;
+        const MAX_CONF = 90; const MAX_TALLER = 40; let currentCapacities = {};
+
+        // ALERTS GLOBALES
+        const alertModal = document.getElementById('custom-alert-modal');
+        function showAlert(title, msg, isErr=false) {
+            document.getElementById('alert-title').textContent = title; document.getElementById('alert-message').textContent = msg;
+            const icon = document.getElementById('alert-icon');
+            icon.className = isErr ? "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6" : "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6";
+            icon.innerHTML = isErr ? `<svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>` : `<svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+            document.getElementById('alert-close-btn').className = isErr ? "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-red-600 text-white font-medium hover:bg-red-700" : "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-emerald-700";
+            alertModal.classList.remove('hidden');
+        }
+        document.getElementById('alert-close-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
+
+        // --- ACTUALIZACION DE CAPACIDADES ---
         if (registrosRef) {
             onSnapshot(registrosRef, (snapshot) => {
                 const newCaps = {};
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    if (data.conferencias_seleccionadas) {
-                        data.conferencias_seleccionadas.forEach(c => { newCaps[c] = (newCaps[c] || 0) + 1; });
-                    }
-                    if (data.talleres_seleccionados) {
-                        data.talleres_seleccionados.forEach(t => { newCaps[t] = (newCaps[t] || 0) + 1; });
-                    }
+                    if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => newCaps[c] = (newCaps[c] || 0) + 1);
+                    if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => newCaps[t] = (newCaps[t] || 0) + 1);
                 });
-                currentCapacities = newCaps;
-                updateCapacityUI();
-            }, (error) => {
-                console.error("Error al cargar capacidades en tiempo real:", error);
+                currentCapacities = newCaps; updateCapacityUI();
             });
         }
 
         function updateCapacityUI() {
-            // Actualizar interfaz de conferencias
-            const confCheckboxes = document.querySelectorAll('.conf-checkbox');
-            confCheckboxes.forEach(cb => {
-                const val = cb.value;
-                const cap = currentCapacities[val] || 0;
-                const textEl = document.getElementById(`cap-${val}`);
-                const labelEl = document.getElementById(`label-${val}`);
-                
-                if (cap >= MAX_CONF) {
-                    textEl.innerHTML = `<span class="text-red-600 font-bold">Conferencia llena - Sin espacios disponibles</span>`;
-                    cb.disabled = true;
-                    cb.checked = false; // Desmarcar si alguien lo tenia seleccionado pero le ganaron el lugar
-                    labelEl.classList.add('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
-                    labelEl.classList.remove('hover:border-emerald-400');
-                } else {
-                    textEl.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_CONF - cap} espacios disponibles</span> (Max ${MAX_CONF})`;
-                    labelEl.classList.remove('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
-                    labelEl.classList.add('hover:border-emerald-400');
+            document.querySelectorAll('.conf-checkbox').forEach(cb => {
+                const cap = currentCapacities[cb.value] || 0;
+                const txt = document.getElementById(`cap-${cb.value}`);
+                if(cap >= MAX_CONF) { 
+                    txt.innerHTML = '<span class="text-red-600 font-bold">Sin espacios</span>'; 
+                    if(cb.checked) cb.checked = false; // Desmarcar si se llenó
+                } else { 
+                    txt.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_CONF - cap} libres</span>`; 
                 }
             });
-
-            // Actualizar interfaz de talleres
-            const workshopCheckboxes = document.querySelectorAll('.workshop-checkbox');
-            workshopCheckboxes.forEach(cb => {
-                const val = cb.value;
-                const cap = currentCapacities[val] || 0;
-                const textEl = document.getElementById(`cap-${val}`);
-                const labelEl = document.getElementById(`label-${val}`);
-                
-                if (cap >= MAX_TALLER) {
-                    textEl.innerHTML = `<span class="text-red-600 font-bold">Taller lleno - Sin espacios disponibles</span>`;
-                    cb.disabled = true;
-                    cb.checked = false;
-                    labelEl.classList.add('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
-                    labelEl.classList.remove('hover:border-emerald-400');
-                } else {
-                    textEl.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_TALLER - cap} espacios disponibles</span> (Max ${MAX_TALLER})`;
-                    labelEl.classList.remove('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
-                    labelEl.classList.add('hover:border-emerald-400');
+            document.querySelectorAll('.workshop-checkbox').forEach(cb => {
+                const cap = currentCapacities[cb.value] || 0;
+                const txt = document.getElementById(`cap-${cb.value}`);
+                if(cap >= MAX_TALLER) { 
+                    txt.innerHTML = '<span class="text-red-600 font-bold">Sin espacios</span>'; 
+                    if(cb.checked) cb.checked = false;
+                } else { 
+                    txt.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_TALLER - cap} libres</span>`; 
                 }
             });
-
-            evaluateFormState(); // Re-evaluar para aplicar limites del usuario
+            evaluateFormState();
         }
 
-        // Registration Elements
-        const userInputs = document.querySelectorAll('.user-input');
-        const confCheckboxes = document.querySelectorAll('.conf-checkbox');
-        const workshopCheckboxes = document.querySelectorAll('.workshop-checkbox');
-        const confCountSpan = document.getElementById('conf-count');
-        const workshopCountSpan = document.getElementById('workshop-count');
+        // --- LOGICA DEL FORMULARIO ---
         const submitBtn = document.getElementById('submitBtn');
-        const statusMessage = document.getElementById('status-message');
-        const qrResultSection = document.getElementById('qr-result-section');
-        const spinner = document.getElementById('loading-spinner');
-        
-        const alertModal = document.getElementById('custom-alert-modal');
-        const alertTitle = document.getElementById('alert-title');
-        const alertMessage = document.getElementById('alert-message');
-        const alertIcon = document.getElementById('alert-icon');
-        const alertCloseBtn = document.getElementById('alert-close-btn');
-
-        const mainLanding = document.getElementById('main-landing');
-        const adminTrigger = document.getElementById('secret-admin-trigger');
-        const pwdModal = document.getElementById('admin-pwd-modal');
-        const pwdInput = document.getElementById('admin-pwd-input');
-        const pwdLoginBtn = document.getElementById('login-admin-btn');
-        const pwdCancelBtn = document.getElementById('cancel-admin-btn');
-        const pwdError = document.getElementById('admin-pwd-error');
-        const adminDashboard = document.getElementById('admin-dashboard');
-        const exitAdminBtn = document.getElementById('exit-admin-btn');
-        
-        let html5QrCode = null;
-        const startScanBtn = document.getElementById('start-scan-btn');
-        const stopScanBtn = document.getElementById('stop-scan-btn');
-        const adminActivitySelect = document.getElementById('admin-activity-select');
-        const scannerWrapper = document.getElementById('scanner-container-wrapper');
-        const lastScanInfo = document.getElementById('last-scan-info');
-        const scanResultMatricula = document.getElementById('scan-result-matricula');
-
-        // --- FUNCIONES HELPER ---
-        function showAlert(title, message, isError = false) {
-            alertTitle.textContent = title;
-            alertMessage.textContent = message;
-            
-            if (isError) {
-                alertIcon.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6";
-                alertIcon.innerHTML = `<svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
-                alertCloseBtn.className = "w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-red-600 text-base font-medium text-white shadow-sm hover:bg-red-700 sm:text-sm";
-            } else {
-                alertIcon.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6";
-                alertIcon.innerHTML = `<svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
-                alertCloseBtn.className = "w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-emerald-600 text-base font-medium text-white shadow-sm hover:bg-emerald-700 sm:text-sm";
-            }
-            alertModal.classList.remove('hidden');
-        }
-
-        alertCloseBtn.addEventListener('click', () => alertModal.classList.add('hidden'));
-
-        // --- LÓGICA DE ELIMINACIÓN INDIVIDUAL ---
-        let recordToDelete = null;
-
-        function openDeleteConfirmModal(matricula) {
-            recordToDelete = matricula;
-            document.getElementById('delete-confirm-text').textContent = `¿Estás seguro de eliminar permanentemente el registro de la matrícula ${matricula}? Al hacerlo, se liberarán sus espacios en los talleres y conferencias de manera inmediata.`;
-            document.getElementById('delete-confirm-modal').classList.remove('hidden');
-        }
-
-        document.getElementById('cancel-delete-btn').addEventListener('click', () => {
-            document.getElementById('delete-confirm-modal').classList.add('hidden');
-            recordToDelete = null;
-        });
-
-        document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
-            if (!recordToDelete || !auth.currentUser) return;
-            document.getElementById('delete-confirm-modal').classList.add('hidden');
-            
-            try {
-                // Eliminar el documento de la base de datos
-                await deleteDoc(doc(registrosRef, recordToDelete));
-                showAlert("Alumno Eliminado", `El registro de la matrícula ${recordToDelete} ha sido borrado exitosamente.`, false);
-                // Refrescar tabla visualmente
-                generateDatabaseReport(); 
-            } catch(e) {
-                console.error("Error eliminando registro:", e);
-                showAlert("Error", "No se pudo eliminar el registro. Intenta de nuevo.", true);
-            }
-            recordToDelete = null;
-        });
-
-        // --- REGISTRATION LOGIC (The "Magic" Checkboxes) ---
         function evaluateFormState() {
-            const selectedConfs = document.querySelectorAll('.conf-checkbox:checked').length;
-            const selectedWorkshops = document.querySelectorAll('.workshop-checkbox:checked').length;
-
-            confCountSpan.textContent = selectedConfs;
-            workshopCountSpan.textContent = selectedWorkshops;
-
-            confCountSpan.className = selectedConfs === 3 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
-            workshopCountSpan.className = selectedWorkshops === 2 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
-
-            // Bloqueo visual de opciones restantes
-            confCheckboxes.forEach(cb => {
+            const confs = document.querySelectorAll('.conf-checkbox:checked').length;
+            const talls = document.querySelectorAll('.workshop-checkbox:checked').length;
+            document.getElementById('conf-count').textContent = confs; 
+            document.getElementById('workshop-count').textContent = talls;
+            
+            // Bloqueo de conferencias restantes si se llega a 3 o si están llenas
+            document.querySelectorAll('.conf-checkbox').forEach(cb => {
                 const label = cb.closest('.activity-label');
                 const isFull = (currentCapacities[cb.value] || 0) >= MAX_CONF;
-                
                 if (!cb.checked) {
-                    if (selectedConfs >= 3 || isFull) {
+                    if (confs >= 3 || isFull) {
                         cb.disabled = true;
-                        if (!isFull) label.classList.add('locked-option'); // Solo agrega clase si no está ya gris por cupo lleno
+                        label.classList.add('locked-option');
                     } else {
                         cb.disabled = false;
                         label.classList.remove('locked-option');
                     }
+                } else {
+                    cb.disabled = false;
+                    label.classList.remove('locked-option');
                 }
             });
 
-            workshopCheckboxes.forEach(cb => {
+            // Bloqueo de talleres restantes si se llega a 2 o si están llenos
+            document.querySelectorAll('.workshop-checkbox').forEach(cb => {
                 const label = cb.closest('.activity-label');
                 const isFull = (currentCapacities[cb.value] || 0) >= MAX_TALLER;
-                
                 if (!cb.checked) {
-                    if (selectedWorkshops >= 2 || isFull) {
+                    if (talls >= 2 || isFull) {
                         cb.disabled = true;
-                        if (!isFull) label.classList.add('locked-option');
+                        label.classList.add('locked-option');
                     } else {
                         cb.disabled = false;
                         label.classList.remove('locked-option');
                     }
+                } else {
+                    cb.disabled = false;
+                    label.classList.remove('locked-option');
                 }
             });
+            
+            let filled = true; document.querySelectorAll('.user-input').forEach(i => { if(!i.value.trim()) filled=false; });
 
-            let allInputsFilled = true;
-            userInputs.forEach(input => { if (input.value.trim() === '') allInputsFilled = false; });
-
-            if (selectedConfs === 3 && selectedWorkshops === 2 && allInputsFilled) {
-                submitBtn.disabled = false;
-                submitBtn.className = "w-full md:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-5 px-14 rounded-full text-xl shadow-[0_10px_25px_rgba(16,185,129,0.4)] transition-all duration-300 transform hover:scale-105 cursor-pointer";
-                statusMessage.innerHTML = "<span class='text-emerald-600 font-bold'>¡Excelente! Tu pase está listo para generarse.</span>";
+            if(confs===3 && talls===2 && filled) {
+                submitBtn.disabled=false; submitBtn.className="w-full bg-emerald-600 text-white font-extrabold py-5 rounded-full text-xl shadow-lg hover:bg-emerald-500 hover:scale-105 transition-all";
+                document.getElementById('status-message').innerHTML="<span class='text-emerald-600 font-bold'>¡Listo para generar!</span>";
             } else {
-                submitBtn.disabled = true;
-                submitBtn.className = "w-full md:w-auto bg-gray-300 text-gray-500 font-extrabold py-5 px-14 rounded-full text-xl opacity-70 cursor-not-allowed transition-all duration-300";
-                statusMessage.innerHTML = "Por favor, completa tus datos y selecciona exactamente 3 conferencias y 2 talleres.";
+                submitBtn.disabled=true; submitBtn.className="w-full bg-gray-300 text-gray-500 font-extrabold py-5 rounded-full text-xl opacity-70 cursor-not-allowed transition-all";
+                document.getElementById('status-message').textContent="Completa tus datos y selecciona exactamente 3 conferencias y 2 talleres.";
             }
         }
+        document.querySelectorAll('.user-input, .conf-checkbox, .workshop-checkbox').forEach(el => el.addEventListener('change', evaluateFormState));
+        document.querySelectorAll('.user-input').forEach(el => el.addEventListener('input', evaluateFormState));
 
-        confCheckboxes.forEach(cb => cb.addEventListener('change', evaluateFormState));
-        workshopCheckboxes.forEach(cb => cb.addEventListener('change', evaluateFormState));
-        userInputs.forEach(input => input.addEventListener('input', evaluateFormState));
-
-        // --- GENERACIÓN DEL CÓDIGO QR ---
+        // GENERAR PASE
         submitBtn.addEventListener('click', async () => {
-            if(!auth.currentUser || !registrosRef) {
-                showAlert(
-                    "Error de Conexión a Base de Datos", 
-                    "El sistema no está conectado a Firebase. Verifica tu conexión a internet e intenta nuevamente.", 
-                    true
-                );
-                return;
-            }
+            if(!auth.currentUser) return showAlert("Error", "Sistema desconectado. Revisa tu internet.", true);
+            const dataObj = {
+                nombre: document.getElementById('studentName').value.trim(),
+                matricula: document.getElementById('studentId').value.trim(),
+                grupo: document.getElementById('studentGroup').value.trim().toUpperCase(),
+                carrera: document.getElementById('program').options[document.getElementById('program').selectedIndex].text,
+                conferencias_seleccionadas: Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb=>cb.value),
+                talleres_seleccionados: Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb=>cb.value),
+                asistencias: [],
+                fecha_registro: new Date().toISOString()
+            };
 
-            const nombre = document.getElementById('studentName').value.trim();
-            const matricula = document.getElementById('studentId').value.trim();
-            const grupo = document.getElementById('studentGroup').value.trim().toUpperCase();
-            const carreraSelect = document.getElementById('program');
-            const carrera = carreraSelect.options[carreraSelect.selectedIndex].text;
-            
-            // Recopilar selección
-            const confsElegidas = Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb => cb.value);
-            const talleresElegidos = Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb => cb.value);
-
-            // Doble verificación de cupos justos antes de guardar para evitar colisiones
-            let capacityError = false;
-            confsElegidas.forEach(c => { if ((currentCapacities[c] || 0) >= MAX_CONF) capacityError = true; });
-            talleresElegidos.forEach(t => { if ((currentCapacities[t] || 0) >= MAX_TALLER) capacityError = true; });
-
-            if(capacityError) {
-                showAlert("Espacios Agotados", "Lo sentimos, uno de los talleres o conferencias que seleccionaste acaba de llenarse en este instante. Por favor, elige otra opción.", true);
-                return;
-            }
-
-            submitBtn.classList.add('hidden');
-            spinner.classList.remove('hidden');
+            submitBtn.classList.add('hidden'); document.getElementById('loading-spinner').classList.remove('hidden');
 
             try {
-                const docRef = doc(registrosRef, matricula);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    showAlert("Registro Duplicado", `La matrícula ${matricula} ya se encuentra registrada en el sistema.`, true);
-                    submitBtn.classList.remove('hidden');
-                    spinner.classList.add('hidden');
-                    return;
-                }
-
-                await setDoc(docRef, {
-                    nombre: nombre,
-                    matricula: matricula,
-                    grupo: grupo,
-                    carrera: carrera,
-                    conferencias_seleccionadas: confsElegidas,
-                    talleres_seleccionados: talleresElegidos,
-                    asistencias: [],
-                    fecha_registro: new Date().toISOString()
+                const docRef = doc(registrosRef, dataObj.matricula);
+                if ((await getDoc(docRef)).exists()) return showAlert("Duplicado", "Esta matrícula ya fue registrada.", true);
+                
+                await setDoc(docRef, dataObj);
+                
+                // Construir Pase visual
+                document.getElementById('res-name').textContent = dataObj.nombre;
+                document.getElementById('res-id').textContent = dataObj.matricula;
+                document.getElementById('res-group').textContent = dataObj.grupo;
+                document.getElementById('res-program').textContent = dataObj.carrera;
+                
+                // Renderizar insignias
+                const badgesDiv = document.getElementById('badges-container');
+                badgesDiv.innerHTML = '';
+                [...dataObj.conferencias_seleccionadas, ...dataObj.talleres_seleccionados, 'gran-cierre'].forEach(id => {
+                    badgesDiv.innerHTML += `<span class="bg-white border border-emerald-200 text-emerald-800 text-xs px-2 py-1 rounded-md font-bold shadow-sm">${activitiesInfo[id].badge}</span>`;
                 });
-
-                document.getElementById('res-name').textContent = nombre;
-                document.getElementById('res-id').textContent = matricula;
-                document.getElementById('res-group').textContent = grupo;
-                document.getElementById('res-program').textContent = carrera;
 
                 document.getElementById('qrcode').innerHTML = "";
-                const qrData = `UATYG2026|${matricula}`;
+                new QRCode(document.getElementById("qrcode"), { text: `UATYG2026|${dataObj.matricula}`, width: 200, height: 200, colorDark: "#064e3b" });
 
-                new QRCode(document.getElementById("qrcode"), {
-                    text: qrData,
-                    width: 200,
-                    height: 200,
-                    colorDark : "#064e3b",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
-                });
-
-                spinner.classList.add('hidden');
-                submitBtn.classList.remove('hidden');
-                submitBtn.disabled = true;
-                submitBtn.textContent = "Pase Generado Exitosamente";
-                submitBtn.className = "w-full md:w-auto bg-gray-800 text-white font-extrabold py-5 px-14 rounded-full text-xl opacity-50 cursor-not-allowed";
+                document.getElementById('qr-result-section').classList.remove('hidden');
+                document.getElementById('qr-result-section').scrollIntoView({ behavior: 'smooth' });
                 
-                qrResultSection.classList.remove('hidden');
-                qrResultSection.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => showAlert("Registro Exitoso", `¡Listo! Se ha guardado tu lugar. Recuerda guardar la captura de tu pase para acceder al evento.`, false), 1000);
 
             } catch (error) {
-                console.error("Error saving doc:", error);
-                showAlert("Error", "Hubo un problema al guardar tu registro. Intenta nuevamente.", true);
-                submitBtn.classList.remove('hidden');
-                spinner.classList.add('hidden');
+                showAlert("Error", "Hubo un fallo al registrar.", true);
+            } finally {
+                document.getElementById('loading-spinner').classList.add('hidden');
             }
         });
 
-        // Evento ecológico para descargar el QR completo con datos
+        // DESCARGAR PASE
         document.getElementById('download-btn').addEventListener('click', () => {
-            const matricula = document.getElementById('res-id').textContent;
-            const ticketElement = document.getElementById('ticket-to-capture');
-            const downloadText = document.getElementById('download-text');
-            const originalText = downloadText.textContent;
-
-            if (ticketElement) {
-                // Mostrar estado de carga
-                downloadText.textContent = 'Generando imagen...';
-
-                // Usar html2canvas para tomar foto del elemento
-                html2canvas(ticketElement, {
-                    scale: 3, // Alta resolución para que no se pixele
-                    backgroundColor: "#ffffff", // Fondo forzado blanco
-                    useCORS: true
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.href = canvas.toDataURL("image/png");
-                    link.download = `Pase_UATyG_${matricula}.png`;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-
-                    // Restaurar botón
-                    downloadText.textContent = originalText;
-                }).catch(err => {
-                    console.error("Error generando imagen", err);
-                    alert("No se pudo generar la imagen automáticamente. Por favor, toma una captura de pantalla.");
-                    downloadText.textContent = originalText;
-                });
-            }
+            const el = document.getElementById('ticket-to-capture');
+            document.getElementById('download-text').textContent = 'Generando...';
+            html2canvas(el, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+                const a = document.createElement('a'); a.href = canvas.toDataURL("image/png"); a.download = `Pase_${document.getElementById('res-id').textContent}.png`; a.click();
+                document.getElementById('download-text').textContent = 'Guardar Pase QR Completo';
+            });
         });
 
-        document.getElementById('close-qr-btn').addEventListener('click', () => {
-            qrResultSection.classList.add('hidden');
-            userInputs.forEach(i => i.value = '');
-            confCheckboxes.forEach(cb => cb.checked = false);
-            workshopCheckboxes.forEach(cb => cb.checked = false);
-            evaluateFormState();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('close-qr-btn').addEventListener('click', () => { location.reload(); });
+
+        // --- PORTAL DE ALUMNOS (Consulta y Certificado) ---
+        const portalModal = document.getElementById('student-portal-modal');
+        document.getElementById('student-portal-btn').addEventListener('click', () => {
+            portalModal.classList.remove('hidden');
+            document.getElementById('portal-result').classList.add('hidden');
+            document.getElementById('portal-matricula').value = '';
+        });
+        document.getElementById('close-portal-btn').addEventListener('click', () => portalModal.classList.add('hidden'));
+        
+        document.getElementById('check-status-btn').addEventListener('click', async () => {
+            const mat = document.getElementById('portal-matricula').value.trim();
+            if(!mat || !registrosRef) return;
+            document.getElementById('check-status-btn').textContent = "Buscando...";
+            try {
+                const docSnap = await getDoc(doc(registrosRef, mat));
+                if(!docSnap.exists()) return showAlert("No encontrado", "No se encontró registro con esa matrícula.", true);
+                
+                const data = docSnap.data();
+                const asis = data.asistencias || [];
+                
+                // Para contar completado, debe tener _entrada Y _salida
+                let confComp = 0, tallComp = 0;
+                if(data.conferencias_seleccionadas) {
+                    data.conferencias_seleccionadas.forEach(c => { if(asis.includes(`${c}_entrada`) && asis.includes(`${c}_salida`)) confComp++; });
+                }
+                if(data.talleres_seleccionados) {
+                    data.talleres_seleccionados.forEach(t => { if(asis.includes(`${t}_entrada`) && asis.includes(`${t}_salida`)) tallComp++; });
+                }
+
+                document.getElementById('portal-nombre').textContent = data.nombre;
+                document.getElementById('portal-conf-score').textContent = `${confComp}/3`;
+                document.getElementById('portal-taller-score').textContent = `${tallComp}/2`;
+                
+                const isAccredited = (confComp >= 3 && tallComp >= 2);
+                document.getElementById('portal-success-msg').classList.toggle('hidden', !isAccredited);
+                document.getElementById('portal-fail-msg').classList.toggle('hidden', isAccredited);
+                document.getElementById('download-cert-btn').classList.toggle('hidden', !isAccredited);
+                
+                document.getElementById('portal-result').classList.remove('hidden');
+            } catch(e) { showAlert("Error", "Error al conectar.", true); }
+            document.getElementById('check-status-btn').textContent = "Consultar Estado";
         });
 
-        // --- ADMIN LOGIN LOGIC ---
-        adminTrigger.addEventListener('click', () => {
-            pwdInput.value = '';
-            pwdError.classList.add('hidden');
-            pwdModal.classList.remove('hidden');
-            setTimeout(() => pwdInput.focus(), 100);
+        document.getElementById('download-cert-btn').addEventListener('click', () => {
+            const btn = document.getElementById('download-cert-btn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = "Procesando certificado en Alta Calidad...";
+            
+            // Llenar datos en el template invisible
+            document.getElementById('cert-student-name').textContent = document.getElementById('portal-nombre').textContent;
+            
+            // Generar imagen
+            html2canvas(document.getElementById('certificate-template'), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+                const a = document.createElement('a'); a.href = canvas.toDataURL("image/png"); a.download = `Reconocimiento_${document.getElementById('portal-matricula').value}.png`; a.click();
+                btn.innerHTML = originalHTML;
+                showAlert("¡Éxito!", "Tu Reconocimiento oficial ha sido descargado en tu dispositivo.", false);
+            });
         });
 
-        pwdCancelBtn.addEventListener('click', () => pwdModal.classList.add('hidden'));
-
-        pwdLoginBtn.addEventListener('click', async () => {
-            if (pwdInput.value === 'luix0738') {
-                // INGRESO NORMAL
-                pwdModal.classList.add('hidden');
-                mainLanding.classList.add('d-none');
-                adminDashboard.classList.remove('hidden');
+        // --- SISTEMA ADMIN ---
+        const admTrig=document.getElementById('secret-admin-trigger'), pwdMod=document.getElementById('admin-pwd-modal');
+        admTrig.addEventListener('click', () => { document.getElementById('admin-pwd-input').value=''; pwdMod.classList.remove('hidden'); });
+        document.getElementById('cancel-admin-btn').addEventListener('click', () => pwdMod.classList.add('hidden'));
+        
+        document.getElementById('login-admin-btn').addEventListener('click', async () => {
+            const pwd = document.getElementById('admin-pwd-input').value;
+            if (pwd === 'luix0738') {
+                pwdMod.classList.add('hidden'); document.getElementById('main-landing').classList.add('d-none'); document.getElementById('admin-dashboard').classList.remove('hidden');
                 document.getElementById('tab-scanner').click();
-            } else if (pwdInput.value === 'reset0738') {
-                // RESETEO MASIVO DE BASE DE DATOS
-                pwdModal.classList.add('hidden');
-                if(!auth.currentUser || !registrosRef) return showAlert("Error", "Sistema no conectado a Firebase.", true);
-                
-                showAlert("Borrando Base de Datos...", "Por favor espera mientras se eliminan todos los registros del evento.", false);
-                
+            } else if (pwd === 'reset0738') {
+                pwdMod.classList.add('hidden');
+                showAlert("Borrando...", "Eliminando todos los registros...", false);
                 try {
                     const qSnap = await getDocs(registrosRef);
-                    const deletePromises = [];
-                    qSnap.forEach(d => {
-                        deletePromises.push(deleteDoc(doc(registrosRef, d.id)));
-                    });
-                    
-                    await Promise.all(deletePromises);
-                    showAlert("Base de Datos Restaurada", `Se han eliminado los ${deletePromises.length} registros exitosamente. Todos los lugares están libres nuevamente.`, false);
-                } catch(e) {
-                    console.error("Error reseteando:", e);
-                    showAlert("Error", "Hubo un problema crítico al limpiar la base de datos.", true);
-                }
-            } else {
-                pwdError.classList.remove('hidden');
-            }
+                    const proms = []; qSnap.forEach(d => proms.push(deleteDoc(doc(registrosRef, d.id))));
+                    await Promise.all(proms);
+                    showAlert("Limpio", `Se eliminaron ${proms.length} alumnos.`, false);
+                } catch(e) { showAlert("Error", "Fallo al resetear.", true); }
+            } else { document.getElementById('admin-pwd-error').classList.remove('hidden'); }
         });
 
-        exitAdminBtn.addEventListener('click', async () => {
-            if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
-            adminDashboard.classList.add('hidden');
-            mainLanding.classList.remove('d-none');
-            window.scrollTo(0,0);
-        });
+        document.getElementById('exit-admin-btn').addEventListener('click', async () => { if(html5QrCode) await html5QrCode.stop(); location.reload(); });
 
-        // --- ADMIN TABS LOGIC ---
-        const tabScanner = document.getElementById('tab-scanner');
-        const tabDb = document.getElementById('tab-database');
-        const viewScanner = document.getElementById('view-scanner');
-        const viewDb = document.getElementById('view-database');
+        // TABS
+        document.getElementById('tab-scanner').addEventListener('click', (e) => { e.target.className="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700"; document.getElementById('tab-database').className="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500"; document.getElementById('view-scanner').classList.replace('hidden','block'); document.getElementById('view-database').classList.replace('block','hidden'); });
+        document.getElementById('tab-database').addEventListener('click', (e) => { e.target.className="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700"; document.getElementById('tab-scanner').className="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500"; document.getElementById('view-database').classList.replace('hidden','block'); document.getElementById('view-scanner').classList.replace('block','hidden'); generateDbReport(); });
 
-        tabScanner.addEventListener('click', () => {
-            tabScanner.className = "flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition";
-            tabDb.className = "flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
-            viewScanner.classList.remove('hidden'); viewScanner.classList.add('block');
-            viewDb.classList.add('hidden'); viewDb.classList.remove('block');
-        });
-
-        tabDb.addEventListener('click', () => {
-            tabDb.className = "flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition";
-            tabScanner.className = "flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
-            viewDb.classList.remove('hidden'); viewDb.classList.add('block');
-            viewScanner.classList.add('hidden'); viewScanner.classList.remove('block');
-            generateDatabaseReport();
-        });
-
-        // --- ESCÁNER ---
-        adminActivitySelect.addEventListener('change', () => {
-            startScanBtn.disabled = adminActivitySelect.value === "";
-        });
-
-        let isProcessingScan = false;
-
-        async function onScanSuccess(decodedText, decodedResult) {
-            if (isProcessingScan || !decodedText.startsWith('UATYG2026|') || !auth.currentUser) return;
-
-            isProcessingScan = true;
-            const matricula = decodedText.split('|')[1];
-            const actividadId = adminActivitySelect.value;
+        // ESCÁNER (DOBLE: ENTRADA Y SALIDA)
+        let isProcessing = false;
+        async function onScanSuccess(text) {
+            if(isProcessing || !text.startsWith('UATYG2026|')) return;
+            isProcessing = true;
+            const mat = text.split('|')[1];
+            const act = document.getElementById('admin-activity-select').value;
+            const type = document.querySelector('input[name="scan_type"]:checked').value; // 'entrada' o 'salida'
+            const recordStr = `${act}_${type}`; // Ej: conf-1_entrada
             
-            const readerEl = document.getElementById('qr-reader');
-            readerEl.style.border = "4px solid #10b981";
+            document.getElementById('qr-reader').style.border = type === 'entrada' ? "4px solid #10b981" : "4px solid #ef4444";
             
             try {
-                const docRef = doc(registrosRef, matricula);
-                const docSnap = await getDoc(docRef);
-
-                if (!docSnap.exists()) {
-                    alert(`La matrícula ${matricula} no está registrada en el sistema.`);
-                } else {
+                const docRef = doc(registrosRef, mat); const docSnap = await getDoc(docRef);
+                if(!docSnap.exists()) alert("No registrado.");
+                else {
                     const data = docSnap.data();
-                    if(!data.asistencias || !data.asistencias.includes(actividadId)) {
-                        await updateDoc(docRef, { asistencias: arrayUnion(actividadId) });
+                    if(data.asistencias && data.asistencias.includes(recordStr)) {
+                        console.log("Ya existía este pase.");
+                    } else {
+                        // Verifica si intenta hacer salida sin tener entrada (Opcional, pero bueno para evitar trampas)
+                        if(type === 'salida' && (!data.asistencias || !data.asistencias.includes(`${act}_entrada`))) {
+                            alert("¡CUIDADO! Este alumno quiere registrar Salida pero NO registró Entrada a esta actividad.");
+                        } else {
+                            await updateDoc(docRef, { asistencias: arrayUnion(recordStr) });
+                        }
                     }
-                    lastScanInfo.classList.remove('hidden');
-                    scanResultMatricula.innerHTML = `${matricula} <span class="text-sm font-normal text-gray-600 block">${data.nombre}</span>`;
+                    document.getElementById('last-scan-info').classList.remove('hidden');
+                    document.getElementById('last-scan-matricula').innerHTML = `<span class="${type==='entrada'?'text-emerald-600':'text-red-600'}">[${type.toUpperCase()}]</span> ${mat} <br><span class="text-sm font-normal text-gray-600">${data.nombre}</span>`;
                 }
-            } catch (err) {
-                console.error("Error al registrar asistencia:", err);
-                alert("Error de red al registrar asistencia. Intenta de nuevo.");
-            }
-
-            setTimeout(() => {
-                readerEl.style.border = "4px solid #1f2937";
-                isProcessingScan = false;
-            }, 2000);
-        }
-
-        startScanBtn.addEventListener('click', async () => {
-            if (!adminActivitySelect.value) return alert("Primero debes seleccionar una actividad.");
-
-            adminActivitySelect.disabled = true;
-            startScanBtn.classList.add('hidden');
-            scannerWrapper.classList.remove('hidden');
-            lastScanInfo.classList.add('hidden');
-
-            html5QrCode = new Html5Qrcode("qr-reader");
-            try {
-                await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess);
-            } catch (err) {
-                console.error("Error iniciando cámara", err);
-                alert("No se pudo acceder a la cámara trasera. Verifica los permisos.");
-                stopScannerUI();
-            }
-        });
-
-        stopScanBtn.addEventListener('click', async () => {
-            if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
-            stopScannerUI();
-        });
-
-        function stopScannerUI() {
-            scannerWrapper.classList.add('hidden');
-            startScanBtn.classList.remove('hidden');
-            adminActivitySelect.disabled = false;
-        }
-
-        // --- REPORTE BASE DE DATOS ---
-        const refreshDbBtn = document.getElementById('refresh-db-btn');
-        const tbody = document.getElementById('db-table-body');
-        const countAccredited = document.getElementById('count-accredited');
-        const countFailed = document.getElementById('count-failed');
-
-        refreshDbBtn.addEventListener('click', generateDatabaseReport);
-
-        async function generateDatabaseReport() {
-            if(!auth.currentUser) return;
-            tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-gray-500">Descargando registros...</td></tr>';
+            } catch(e) { alert("Error de red."); }
             
-            try {
-                const querySnapshot = await getDocs(registrosRef);
-                let html = '', acreditados = 0, noAcreditados = 0;
-
-                if (querySnapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-gray-500">Aún no hay alumnos registrados.</td></tr>';
-                    countAccredited.textContent = '0'; countFailed.textContent = '0';
-                    return;
-                }
-
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const asistencias = data.asistencias || [];
-                    const confsAsistidas = asistencias.filter(a => a.startsWith('conf')).length;
-                    const talleresAsistidos = asistencias.filter(a => a.startsWith('taller')).length;
-                    const isAccredited = (confsAsistidas >= 3 && talleresAsistidos >= 2);
-                    
-                    if(isAccredited) acreditados++; else noAcreditados++;
-
-                    const statusBadge = isAccredited 
-                        ? '<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Acreditado</span>'
-                        : '<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">Incompleto</span>';
-
-                    html += `
-                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
-                            <td class="p-3 font-mono text-gray-600">${data.matricula}</td>
-                            <td class="p-3">
-                                <div class="font-semibold text-gray-800">${data.nombre}</div>
-                                <div class="text-xs text-gray-500">${data.carrera} (Gr: ${data.grupo})</div>
-                            </td>
-                            <td class="p-3 text-center"><span class="${confsAsistidas >= 3 ? 'text-green-600 font-bold' : 'text-gray-500'}">${confsAsistidas}/3</span></td>
-                            <td class="p-3 text-center"><span class="${talleresAsistidos >= 2 ? 'text-green-600 font-bold' : 'text-gray-500'}">${talleresAsistidos}/2</span></td>
-                            <td class="p-3 text-center">${statusBadge}</td>
-                            <td class="p-3 text-center">
-                                <button class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition btn-delete-record" data-matricula="${data.matricula}" title="Eliminar alumno">
-                                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
-
-                tbody.innerHTML = html;
-                countAccredited.textContent = acreditados;
-                countFailed.textContent = noAcreditados;
-
-                // Asignar los eventos de clic a los nuevos botones de eliminar
-                document.querySelectorAll('.btn-delete-record').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const matriculaTarget = e.currentTarget.getAttribute('data-matricula');
-                        openDeleteConfirmModal(matriculaTarget);
-                    });
-                });
-
-            } catch (error) {
-                console.error("Error leyendo BD:", error);
-                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-red-500">Error al cargar la base de datos.</td></tr>';
-            }
+            setTimeout(() => { document.getElementById('qr-reader').style.border = "4px solid #1f2937"; isProcessing=false; }, 2000);
         }
+
+        document.getElementById('start-scan-btn').addEventListener('click', async () => {
+            if(!document.getElementById('admin-activity-select').value) return alert("Selecciona Actividad");
+            document.getElementById('start-scan-btn').classList.add('hidden'); document.getElementById('scanner-container-wrapper').classList.remove('hidden');
+            html5QrCode = new Html5Qrcode("qr-reader");
+            try { await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess); } 
+            catch(e) { alert("Sin cámara."); document.getElementById('start-scan-btn').classList.remove('hidden'); document.getElementById('scanner-container-wrapper').classList.add('hidden'); }
+        });
+        document.getElementById('stop-scan-btn').addEventListener('click', async () => { if(html5QrCode) await html5QrCode.stop(); document.getElementById('start-scan-btn').classList.remove('hidden'); document.getElementById('scanner-container-wrapper').classList.add('hidden'); });
+
+        // REPORTE BASE DE DATOS
+        let recToDelete=null;
+        window.confirmDel = async function() {
+            document.getElementById('delete-confirm-modal').classList.add('hidden');
+            if(recToDelete) { await deleteDoc(doc(registrosRef, recToDelete)); showAlert("Borrado", "Alumno borrado", false); generateDbReport(); }
+        };
+        window.cancelDel = function() { document.getElementById('delete-confirm-modal').classList.add('hidden'); recToDelete=null; };
+        
+        async function generateDbReport() {
+            const tbody = document.getElementById('db-table-body'); tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4">Cargando...</td></tr>';
+            try {
+                const qSnap = await getDocs(registrosRef); let html='', ok=0, no=0;
+                qSnap.forEach(d => {
+                    const dt=d.data(), asis = dt.asistencias||[];
+                    let conf=0, tall=0;
+                    if(dt.conferencias_seleccionadas) dt.conferencias_seleccionadas.forEach(c => { if(asis.includes(c+'_entrada') && asis.includes(c+'_salida')) conf++; });
+                    if(dt.talleres_seleccionados) dt.talleres_seleccionados.forEach(t => { if(asis.includes(t+'_entrada') && asis.includes(t+'_salida')) tall++; });
+                    const isOk = (conf>=3 && tall>=2);
+                    if(isOk) ok++; else no++;
+                    html += `<tr class="border-b">
+                        <td class="p-3 font-mono">${dt.matricula}</td><td class="p-3"><b>${dt.nombre}</b></td>
+                        <td class="p-3 text-center ${conf>=3?'text-green-600 font-bold':''}">${conf}/3</td><td class="p-3 text-center ${tall>=2?'text-green-600 font-bold':''}">${tall}/2</td>
+                        <td class="p-3 text-center">${isOk?'<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">OK</span>':'<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">FALTA</span>'}</td>
+                        <td class="p-3 text-center"><button class="text-red-500 bg-red-50 p-2 rounded" onclick="recToDelete='${dt.matricula}'; document.getElementById('delete-confirm-modal').classList.remove('hidden')">🗑️</button></td>
+                    </tr>`;
+                });
+                tbody.innerHTML=html; document.getElementById('count-accredited').textContent=ok; document.getElementById('count-failed').textContent=no;
+            } catch(e) { tbody.innerHTML='Error al cargar'; }
+        }
+        document.getElementById('refresh-db-btn').addEventListener('click', generateDbReport);
     </script>
 </body>
 </html>
