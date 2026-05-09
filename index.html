@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1ra Eco-Semana UATyG 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- QR Code Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- HTML5 QR Code Scanner -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Fondo inmersivo con temática verde/agrícola y filtro oscuro */
+        .hero-bg {
+            background-image: linear-gradient(rgba(6, 78, 59, 0.85), rgba(17, 24, 39, 0.95)), url('https://images.unsplash.com/photo-1530836369250-ef71a3f5e9cb?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Estilos para scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #15803d; }
+        
+        /* Efecto de bloqueo para checkboxes no disponibles */
+        .locked-option {
+            opacity: 0.4;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Ocultar elementos para las vistas de admin */
+        .d-none { display: none !important; }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div id="main-landing">
+        <!-- HERO SECTION (El Pitch de Venta para el alumno) -->
+        <header class="hero-bg text-white py-20 px-6 min-h-screen flex flex-col justify-center items-center text-center">
+            <div class="max-w-4xl mx-auto">
+                <!-- Botón Secreto del Administrador -->
+                <span id="secret-admin-trigger" class="cursor-pointer bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
+                    Evento Académico con Valor Curricular
+                </span>
+                
+                <h1 class="mt-6 text-5xl md:text-7xl font-extrabold tracking-tight text-emerald-400">
+                    1ra Eco-Semana UATyG 2026
+                </h1>
+                <p class="mt-4 text-xl md:text-2xl font-light text-gray-300">
+                    Sustentabilidad, Entorno, Turismo y Gastronomía
+                </p>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div class="bg-gray-800 bg-opacity-60 p-6 rounded-2xl border border-gray-600 backdrop-blur-md shadow-xl">
+                        <h3 class="text-emerald-400 font-bold text-lg mb-2">🌱 Aprende Haciendo</h3>
+                        <p class="text-sm text-gray-300">Sumérgete en la práctica. Domina hidroponía, germinados y compostaje en nuestros talleres especializados.</p>
+                    </div>
+                    <div class="bg-gray-800 bg-opacity-60 p-6 rounded-2xl border border-gray-600 backdrop-blur-md shadow-xl">
+                        <h3 class="text-emerald-400 font-bold text-lg mb-2">🎓 Créditos Académicos</h3>
+                        <p class="text-sm text-gray-300">Eleva tu perfil. Obtén horas válidas para el Rubro 2 y Rubro 3 completando tu asistencia al evento.</p>
+                    </div>
+                    <div class="bg-gray-800 bg-opacity-60 p-6 rounded-2xl border border-gray-600 backdrop-blur-md shadow-xl">
+                        <h3 class="text-emerald-400 font-bold text-lg mb-2">🤝 Comunidad UATyG</h3>
+                        <p class="text-sm text-gray-300">Integra conocimientos. Conecta con expertos, directivos y compañeros de ambas licenciaturas.</p>
+                    </div>
+                </div>
+                <div class="mt-14">
+                    <a href="#registro" class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:-translate-y-1 hover:scale-105">
+                        ¡Quiero Inscribirme Ahora! ↓
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- PROGRAMA DEL EVENTO -->
+        <section class="py-20 px-6 max-w-6xl mx-auto bg-white">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Programa Oficial de Actividades</h2>
+                <p class="mt-4 text-gray-600 text-lg">Una agenda diseñada para transformar tu visión profesional.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Lunes -->
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                    <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Lunes</div>
+                    <div class="mb-5">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2">El Huerto como Atractivo: Paisajismo Urbano y Agroturismo</p>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Introducción a la Hidroponía</p>
+                    </div>
+                </div>
+
+                <!-- Martes -->
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                    <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Martes</div>
+                    <div class="mb-5">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Economía Circular y Reducción de Desperdicios en la Cocina</p>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Estación de Compostaje: Armado y Manejo</p>
+                    </div>
+                </div>
+
+                <!-- Miércoles -->
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                    <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Miércoles</div>
+                    <div class="mb-5">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Botánica Culinaria: El Valor del Entorno en la Alta Cocina</p>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Producción de Germinados y Brotes</p>
+                    </div>
+                </div>
+
+                <!-- Jueves -->
+                <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg hover:border-emerald-200 transition-all">
+                    <div class="text-emerald-700 font-black text-2xl border-b-2 border-emerald-100 pb-2 mb-4">Jueves</div>
+                    <div class="mb-5">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded uppercase">Mañana (Conferencia)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Comunidad y Espacios Universitarios Sustentables</p>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded uppercase">Tarde (Taller)</span>
+                        <p class="font-semibold text-gray-800 mt-2">Ensaladas, Aderezos y Emplatados Técnicos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIERNES: EL GRAN CIERRE (Institucional) -->
+            <div class="mt-12 bg-gray-900 rounded-3xl p-8 md:p-12 border border-gray-700 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-10 opacity-10">
+                    <svg width="250" height="250" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 4 13v-5a2 2 0 0 1 2-2h5a7 7 0 0 1 7 7v5a2 2 0 0 1-2 2h-5Z"></path>
+                        <path d="M11 20V12"></path>
+                    </svg>
+                </div>
+                <div class="relative z-10 text-center">
+                    <span class="bg-emerald-900 text-emerald-300 text-sm font-bold px-5 py-2 rounded-full border border-emerald-700 uppercase tracking-widest shadow-inner">Día Viernes</span>
+                    <h3 class="text-3xl md:text-5xl font-extrabold text-white mt-8 mb-4 tracking-tight">El Gran Cierre Institucional</h3>
+                    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+                        Ceremonia oficial de inauguración del <strong class="text-emerald-400">Huerto Académico</strong> y la <strong class="text-emerald-400">Estación de Compostaje</strong> de la Unidad Académica de Turismo y Gastronomía.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4 text-sm font-semibold text-gray-200">
+                        <span class="bg-gray-800 px-5 py-3 rounded-xl border border-gray-600 shadow-md">✓ Corte de Listón</span>
+                        <span class="bg-gray-800 px-5 py-3 rounded-xl border border-gray-600 shadow-md">✓ Recorrido Guiado</span>
+                        <span class="bg-gray-800 px-5 py-3 rounded-xl border border-gray-600 shadow-md">✓ Degustación Sostenible</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SISTEMA DE REGISTRO -->
+        <section id="registro" class="bg-gray-100 py-20 px-6 border-t border-gray-200">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">Sistema de Acreditación</h2>
+                    <p class="mt-4 text-gray-600 text-lg">Personaliza tu experiencia. <br> <strong class="text-emerald-600">Requisito para créditos:</strong> Elegir exactamente 3 conferencias y 2 talleres.</p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-6 md:p-10 border border-gray-200 shadow-2xl">
+                    <!-- Datos del Alumno -->
+                    <div class="mb-10">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center border-b pb-3 border-gray-100">
+                            <span class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm shadow-md">1</span> 
+                            Datos del Estudiante
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                            <div class="md:col-span-4">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Matrícula</label>
+                                <input type="text" id="studentId" class="user-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none bg-gray-50 transition-colors" placeholder="Ej. 12345678">
+                            </div>
+                            <div class="md:col-span-8">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Nombre Completo</label>
+                                <input type="text" id="studentName" class="user-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none bg-gray-50 transition-colors" placeholder="Tu nombre empezando por apellidos">
+                            </div>
+                            <div class="md:col-span-8">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Licenciatura</label>
+                                <select id="program" class="user-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none bg-gray-50 transition-colors">
+                                    <option value="">Selecciona tu carrera...</option>
+                                    <option value="Gastronomía">Licenciatura en Gastronomía</option>
+                                    <option value="Turismo">Licenciatura en Gestión e Innovación del Turismo</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-4">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Grupo</label>
+                                <input type="text" id="studentGroup" maxlength="4" class="user-input w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none bg-gray-50 transition-colors uppercase" placeholder="Ej. D5, A1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selección de Actividades -->
+                    <div class="mb-10">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center border-b pb-3 border-gray-100">
+                            <span class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm shadow-md">2</span> 
+                            Arma tu Horario
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Conferencias -->
+                            <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                <div class="flex justify-between items-center mb-5">
+                                    <h4 class="font-extrabold text-gray-800 text-lg">Conferencias</h4>
+                                    <span class="bg-white shadow-sm text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200">
+                                        <span id="conf-count" class="text-gray-400 font-bold">0</span> / 3
+                                    </span>
+                                </div>
+                                <div class="space-y-3" id="conf-container">
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-1">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">El Huerto como Atractivo Turístico</span>
+                                    </label>
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-2">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Economía Circular y Desperdicios</span>
+                                    </label>
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-3">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Botánica Culinaria y Entorno</span>
+                                    </label>
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-4">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Comunidad y Espacios Sustentables</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Talleres -->
+                            <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                <div class="flex justify-between items-center mb-5">
+                                    <h4 class="font-extrabold text-gray-800 text-lg">Talleres</h4>
+                                    <span class="bg-white shadow-sm text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200">
+                                        <span id="workshop-count" class="text-gray-400 font-bold">0</span> / 2
+                                    </span>
+                                </div>
+                                <div class="space-y-3" id="workshop-container">
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-1">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Introducción a la Hidroponía</span>
+                                    </label>
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-2">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Estación de Compostaje</span>
+                                    </label>
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-3">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Producción de Germinados</span>
+                                    </label>
+                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
+                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-4">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">Aderezos y Emplatados</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón Generar -->
+                    <div class="text-center mt-10">
+                        <p class="text-sm font-medium text-gray-500 mb-4 h-5 transition-colors" id="status-message">Por favor, completa la selección para activar tu pase.</p>
+                        <button id="submitBtn" disabled class="w-full md:w-auto bg-gray-300 text-gray-500 font-extrabold py-5 px-14 rounded-full text-xl opacity-70 cursor-not-allowed transition-all duration-300">
+                            Generar mi Pase QR
+                        </button>
+                        <!-- Indicador de carga -->
+                        <div id="loading-spinner" class="hidden mt-4 text-emerald-600 text-sm font-bold animate-pulse">
+                            Conectando con el servidor y guardando registro...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DEL QR GENERADO (Oculto inicialmente) -->
+                <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
+                    <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
+                    <p class="text-gray-600 mb-8 font-medium">Guarda una captura de pantalla. Preséntalo en la entrada de tus eventos.</p>
+                    
+                    <div class="bg-white p-5 rounded-2xl inline-block mb-8 shadow-inner border border-gray-100">
+                        <div id="qrcode"></div>
+                    </div>
+                    
+                    <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                        <p class="text-sm text-gray-700 mb-2"><strong>Titular:</strong> <span id="res-name" class="font-semibold text-gray-900"></span></p>
+                        <p class="text-sm text-gray-700 mb-2 flex justify-between">
+                            <span><strong>Matrícula:</strong> <span id="res-id" class="font-semibold text-gray-900"></span></span>
+                            <span><strong>Grupo:</strong> <span id="res-group" class="font-semibold text-gray-900"></span></span>
+                        </p>
+                        <p class="text-sm text-gray-700"><strong>Licenciatura:</strong> <span id="res-program" class="font-semibold text-gray-900"></span></p>
+                    </div>
+                    
+                    <div class="mt-8 flex flex-col gap-3">
+                        <button id="print-btn" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition">Imprimir Pase</button>
+                        <button id="close-qr-btn" class="w-full bg-white text-emerald-600 font-bold py-3 rounded-xl border-2 border-emerald-600 hover:bg-emerald-50 transition">Cerrar y volver al inicio</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CUSTOM MODAL ALERTS -->
+    <div id="custom-alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
+            <div id="alert-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6">
+                <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2" id="alert-title">Éxito</h3>
+            <p class="text-gray-600 mb-6" id="alert-message">Operación realizada correctamente.</p>
+            <button id="alert-close-btn" class="w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-emerald-600 text-base font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:text-sm">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- ADMIN PASSWORD MODAL -->
+    <div id="admin-pwd-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md">
+        <div class="bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl">
+            <h3 class="text-xl font-bold text-emerald-400 mb-2">Acceso Administrativo</h3>
+            <p class="text-gray-400 text-sm mb-6">Ingrese la clave de operaciones</p>
+            <input type="password" id="admin-pwd-input" class="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none text-center mb-4" placeholder="••••••••">
+            <div class="flex gap-3">
+                <button id="cancel-admin-btn" class="flex-1 bg-gray-700 text-white font-bold py-3 rounded-xl hover:bg-gray-600 transition">Cancelar</button>
+                <button id="login-admin-btn" class="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition">Entrar</button>
+            </div>
+            <p id="admin-pwd-error" class="text-red-400 text-sm mt-3 hidden">Contraseña incorrecta</p>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD (Oculto por defecto) -->
+    <div id="admin-dashboard" class="hidden min-h-screen bg-gray-100 pb-20">
+        <!-- NavBar Admin -->
+        <div class="bg-gray-900 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
+            <div class="font-bold text-lg flex items-center">
+                <span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span>
+                Panel de Control UATyG
+            </div>
+            <button id="exit-admin-btn" class="text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg border border-gray-700 transition">Cerrar Sesión</button>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Tabs -->
+            <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8">
+                <button id="tab-scanner" class="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
+                <button id="tab-database" class="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos Final</button>
+            </div>
+
+            <!-- SCANNER VIEW -->
+            <div id="view-scanner" class="block">
+                <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200 text-center">
+                    <h2 class="text-2xl font-black text-gray-900 mb-6">Control de Acceso</h2>
+                    
+                    <div class="mb-6 text-left">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">1. Selecciona la Actividad Actual:</label>
+                        <select id="admin-activity-select" class="w-full p-4 rounded-xl border-2 border-emerald-200 focus:ring-0 focus:border-emerald-500 bg-emerald-50 font-semibold text-gray-800">
+                            <option value="">-- Elige una actividad para comenzar --</option>
+                            <optgroup label="Conferencias">
+                                <option value="conf-1">Conf 1: Paisajismo y Agroturismo</option>
+                                <option value="conf-2">Conf 2: Economía Circular</option>
+                                <option value="conf-3">Conf 3: Botánica Culinaria</option>
+                                <option value="conf-4">Conf 4: Espacios Sustentables</option>
+                            </optgroup>
+                            <optgroup label="Talleres">
+                                <option value="taller-1">Taller 1: Hidroponía</option>
+                                <option value="taller-2">Taller 2: Compostaje</option>
+                                <option value="taller-3">Taller 3: Germinados</option>
+                                <option value="taller-4">Taller 4: Emplatados</option>
+                            </optgroup>
+                            <optgroup label="Cierre">
+                                <option value="gran-cierre">El Gran Cierre (Viernes)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div id="scanner-container-wrapper" class="hidden">
+                        <p class="text-sm text-gray-500 mb-4">Apunta la cámara trasera al código QR del alumno.</p>
+                        <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-2xl overflow-hidden border-4 border-gray-800 shadow-2xl bg-black"></div>
+                        <div class="mt-6 flex gap-4 justify-center">
+                            <button id="stop-scan-btn" class="bg-red-100 text-red-700 font-bold py-3 px-6 rounded-xl hover:bg-red-200 transition">Detener Acceso</button>
+                        </div>
+                        
+                        <!-- Último escaneo info -->
+                        <div class="mt-6 text-left bg-emerald-50 p-4 rounded-xl border border-emerald-100 hidden" id="last-scan-info">
+                            <p class="text-xs text-emerald-600 font-bold uppercase mb-1">Último Acceso Registrado:</p>
+                            <p class="text-lg font-bold text-gray-900" id="scan-result-matricula">-</p>
+                        </div>
+                    </div>
+
+                    <button id="start-scan-btn" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition shadow-lg mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Iniciar Escáner (Cámara Trasera)
+                    </button>
+                </div>
+            </div>
+
+            <!-- DATABASE VIEW -->
+            <div id="view-database" class="hidden">
+                <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-black text-gray-900">Reporte de Acreditación</h2>
+                        <button id="refresh-db-btn" class="bg-emerald-100 text-emerald-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-200 transition">Actualizar</button>
+                    </div>
+                    
+                    <div class="mb-6 grid grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-xl border border-green-200 text-center">
+                            <p class="text-xs font-bold text-green-600 uppercase">Acreditados</p>
+                            <p class="text-3xl font-black text-green-700" id="count-accredited">0</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200 text-center">
+                            <p class="text-xs font-bold text-red-600 uppercase">No Cumplieron</p>
+                            <p class="text-3xl font-black text-red-700" id="count-failed">0</p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100 text-gray-700 text-sm">
+                                    <th class="p-3 rounded-tl-xl font-bold">Matrícula</th>
+                                    <th class="p-3 font-bold">Nombre</th>
+                                    <th class="p-3 font-bold text-center">Conf. (3)</th>
+                                    <th class="p-3 font-bold text-center">Taller (2)</th>
+                                    <th class="p-3 rounded-tr-xl font-bold text-center">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="db-table-body" class="text-sm">
+                                <!-- Filas inyectadas por JS -->
+                                <tr><td colspan="5" class="p-4 text-center text-gray-500">Cargando base de datos...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Configuration (Using Canvas Environment globals)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        
+        let db, auth;
+        let isFirebaseReady = false;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            // Authentication is strictly required for any Firestore operations
+            signInAnonymously(auth).then(() => {
+                isFirebaseReady = true;
+                console.log("Sistema Conectado a la Nube (Firebase Auth Success)");
+            }).catch(e => {
+                console.error("Firebase Auth Error", e);
+            });
+        } catch(e) {
+            console.error("Firebase Init Error (App might be running outside Canvas)", e);
+        }
+
+        // --- GLOBAL VARIABLES & DOM ELEMENTS ---
+        const registrosRef = isFirebaseReady || db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
+        
+        // Registration Elements
+        const userInputs = document.querySelectorAll('.user-input');
+        const confCheckboxes = document.querySelectorAll('.conf-checkbox');
+        const workshopCheckboxes = document.querySelectorAll('.workshop-checkbox');
+        const confCountSpan = document.getElementById('conf-count');
+        const workshopCountSpan = document.getElementById('workshop-count');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMessage = document.getElementById('status-message');
+        const qrResultSection = document.getElementById('qr-result-section');
+        const spinner = document.getElementById('loading-spinner');
+        
+        // Modal Elements
+        const alertModal = document.getElementById('custom-alert-modal');
+        const alertTitle = document.getElementById('alert-title');
+        const alertMessage = document.getElementById('alert-message');
+        const alertIcon = document.getElementById('alert-icon');
+        const alertCloseBtn = document.getElementById('alert-close-btn');
+
+        // Admin Elements
+        const mainLanding = document.getElementById('main-landing');
+        const adminTrigger = document.getElementById('secret-admin-trigger');
+        const pwdModal = document.getElementById('admin-pwd-modal');
+        const pwdInput = document.getElementById('admin-pwd-input');
+        const pwdLoginBtn = document.getElementById('login-admin-btn');
+        const pwdCancelBtn = document.getElementById('cancel-admin-btn');
+        const pwdError = document.getElementById('admin-pwd-error');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const exitAdminBtn = document.getElementById('exit-admin-btn');
+        
+        // Scanner Elements
+        let html5QrCode = null;
+        const startScanBtn = document.getElementById('start-scan-btn');
+        const stopScanBtn = document.getElementById('stop-scan-btn');
+        const adminActivitySelect = document.getElementById('admin-activity-select');
+        const scannerWrapper = document.getElementById('scanner-container-wrapper');
+        const lastScanInfo = document.getElementById('last-scan-info');
+        const scanResultMatricula = document.getElementById('scan-result-matricula');
+
+        // --- HELPER FUNCTIONS ---
+        function showAlert(title, message, isError = false) {
+            alertTitle.textContent = title;
+            alertMessage.textContent = message;
+            
+            if (isError) {
+                alertIcon.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6";
+                alertIcon.innerHTML = `<svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
+                alertCloseBtn.className = "w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-red-600 text-base font-medium text-white shadow-sm hover:bg-red-700 sm:text-sm";
+            } else {
+                alertIcon.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6";
+                alertIcon.innerHTML = `<svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+                alertCloseBtn.className = "w-full inline-flex justify-center rounded-xl border border-transparent px-4 py-3 bg-emerald-600 text-base font-medium text-white shadow-sm hover:bg-emerald-700 sm:text-sm";
+            }
+            
+            alertModal.classList.remove('hidden');
+        }
+
+        alertCloseBtn.addEventListener('click', () => {
+            alertModal.classList.add('hidden');
+        });
+
+        // --- REGISTRATION LOGIC (The "Magic" Checkboxes) ---
+        function evaluateFormState() {
+            const selectedConfs = document.querySelectorAll('.conf-checkbox:checked').length;
+            const selectedWorkshops = document.querySelectorAll('.workshop-checkbox:checked').length;
+
+            confCountSpan.textContent = selectedConfs;
+            workshopCountSpan.textContent = selectedWorkshops;
+
+            confCountSpan.className = selectedConfs === 3 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
+            workshopCountSpan.className = selectedWorkshops === 2 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
+
+            // Bloqueo visual de opciones restantes
+            confCheckboxes.forEach(cb => {
+                const label = cb.parentElement;
+                if (!cb.checked) {
+                    if (selectedConfs >= 3) {
+                        cb.disabled = true;
+                        label.classList.add('locked-option');
+                    } else {
+                        cb.disabled = false;
+                        label.classList.remove('locked-option');
+                    }
+                }
+            });
+
+            workshopCheckboxes.forEach(cb => {
+                const label = cb.parentElement;
+                if (!cb.checked) {
+                    if (selectedWorkshops >= 2) {
+                        cb.disabled = true;
+                        label.classList.add('locked-option');
+                    } else {
+                        cb.disabled = false;
+                        label.classList.remove('locked-option');
+                    }
+                }
+            });
+
+            let allInputsFilled = true;
+            userInputs.forEach(input => {
+                if (input.value.trim() === '') allInputsFilled = false;
+            });
+
+            const isPerfect = (selectedConfs === 3 && selectedWorkshops === 2 && allInputsFilled);
+
+            if (isPerfect) {
+                submitBtn.disabled = false;
+                submitBtn.className = "w-full md:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-5 px-14 rounded-full text-xl shadow-[0_10px_25px_rgba(16,185,129,0.4)] transition-all duration-300 transform hover:scale-105 cursor-pointer";
+                statusMessage.innerHTML = "<span class='text-emerald-600 font-bold'>¡Excelente! Tu pase está listo para generarse.</span>";
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.className = "w-full md:w-auto bg-gray-300 text-gray-500 font-extrabold py-5 px-14 rounded-full text-xl opacity-70 cursor-not-allowed transition-all duration-300";
+                statusMessage.innerHTML = "Por favor, completa tus datos y selecciona exactamente 3 conferencias y 2 talleres.";
+            }
+        }
+
+        confCheckboxes.forEach(cb => cb.addEventListener('change', evaluateFormState));
+        workshopCheckboxes.forEach(cb => cb.addEventListener('change', evaluateFormState));
+        userInputs.forEach(input => input.addEventListener('input', evaluateFormState));
+
+        // Generar QR y guardar en Firebase
+        submitBtn.addEventListener('click', async () => {
+            if(!auth.currentUser) {
+                showAlert("Error de Conexión", "Por favor espera un momento a que el sistema se conecte al servidor e intenta de nuevo.", true);
+                return;
+            }
+
+            const nombre = document.getElementById('studentName').value.trim();
+            const matricula = document.getElementById('studentId').value.trim();
+            const grupo = document.getElementById('studentGroup').value.trim().toUpperCase();
+            const carreraSelect = document.getElementById('program');
+            const carrera = carreraSelect.options[carreraSelect.selectedIndex].text;
+            
+            // Recopilar selección
+            const confsElegidas = Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb => cb.value);
+            const talleresElegidos = Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb => cb.value);
+
+            submitBtn.classList.add('hidden');
+            spinner.classList.remove('hidden');
+
+            try {
+                // Verificar si ya existe
+                const docRef = doc(registrosRef, matricula);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    showAlert("Registro Duplicado", `La matrícula ${matricula} ya se encuentra registrada en el sistema.`, true);
+                    submitBtn.classList.remove('hidden');
+                    spinner.classList.add('hidden');
+                    return;
+                }
+
+                // Guardar en Firestore
+                await setDoc(docRef, {
+                    nombre: nombre,
+                    matricula: matricula,
+                    grupo: grupo,
+                    carrera: carrera,
+                    conferencias_seleccionadas: confsElegidas,
+                    talleres_seleccionados: talleresElegidos,
+                    asistencias: [], // Array vacío para el escáner posterior
+                    fecha_registro: new Date().toISOString()
+                });
+
+                // Llenar UI del QR
+                document.getElementById('res-name').textContent = nombre;
+                document.getElementById('res-id').textContent = matricula;
+                document.getElementById('res-group').textContent = grupo;
+                document.getElementById('res-program').textContent = carrera;
+
+                // Limpiar QR anterior
+                document.getElementById('qrcode').innerHTML = "";
+
+                // String de datos simple para escanear rápido: UATYG2026|MATRICULA
+                const qrData = `UATYG2026|${matricula}`;
+
+                // Crear QR
+                new QRCode(document.getElementById("qrcode"), {
+                    text: qrData,
+                    width: 200,
+                    height: 200,
+                    colorDark : "#064e3b", // Verde muy oscuro
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+
+                // Mostrar sección
+                spinner.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Pase Generado Exitosamente";
+                submitBtn.className = "w-full md:w-auto bg-gray-800 text-white font-extrabold py-5 px-14 rounded-full text-xl opacity-50 cursor-not-allowed";
+                
+                qrResultSection.classList.remove('hidden');
+                qrResultSection.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error("Error saving doc:", error);
+                showAlert("Error", "Hubo un problema al guardar tu registro. Intenta nuevamente.", true);
+                submitBtn.classList.remove('hidden');
+                spinner.classList.add('hidden');
+            }
+        });
+
+        // Botones de la sección QR
+        document.getElementById('print-btn').addEventListener('click', () => window.print());
+        document.getElementById('close-qr-btn').addEventListener('click', () => {
+            qrResultSection.classList.add('hidden');
+            // Resetear formulario
+            userInputs.forEach(i => i.value = '');
+            confCheckboxes.forEach(cb => cb.checked = false);
+            workshopCheckboxes.forEach(cb => cb.checked = false);
+            evaluateFormState();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- ADMIN LOGIN LOGIC ---
+        adminTrigger.addEventListener('click', () => {
+            pwdInput.value = '';
+            pwdError.classList.add('hidden');
+            pwdModal.classList.remove('hidden');
+            setTimeout(() => pwdInput.focus(), 100);
+        });
+
+        pwdCancelBtn.addEventListener('click', () => {
+            pwdModal.classList.add('hidden');
+        });
+
+        pwdLoginBtn.addEventListener('click', () => {
+            if (pwdInput.value === 'luix0738') {
+                pwdModal.classList.add('hidden');
+                mainLanding.classList.add('d-none');
+                adminDashboard.classList.remove('hidden');
+                // Asegurarse de que las pestañas están correctas
+                document.getElementById('tab-scanner').click();
+            } else {
+                pwdError.classList.remove('hidden');
+            }
+        });
+
+        exitAdminBtn.addEventListener('click', async () => {
+            if (html5QrCode && html5QrCode.isScanning) {
+                await html5QrCode.stop();
+            }
+            adminDashboard.classList.add('hidden');
+            mainLanding.classList.remove('d-none');
+            window.scrollTo(0,0);
+        });
+
+        // --- ADMIN TABS LOGIC ---
+        const tabScanner = document.getElementById('tab-scanner');
+        const tabDb = document.getElementById('tab-database');
+        const viewScanner = document.getElementById('view-scanner');
+        const viewDb = document.getElementById('view-database');
+
+        tabScanner.addEventListener('click', () => {
+            tabScanner.className = "flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition";
+            tabDb.className = "flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
+            viewScanner.classList.remove('hidden');
+            viewScanner.classList.add('block');
+            viewDb.classList.add('hidden');
+            viewDb.classList.remove('block');
+        });
+
+        tabDb.addEventListener('click', () => {
+            tabDb.className = "flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition";
+            tabScanner.className = "flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
+            viewDb.classList.remove('hidden');
+            viewDb.classList.add('block');
+            viewScanner.classList.add('hidden');
+            viewScanner.classList.remove('block');
+            generateDatabaseReport(); // Autocargar al cambiar de tab
+        });
+
+        // --- SCANNER LOGIC ---
+        adminActivitySelect.addEventListener('change', () => {
+            if(adminActivitySelect.value !== "") {
+                startScanBtn.disabled = false;
+            } else {
+                startScanBtn.disabled = true;
+            }
+        });
+
+        let isProcessingScan = false;
+
+        async function onScanSuccess(decodedText, decodedResult) {
+            // Prevenir doble escaneo rápido
+            if (isProcessingScan) return;
+            
+            // Validar formato del QR
+            if (!decodedText.startsWith('UATYG2026|')) {
+                return; // Ignorar QRs que no son nuestros
+            }
+
+            isProcessingScan = true;
+            const matricula = decodedText.split('|')[1];
+            const actividadId = adminActivitySelect.value;
+            
+            // Pausar UI del escáner visualmente (efecto flash)
+            const readerEl = document.getElementById('qr-reader');
+            readerEl.style.border = "4px solid #10b981"; // Borde verde
+            
+            try {
+                const docRef = doc(registrosRef, matricula);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    alert(`La matrícula ${matricula} no está registrada en el sistema.`);
+                } else {
+                    const data = docSnap.data();
+                    
+                    // Verificar si ya tiene registrada esta asistencia para evitar duplicados en el array
+                    if(data.asistencias && data.asistencias.includes(actividadId)) {
+                        console.log("Ya había registrado asistencia previamente.");
+                    } else {
+                        // Actualizar en Firebase agregando la actividad al array
+                        await updateDoc(docRef, {
+                            asistencias: arrayUnion(actividadId)
+                        });
+                    }
+
+                    // Mostrar info en pantalla
+                    lastScanInfo.classList.remove('hidden');
+                    scanResultMatricula.innerHTML = `${matricula} <span class="text-sm font-normal text-gray-600 block">${data.nombre}</span>`;
+                }
+            } catch (err) {
+                console.error("Error al registrar asistencia:", err);
+                alert("Error de red al registrar asistencia. Intenta de nuevo.");
+            }
+
+            // Restaurar estado después de 2 segundos
+            setTimeout(() => {
+                readerEl.style.border = "4px solid #1f2937";
+                isProcessingScan = false;
+            }, 2000);
+        }
+
+        startScanBtn.addEventListener('click', async () => {
+            if (!adminActivitySelect.value) {
+                alert("Primero debes seleccionar una actividad.");
+                return;
+            }
+
+            adminActivitySelect.disabled = true;
+            startScanBtn.classList.add('hidden');
+            scannerWrapper.classList.remove('hidden');
+            lastScanInfo.classList.add('hidden');
+
+            html5QrCode = new Html5Qrcode("qr-reader");
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+            try {
+                // Forzar cámara trasera (environment)
+                await html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+            } catch (err) {
+                console.error("Error iniciando cámara", err);
+                alert("No se pudo acceder a la cámara trasera. Verifica los permisos de tu dispositivo.");
+                stopScannerUI();
+            }
+        });
+
+        stopScanBtn.addEventListener('click', async () => {
+            if (html5QrCode && html5QrCode.isScanning) {
+                try {
+                    await html5QrCode.stop();
+                } catch(err) {
+                    console.error("Error deteniendo", err);
+                }
+            }
+            stopScannerUI();
+        });
+
+        function stopScannerUI() {
+            scannerWrapper.classList.add('hidden');
+            startScanBtn.classList.remove('hidden');
+            adminActivitySelect.disabled = false;
+        }
+
+        // --- DATABASE REPORTS LOGIC ---
+        const refreshDbBtn = document.getElementById('refresh-db-btn');
+        const tbody = document.getElementById('db-table-body');
+        const countAccredited = document.getElementById('count-accredited');
+        const countFailed = document.getElementById('count-failed');
+
+        refreshDbBtn.addEventListener('click', generateDatabaseReport);
+
+        async function generateDatabaseReport() {
+            if(!auth.currentUser) return;
+            
+            tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Descargando registros...</td></tr>';
+            
+            try {
+                const querySnapshot = await getDocs(registrosRef);
+                
+                let html = '';
+                let acreditados = 0;
+                let noAcreditados = 0;
+
+                if (querySnapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Aún no hay alumnos registrados.</td></tr>';
+                    countAccredited.textContent = '0';
+                    countFailed.textContent = '0';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const asistencias = data.asistencias || [];
+                    
+                    // Contar tipos de asistencia
+                    const confsAsistidas = asistencias.filter(a => a.startsWith('conf')).length;
+                    const talleresAsistidos = asistencias.filter(a => a.startsWith('taller')).length;
+                    
+                    // Evaluar acreditación (Meta: 3 conf, 2 talleres)
+                    const isAccredited = (confsAsistidas >= 3 && talleresAsistidos >= 2);
+                    
+                    if(isAccredited) acreditados++;
+                    else noAcreditados++;
+
+                    const statusBadge = isAccredited 
+                        ? '<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Acreditado</span>'
+                        : '<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">Incompleto</span>';
+
+                    html += `
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                            <td class="p-3 font-mono text-gray-600">${data.matricula}</td>
+                            <td class="p-3">
+                                <div class="font-semibold text-gray-800">${data.nombre}</div>
+                                <div class="text-xs text-gray-500">${data.carrera} (Gr: ${data.grupo})</div>
+                            </td>
+                            <td class="p-3 text-center">
+                                <span class="${confsAsistidas >= 3 ? 'text-green-600 font-bold' : 'text-gray-500'}">${confsAsistidas}/3</span>
+                            </td>
+                            <td class="p-3 text-center">
+                                <span class="${talleresAsistidos >= 2 ? 'text-green-600 font-bold' : 'text-gray-500'}">${talleresAsistidos}/2</span>
+                            </td>
+                            <td class="p-3 text-center">${statusBadge}</td>
+                        </tr>
+                    `;
+                });
+
+                tbody.innerHTML = html;
+                countAccredited.textContent = acreditados;
+                countFailed.textContent = noAcreditados;
+
+            } catch (error) {
+                console.error("Error leyendo BD:", error);
+                tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-red-500">Error al cargar la base de datos.</td></tr>';
+            }
+        }
+    </script>
+</body>
+</html>
