@@ -48,9 +48,10 @@
         <!-- HERO SECTION -->
         <header class="hero-bg text-white min-h-screen flex flex-col items-center relative pb-20">
             
-            <!-- LOGOS INSTITUCIONALES (Nuevos) -->
+            <!-- LOGOS INSTITUCIONALES -->
             <div class="w-full max-w-7xl mx-auto flex justify-between items-center pt-8 px-6 mb-10">
-                <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
+                <!-- Se agregó fondo blanco y padding al logo UAN para que resalte -->
+                <img src="uan.png" alt="Logo UAN" class="h-14 md:h-20 bg-white p-2 rounded-xl object-contain shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
                 <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg=='">
                 <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4='">
             </div>
@@ -315,7 +316,7 @@
         </section>
     </div>
 
-    <!-- ACTIVITY DETAILS MODAL (NUEVO) -->
+    <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative transform transition-all">
             <button onclick="closeActivityModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
@@ -471,7 +472,7 @@
         </div>
     </div>
 
-    <!-- Script de Interfaz de Actividades (NUEVO) -->
+    <!-- Script de Interfaz de Actividades -->
     <script>
         const activitiesInfo = {
             'conf-1': {
@@ -546,7 +547,6 @@
             const badge = document.getElementById('activity-modal-badge');
             badge.textContent = data.type;
             
-            // Estilos del "badge" (etiqueta) según el tipo de actividad
             if (data.type === 'Conferencia') {
                 badge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase inline-block mb-4 border text-emerald-600 bg-emerald-50 border-emerald-200';
             } else if (data.type === 'Taller') {
@@ -575,21 +575,19 @@
         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ============================================================================
-        // ⚠️ ATENCIÓN: CONFIGURACIÓN DE FIREBASE PARA TU GITHUB PAGES
+        // ⚠️ CONFIGURACIÓN DE FIREBASE PARA TU GITHUB PAGES
         // ============================================================================
-        // Si alojas tu código en GitHub, necesitas reemplazar los valores de este objeto
-        // con los de tu proyecto de Firebase. De lo contrario, marcará error de conexión.
-        const firebaseConfig = {
+        const externalFirebaseConfig = {
             apiKey: "AIzaSyAPPmCxAdm57MlXPJL5u_5gs60djn4Uhss",
             authDomain: "ecosemanauatyg.firebaseapp.com",
             projectId: "ecosemanauatyg",
             storageBucket: "ecosemanauatyg.firebasestorage.app",
             messagingSenderId: "492337695292",
             appId: "1:492337695292:web:7968d12096880ef5f09139"
-            };
+        };
         // ============================================================================
 
-        // Detección automática (Permite que funcione aquí en Canvas o en tu GitHub)
+        // Detección automática
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
         
@@ -601,7 +599,6 @@
             db = getFirestore(app);
             auth = getAuth(app);
             
-            // Iniciar sesión requerida para acceder a la base de datos
             const initAuth = async () => {
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -615,18 +612,16 @@
             };
             initAuth();
 
-            // Mantener un rastreo en tiempo real del usuario
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
                 if(user) console.log("Sistema conectado a Base de Datos");
             });
 
         } catch(e) {
-            console.error("Firebase no pudo iniciar. ¿Configuraste correctamente externalFirebaseConfig?", e);
+            console.error("Firebase no pudo iniciar. Verifique la configuración.", e);
         }
 
         // --- VARIABLES GLOBALES Y DOM ---
-        // Referencia a la colección en base a las reglas obligatorias
         const registrosRef = db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
         
         const userInputs = document.querySelectorAll('.user-input');
@@ -729,11 +724,10 @@
 
         // --- GENERACIÓN DEL CÓDIGO QR ---
         submitBtn.addEventListener('click', async () => {
-            // VERIFICACIÓN CLAVE: Si Firebase no se inicializó bien, se bloquea y avisa al usuario
             if(!currentUser || !registrosRef) {
                 showAlert(
                     "Error de Conexión a Base de Datos", 
-                    "El sistema no está conectado a Firebase. Si estás ejecutando esto en GitHub Pages, asegúrate de colocar tus credenciales en la variable 'externalFirebaseConfig' dentro del código.", 
+                    "El sistema no está conectado a Firebase. Verifica tu conexión a internet e intenta nuevamente.", 
                     true
                 );
                 return;
@@ -762,7 +756,6 @@
                     return;
                 }
 
-                // Guardar
                 await setDoc(docRef, {
                     nombre: nombre,
                     matricula: matricula,
@@ -802,7 +795,7 @@
 
             } catch (error) {
                 console.error("Error saving doc:", error);
-                showAlert("Error", "Hubo un problema al guardar tu registro. Verifica los permisos de tu base de datos Firebase e intenta nuevamente.", true);
+                showAlert("Error", "Hubo un problema al guardar tu registro. Intenta nuevamente.", true);
                 submitBtn.classList.remove('hidden');
                 spinner.classList.add('hidden');
             }
