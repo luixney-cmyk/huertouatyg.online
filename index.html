@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- HTML5 QR Code Scanner -->
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <!-- html2canvas para descargar el pase completo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         body {
@@ -45,19 +47,17 @@
 <body class="antialiased text-gray-800">
 
     <div id="main-landing">
-        <!-- HERO SECTION -->
-        <header class="hero-bg text-white min-h-screen flex flex-col items-center relative pb-20">
-            
-            <!-- LOGOS INSTITUCIONALES -->
-            <div class="w-full max-w-7xl mx-auto flex justify-between items-center pt-8 px-6 mb-10">
-                <!-- Se agregó fondo blanco y padding al logo UAN para que resalte -->
-                <img src="uan.png" alt="Logo UAN" class="h-14 md:h-20 bg-white p-2 rounded-xl object-contain shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
-                <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg=='">
-                <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4='">
-            </div>
+        <!-- HERO SECTION (El Pitch de Venta para el alumno) -->
+        <header class="hero-bg text-white py-20 px-6 min-h-screen flex flex-col justify-center items-center text-center">
+            <div class="max-w-4xl mx-auto">
+                <!-- LOGOS INSTITUCIONALES -->
+                <div class="w-full max-w-7xl mx-auto flex justify-between items-center pt-8 px-6 mb-10">
+                    <!-- Logo UAN con resplandor intenso para unificar tono y quitar fondo blanco -->
+                    <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.9)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
+                    <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg=='">
+                    <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4='">
+                </div>
 
-            <!-- CONTENIDO HERO -->
-            <div class="max-w-4xl mx-auto text-center px-6 mt-auto mb-auto">
                 <!-- Botón Secreto del Administrador -->
                 <span id="secret-admin-trigger" class="cursor-pointer bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
                     Evento Académico con Valor Curricular
@@ -226,21 +226,41 @@
                                     </span>
                                 </div>
                                 <div class="space-y-3" id="conf-container">
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-1">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">El Huerto como Atractivo Turístico</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-1">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-1">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">El Huerto como Atractivo Turístico</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-1">Calculando espacios...</span>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-2">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Economía Circular y Desperdicios</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-2">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-2">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Economía Circular y Desperdicios</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-2">Calculando espacios...</span>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-3">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Botánica Culinaria y Entorno</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-3">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-3">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Botánica Culinaria y Entorno</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-3">Calculando espacios...</span>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-4">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Comunidad y Espacios Sustentables</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-conf-4">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="conf-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="conf-4">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Comunidad y Espacios Sustentables</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-conf-4">Calculando espacios...</span>
+                                        </div>
                                     </label>
                                 </div>
                             </div>
@@ -254,21 +274,41 @@
                                     </span>
                                 </div>
                                 <div class="space-y-3" id="workshop-container">
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-1">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Introducción a la Hidroponía</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-1">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-1">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Introducción a la Hidroponía</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-1">Calculando espacios...</span>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-2">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Estación de Compostaje</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-2">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-2">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Estación de Compostaje</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-2">Calculando espacios...</span>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-3">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Producción de Germinados</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-3">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-3">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Producción de Germinados</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-3">Calculando espacios...</span>
+                                        </div>
                                     </label>
-                                    <label class="flex items-center p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label">
-                                        <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-4">
-                                        <span class="ml-3 text-sm font-medium text-gray-700">Aderezos y Emplatados</span>
+                                    <label class="flex items-start p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-emerald-400 transition-all shadow-sm activity-label" id="label-taller-4">
+                                        <div class="pt-1">
+                                            <input type="checkbox" class="workshop-checkbox text-emerald-600 focus:ring-emerald-500 h-5 w-5 rounded border-gray-300" value="taller-4">
+                                        </div>
+                                        <div class="ml-3 flex flex-col w-full">
+                                            <span class="text-sm font-medium text-gray-700 leading-tight">Aderezos y Emplatados</span>
+                                            <span class="text-xs text-gray-500 mt-1 capacity-text" id="cap-taller-4">Calculando espacios...</span>
+                                        </div>
                                     </label>
                                 </div>
                             </div>
@@ -292,23 +332,30 @@
                 <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
                     <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
-                    <p class="text-gray-600 mb-8 font-medium">Guarda una captura de pantalla. Preséntalo en la entrada de tus eventos.</p>
+                    <p class="text-gray-600 mb-8 font-medium">Descarga tu código QR o toma una captura de pantalla. Guárdalo en tu celular y preséntalo en la entrada de tus eventos. <span class="text-emerald-600 block mt-1 font-bold">¡Cuidemos el planeta, no lo imprimas! 🌎</span></p>
                     
-                    <div class="bg-white p-5 rounded-2xl inline-block mb-8 shadow-inner border border-gray-100">
-                        <div id="qrcode"></div>
+                    <!-- INICIO DEL PASE A DESCARGAR -->
+                    <div id="ticket-to-capture" class="bg-white p-6 rounded-3xl mx-auto inline-block shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-gray-100">
+                        <div class="bg-white p-4 rounded-2xl flex justify-center mb-6 shadow-inner border border-gray-100">
+                            <div id="qrcode"></div>
+                        </div>
+                        
+                        <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                            <p class="text-sm text-gray-700 mb-2"><strong>Titular:</strong> <span id="res-name" class="font-semibold text-gray-900"></span></p>
+                            <p class="text-sm text-gray-700 mb-2 flex justify-between">
+                                <span><strong>Matrícula:</strong> <span id="res-id" class="font-semibold text-gray-900"></span></span>
+                                <span><strong>Grupo:</strong> <span id="res-group" class="font-semibold text-gray-900"></span></span>
+                            </p>
+                            <p class="text-sm text-gray-700"><strong>Licenciatura:</strong> <span id="res-program" class="font-semibold text-gray-900"></span></p>
+                        </div>
                     </div>
-                    
-                    <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200">
-                        <p class="text-sm text-gray-700 mb-2"><strong>Titular:</strong> <span id="res-name" class="font-semibold text-gray-900"></span></p>
-                        <p class="text-sm text-gray-700 mb-2 flex justify-between">
-                            <span><strong>Matrícula:</strong> <span id="res-id" class="font-semibold text-gray-900"></span></span>
-                            <span><strong>Grupo:</strong> <span id="res-group" class="font-semibold text-gray-900"></span></span>
-                        </p>
-                        <p class="text-sm text-gray-700"><strong>Licenciatura:</strong> <span id="res-program" class="font-semibold text-gray-900"></span></p>
-                    </div>
+                    <!-- FIN DEL PASE A DESCARGAR -->
                     
                     <div class="mt-8 flex flex-col gap-3">
-                        <button id="print-btn" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition">Imprimir Pase</button>
+                        <button id="download-btn" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition flex justify-center items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span id="download-text">Guardar Pase QR</span>
+                        </button>
                         <button id="close-qr-btn" class="w-full bg-white text-emerald-600 font-bold py-3 rounded-xl border-2 border-emerald-600 hover:bg-emerald-50 transition">Cerrar y volver al inicio</button>
                     </div>
                 </div>
@@ -571,8 +618,8 @@
     <!-- Scripts de Firebase y Logica Principal -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ============================================================================
         // ⚠️ CONFIGURACIÓN DE FIREBASE PARA TU GITHUB PAGES
@@ -587,43 +634,104 @@
         };
         // ============================================================================
 
-        // Detección automática
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
+        // Firebase Configuration (Using Canvas Environment globals or fallback to explicit)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         
         let db, auth;
-        let currentUser = null;
+        let isFirebaseReady = false;
+        
+        // --- LIMITES DE CAPACIDAD ---
+        const MAX_CONF = 90;
+        const MAX_TALLER = 40;
+        let currentCapacities = {};
 
         try {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
             auth = getAuth(app);
             
-            const initAuth = async () => {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch (e) {
-                    console.error("Error al autenticar Firebase:", e);
-                }
-            };
-            initAuth();
-
-            onAuthStateChanged(auth, (user) => {
-                currentUser = user;
-                if(user) console.log("Sistema conectado a Base de Datos");
+            // Authentication is strictly required for any Firestore operations
+            signInAnonymously(auth).then(() => {
+                isFirebaseReady = true;
+                console.log("Sistema Conectado a la Nube (Firebase Auth Success)");
+            }).catch(e => {
+                console.error("Firebase Auth Error", e);
             });
-
         } catch(e) {
-            console.error("Firebase no pudo iniciar. Verifique la configuración.", e);
+            console.error("Firebase Init Error", e);
         }
 
-        // --- VARIABLES GLOBALES Y DOM ---
-        const registrosRef = db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
+        // --- GLOBAL VARIABLES & DOM ELEMENTS ---
+        const registrosRef = isFirebaseReady || db ? collection(db, 'artifacts', appId, 'public', 'data', 'registros') : null;
         
+        // --- LECTURA EN TIEMPO REAL DE CAPACIDADES ---
+        if (registrosRef) {
+            onSnapshot(registrosRef, (snapshot) => {
+                const newCaps = {};
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.conferencias_seleccionadas) {
+                        data.conferencias_seleccionadas.forEach(c => { newCaps[c] = (newCaps[c] || 0) + 1; });
+                    }
+                    if (data.talleres_seleccionados) {
+                        data.talleres_seleccionados.forEach(t => { newCaps[t] = (newCaps[t] || 0) + 1; });
+                    }
+                });
+                currentCapacities = newCaps;
+                updateCapacityUI();
+            }, (error) => {
+                console.error("Error al cargar capacidades en tiempo real:", error);
+            });
+        }
+
+        function updateCapacityUI() {
+            // Actualizar interfaz de conferencias
+            const confCheckboxes = document.querySelectorAll('.conf-checkbox');
+            confCheckboxes.forEach(cb => {
+                const val = cb.value;
+                const cap = currentCapacities[val] || 0;
+                const textEl = document.getElementById(`cap-${val}`);
+                const labelEl = document.getElementById(`label-${val}`);
+                
+                if (cap >= MAX_CONF) {
+                    textEl.innerHTML = `<span class="text-red-600 font-bold">Conferencia llena - Sin espacios disponibles</span>`;
+                    cb.disabled = true;
+                    cb.checked = false; // Desmarcar si alguien lo tenia seleccionado pero le ganaron el lugar
+                    labelEl.classList.add('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
+                    labelEl.classList.remove('hover:border-emerald-400');
+                } else {
+                    textEl.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_CONF - cap} espacios disponibles</span> (Max ${MAX_CONF})`;
+                    labelEl.classList.remove('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
+                    labelEl.classList.add('hover:border-emerald-400');
+                }
+            });
+
+            // Actualizar interfaz de talleres
+            const workshopCheckboxes = document.querySelectorAll('.workshop-checkbox');
+            workshopCheckboxes.forEach(cb => {
+                const val = cb.value;
+                const cap = currentCapacities[val] || 0;
+                const textEl = document.getElementById(`cap-${val}`);
+                const labelEl = document.getElementById(`label-${val}`);
+                
+                if (cap >= MAX_TALLER) {
+                    textEl.innerHTML = `<span class="text-red-600 font-bold">Taller lleno - Sin espacios disponibles</span>`;
+                    cb.disabled = true;
+                    cb.checked = false;
+                    labelEl.classList.add('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
+                    labelEl.classList.remove('hover:border-emerald-400');
+                } else {
+                    textEl.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_TALLER - cap} espacios disponibles</span> (Max ${MAX_TALLER})`;
+                    labelEl.classList.remove('bg-gray-100', 'opacity-60', 'cursor-not-allowed');
+                    labelEl.classList.add('hover:border-emerald-400');
+                }
+            });
+
+            evaluateFormState(); // Re-evaluar para aplicar limites del usuario
+        }
+
+        // Registration Elements
         const userInputs = document.querySelectorAll('.user-input');
         const confCheckboxes = document.querySelectorAll('.conf-checkbox');
         const workshopCheckboxes = document.querySelectorAll('.workshop-checkbox');
@@ -677,7 +785,7 @@
 
         alertCloseBtn.addEventListener('click', () => alertModal.classList.add('hidden'));
 
-        // --- LÓGICA DE REGISTRO (Checkboxes) ---
+        // --- REGISTRATION LOGIC (The "Magic" Checkboxes) ---
         function evaluateFormState() {
             const selectedConfs = document.querySelectorAll('.conf-checkbox:checked').length;
             const selectedWorkshops = document.querySelectorAll('.workshop-checkbox:checked').length;
@@ -688,19 +796,34 @@
             confCountSpan.className = selectedConfs === 3 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
             workshopCountSpan.className = selectedWorkshops === 2 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-bold';
 
+            // Bloqueo visual de opciones restantes
             confCheckboxes.forEach(cb => {
-                const label = cb.parentElement;
+                const label = cb.closest('.activity-label');
+                const isFull = (currentCapacities[cb.value] || 0) >= MAX_CONF;
+                
                 if (!cb.checked) {
-                    if (selectedConfs >= 3) { cb.disabled = true; label.classList.add('locked-option'); } 
-                    else { cb.disabled = false; label.classList.remove('locked-option'); }
+                    if (selectedConfs >= 3 || isFull) {
+                        cb.disabled = true;
+                        if (!isFull) label.classList.add('locked-option'); // Solo agrega clase si no está ya gris por cupo lleno
+                    } else {
+                        cb.disabled = false;
+                        label.classList.remove('locked-option');
+                    }
                 }
             });
 
             workshopCheckboxes.forEach(cb => {
-                const label = cb.parentElement;
+                const label = cb.closest('.activity-label');
+                const isFull = (currentCapacities[cb.value] || 0) >= MAX_TALLER;
+                
                 if (!cb.checked) {
-                    if (selectedWorkshops >= 2) { cb.disabled = true; label.classList.add('locked-option'); } 
-                    else { cb.disabled = false; label.classList.remove('locked-option'); }
+                    if (selectedWorkshops >= 2 || isFull) {
+                        cb.disabled = true;
+                        if (!isFull) label.classList.add('locked-option');
+                    } else {
+                        cb.disabled = false;
+                        label.classList.remove('locked-option');
+                    }
                 }
             });
 
@@ -724,7 +847,7 @@
 
         // --- GENERACIÓN DEL CÓDIGO QR ---
         submitBtn.addEventListener('click', async () => {
-            if(!currentUser || !registrosRef) {
+            if(!auth.currentUser || !registrosRef) {
                 showAlert(
                     "Error de Conexión a Base de Datos", 
                     "El sistema no está conectado a Firebase. Verifica tu conexión a internet e intenta nuevamente.", 
@@ -739,8 +862,19 @@
             const carreraSelect = document.getElementById('program');
             const carrera = carreraSelect.options[carreraSelect.selectedIndex].text;
             
+            // Recopilar selección
             const confsElegidas = Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb => cb.value);
             const talleresElegidos = Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb => cb.value);
+
+            // Doble verificación de cupos justos antes de guardar para evitar colisiones
+            let capacityError = false;
+            confsElegidas.forEach(c => { if ((currentCapacities[c] || 0) >= MAX_CONF) capacityError = true; });
+            talleresElegidos.forEach(t => { if ((currentCapacities[t] || 0) >= MAX_TALLER) capacityError = true; });
+
+            if(capacityError) {
+                showAlert("Espacios Agotados", "Lo sentimos, uno de los talleres o conferencias que seleccionaste acaba de llenarse en este instante. Por favor, elige otra opción.", true);
+                return;
+            }
 
             submitBtn.classList.add('hidden');
             spinner.classList.remove('hidden');
@@ -801,7 +935,40 @@
             }
         });
 
-        document.getElementById('print-btn').addEventListener('click', () => window.print());
+        // Evento ecológico para descargar el QR completo con datos
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const matricula = document.getElementById('res-id').textContent;
+            const ticketElement = document.getElementById('ticket-to-capture');
+            const downloadText = document.getElementById('download-text');
+            const originalText = downloadText.textContent;
+
+            if (ticketElement) {
+                // Mostrar estado de carga
+                downloadText.textContent = 'Generando imagen...';
+
+                // Usar html2canvas para tomar foto del elemento
+                html2canvas(ticketElement, {
+                    scale: 3, // Alta resolución para que no se pixele
+                    backgroundColor: "#ffffff", // Fondo forzado blanco
+                    useCORS: true
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL("image/png");
+                    link.download = `Pase_UATyG_${matricula}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Restaurar botón
+                    downloadText.textContent = originalText;
+                }).catch(err => {
+                    console.error("Error generando imagen", err);
+                    alert("No se pudo generar la imagen automáticamente. Por favor, toma una captura de pantalla.");
+                    downloadText.textContent = originalText;
+                });
+            }
+        });
+
         document.getElementById('close-qr-btn').addEventListener('click', () => {
             qrResultSection.classList.add('hidden');
             userInputs.forEach(i => i.value = '');
@@ -868,7 +1035,7 @@
         let isProcessingScan = false;
 
         async function onScanSuccess(decodedText, decodedResult) {
-            if (isProcessingScan || !decodedText.startsWith('UATYG2026|') || !currentUser) return;
+            if (isProcessingScan || !decodedText.startsWith('UATYG2026|') || !auth.currentUser) return;
 
             isProcessingScan = true;
             const matricula = decodedText.split('|')[1];
@@ -940,7 +1107,7 @@
         refreshDbBtn.addEventListener('click', generateDatabaseReport);
 
         async function generateDatabaseReport() {
-            if(!currentUser) return;
+            if(!auth.currentUser) return;
             tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Descargando registros...</td></tr>';
             
             try {
