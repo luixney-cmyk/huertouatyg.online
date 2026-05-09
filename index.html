@@ -639,17 +639,13 @@
             messagingSenderId: "492337695292",
             appId: "1:492337695292:web:7968d12096880ef5f09139"
         };
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
-        let db, auth, isFirebaseReady = false;
         
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app); auth = getAuth(app);
-            signInAnonymously(auth).then(() => { isFirebaseReady = true; }).catch(console.error);
-        } catch(e) { console.error("Firebase Error", e); }
-
-        const registrosRef = isFirebaseReady || db ? collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'registros') : null;
-        const MAX_CONF = 90; const MAX_TALLER = 40; let currentCapacities = {};
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
+        
+        let db, auth, registrosRef = null;
+        const MAX_CONF = 90; 
+        const MAX_TALLER = 40; 
+        let currentCapacities = {};
 
         // ALERTS GLOBALES
         const alertModal = document.getElementById('custom-alert-modal');
@@ -663,18 +659,34 @@
         }
         document.getElementById('alert-close-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
 
-        // --- ACTUALIZACION DE CAPACIDADES ---
-        if (registrosRef) {
-            onSnapshot(registrosRef, (snapshot) => {
-                const newCaps = {};
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => newCaps[c] = (newCaps[c] || 0) + 1);
-                    if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => newCaps[t] = (newCaps[t] || 0) + 1);
+        // --- INICIALIZACIÓN SEGURA DE FIREBASE ---
+        const initApp = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app); 
+                auth = getAuth(app);
+                
+                // 1. ESPERAR AUTENTICACIÓN ANÓNIMA ANTES DE LEER LA BASE DE DATOS
+                await signInAnonymously(auth);
+                
+                // 2. UNA VEZ AUTENTICADOS, CREAR REFERENCIA Y LEER ESPACIOS
+                registrosRef = collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'registros');
+                
+                onSnapshot(registrosRef, (snapshot) => {
+                    const newCaps = {};
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => newCaps[c] = (newCaps[c] || 0) + 1);
+                        if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => newCaps[t] = (newCaps[t] || 0) + 1);
+                    });
+                    currentCapacities = newCaps; 
+                    updateCapacityUI();
                 });
-                currentCapacities = newCaps; updateCapacityUI();
-            });
-        }
+            } catch(e) {
+                console.error("Error al conectar con la base de datos:", e);
+            }
+        };
+        initApp(); // Ejecutar inicialización
 
         function updateCapacityUI() {
             document.querySelectorAll('.conf-checkbox').forEach(cb => {
@@ -759,7 +771,7 @@
 
         // GENERAR PASE
         submitBtn.addEventListener('click', async () => {
-            if(!auth.currentUser) return showAlert("Error", "Sistema desconectado. Revisa tu internet.", true);
+            if(!auth || !auth.currentUser) return showAlert("Error", "Sistema desconectado. Revisa tu internet o recarga la página.", true);
             const dataObj = {
                 nombre: document.getElementById('studentName').value.trim(),
                 matricula: document.getElementById('studentId').value.trim(),
@@ -817,7 +829,15 @@
             });
         });
 
-        document.getElementById('close-qr-btn').addEventListener('click', () => { location.reload(); });
+        document.getElementById('close-qr-btn').addEventListener('click', () => { 
+            // Cerrar pestaña sin recargar página
+            document.getElementById('qr-result-section').classList.add('hidden');
+            document.querySelectorAll('.user-input').forEach(i => i.value = '');
+            document.querySelectorAll('.conf-checkbox').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.workshop-checkbox').forEach(cb => cb.checked = false);
+            evaluateFormState();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
         // --- PORTAL DE ALUMNOS (Consulta y Certificado) ---
         const portalModal = document.getElementById('student-portal-modal');
@@ -900,11 +920,20 @@
             } else { document.getElementById('admin-pwd-error').classList.remove('hidden'); }
         });
 
+        // Salir sin location.reload()
         document.getElementById('exit-admin-btn').addEventListener('click', async () => { 
             if(html5QrCode) {
-                try { await html5QrCode.stop(); } catch(e) { console.warn("Scanner ya detenido"); }
+                try { await html5QrCode.stop(); } catch(e) { console.warn("Scanner ya detenido o sin iniciar"); }
             }
-            location.reload(); 
+            
+            // Restaurar interfaces
+            document.getElementById('start-scan-btn').classList.remove('hidden'); 
+            document.getElementById('scanner-container-wrapper').classList.add('hidden'); 
+            document.getElementById('admin-activity-select').disabled = false;
+
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('main-landing').classList.remove('d-none');
+            window.scrollTo(0,0);
         });
 
         // TABS
@@ -931,7 +960,7 @@
                     if(data.asistencias && data.asistencias.includes(recordStr)) {
                         console.log("Ya existía este pase.");
                     } else {
-                        // Verifica si intenta hacer salida sin tener entrada (Opcional, pero bueno para evitar trampas)
+                        // Verifica si intenta hacer salida sin tener entrada
                         if(type === 'salida' && (!data.asistencias || !data.asistencias.includes(`${act}_entrada`))) {
                             alert("¡CUIDADO! Este alumno quiere registrar Salida pero NO registró Entrada a esta actividad.");
                         } else {
