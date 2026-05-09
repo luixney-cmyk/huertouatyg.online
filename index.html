@@ -387,6 +387,23 @@
         </div>
     </div>
 
+    <!-- DELETE CONFIRM MODAL -->
+    <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
+                <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">¿Eliminar registro?</h3>
+            <p class="text-gray-600 mb-6" id="delete-confirm-text">Se liberarán los espacios en talleres y conferencias de este alumno.</p>
+            <div class="flex gap-3">
+                <button id="cancel-delete-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none transition">Cancelar</button>
+                <button id="confirm-delete-btn" class="flex-1 rounded-xl border border-transparent px-4 py-3 bg-red-600 text-white font-medium shadow-sm hover:bg-red-700 focus:outline-none transition">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- CUSTOM MODAL ALERTS -->
     <div id="custom-alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
         <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
@@ -506,11 +523,12 @@
                                     <th class="p-3 font-bold">Nombre</th>
                                     <th class="p-3 font-bold text-center">Conf. (3)</th>
                                     <th class="p-3 font-bold text-center">Taller (2)</th>
-                                    <th class="p-3 rounded-tr-xl font-bold text-center">Estado</th>
+                                    <th class="p-3 font-bold text-center">Estado</th>
+                                    <th class="p-3 rounded-tr-xl font-bold text-center">Borrar</th>
                                 </tr>
                             </thead>
                             <tbody id="db-table-body" class="text-sm">
-                                <tr><td colspan="5" class="p-4 text-center text-gray-500">Cargando base de datos...</td></tr>
+                                <tr><td colspan="6" class="p-4 text-center text-gray-500">Cargando base de datos...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -619,7 +637,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ============================================================================
         // ⚠️ CONFIGURACIÓN DE FIREBASE PARA TU GITHUB PAGES
@@ -784,6 +802,37 @@
         }
 
         alertCloseBtn.addEventListener('click', () => alertModal.classList.add('hidden'));
+
+        // --- LÓGICA DE ELIMINACIÓN INDIVIDUAL ---
+        let recordToDelete = null;
+
+        function openDeleteConfirmModal(matricula) {
+            recordToDelete = matricula;
+            document.getElementById('delete-confirm-text').textContent = `¿Estás seguro de eliminar permanentemente el registro de la matrícula ${matricula}? Al hacerlo, se liberarán sus espacios en los talleres y conferencias de manera inmediata.`;
+            document.getElementById('delete-confirm-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('cancel-delete-btn').addEventListener('click', () => {
+            document.getElementById('delete-confirm-modal').classList.add('hidden');
+            recordToDelete = null;
+        });
+
+        document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
+            if (!recordToDelete || !auth.currentUser) return;
+            document.getElementById('delete-confirm-modal').classList.add('hidden');
+            
+            try {
+                // Eliminar el documento de la base de datos
+                await deleteDoc(doc(registrosRef, recordToDelete));
+                showAlert("Alumno Eliminado", `El registro de la matrícula ${recordToDelete} ha sido borrado exitosamente.`, false);
+                // Refrescar tabla visualmente
+                generateDatabaseReport(); 
+            } catch(e) {
+                console.error("Error eliminando registro:", e);
+                showAlert("Error", "No se pudo eliminar el registro. Intenta de nuevo.", true);
+            }
+            recordToDelete = null;
+        });
 
         // --- REGISTRATION LOGIC (The "Magic" Checkboxes) ---
         function evaluateFormState() {
@@ -988,12 +1037,33 @@
 
         pwdCancelBtn.addEventListener('click', () => pwdModal.classList.add('hidden'));
 
-        pwdLoginBtn.addEventListener('click', () => {
+        pwdLoginBtn.addEventListener('click', async () => {
             if (pwdInput.value === 'luix0738') {
+                // INGRESO NORMAL
                 pwdModal.classList.add('hidden');
                 mainLanding.classList.add('d-none');
                 adminDashboard.classList.remove('hidden');
                 document.getElementById('tab-scanner').click();
+            } else if (pwdInput.value === 'reset0738') {
+                // RESETEO MASIVO DE BASE DE DATOS
+                pwdModal.classList.add('hidden');
+                if(!auth.currentUser || !registrosRef) return showAlert("Error", "Sistema no conectado a Firebase.", true);
+                
+                showAlert("Borrando Base de Datos...", "Por favor espera mientras se eliminan todos los registros del evento.", false);
+                
+                try {
+                    const qSnap = await getDocs(registrosRef);
+                    const deletePromises = [];
+                    qSnap.forEach(d => {
+                        deletePromises.push(deleteDoc(doc(registrosRef, d.id)));
+                    });
+                    
+                    await Promise.all(deletePromises);
+                    showAlert("Base de Datos Restaurada", `Se han eliminado los ${deletePromises.length} registros exitosamente. Todos los lugares están libres nuevamente.`, false);
+                } catch(e) {
+                    console.error("Error reseteando:", e);
+                    showAlert("Error", "Hubo un problema crítico al limpiar la base de datos.", true);
+                }
             } else {
                 pwdError.classList.remove('hidden');
             }
@@ -1108,14 +1178,14 @@
 
         async function generateDatabaseReport() {
             if(!auth.currentUser) return;
-            tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Descargando registros...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-gray-500">Descargando registros...</td></tr>';
             
             try {
                 const querySnapshot = await getDocs(registrosRef);
                 let html = '', acreditados = 0, noAcreditados = 0;
 
                 if (querySnapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">Aún no hay alumnos registrados.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-gray-500">Aún no hay alumnos registrados.</td></tr>';
                     countAccredited.textContent = '0'; countFailed.textContent = '0';
                     return;
                 }
@@ -1143,6 +1213,11 @@
                             <td class="p-3 text-center"><span class="${confsAsistidas >= 3 ? 'text-green-600 font-bold' : 'text-gray-500'}">${confsAsistidas}/3</span></td>
                             <td class="p-3 text-center"><span class="${talleresAsistidos >= 2 ? 'text-green-600 font-bold' : 'text-gray-500'}">${talleresAsistidos}/2</span></td>
                             <td class="p-3 text-center">${statusBadge}</td>
+                            <td class="p-3 text-center">
+                                <button class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition btn-delete-record" data-matricula="${data.matricula}" title="Eliminar alumno">
+                                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                </button>
+                            </td>
                         </tr>
                     `;
                 });
@@ -1151,9 +1226,17 @@
                 countAccredited.textContent = acreditados;
                 countFailed.textContent = noAcreditados;
 
+                // Asignar los eventos de clic a los nuevos botones de eliminar
+                document.querySelectorAll('.btn-delete-record').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const matriculaTarget = e.currentTarget.getAttribute('data-matricula');
+                        openDeleteConfirmModal(matriculaTarget);
+                    });
+                });
+
             } catch (error) {
                 console.error("Error leyendo BD:", error);
-                tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-red-500">Error al cargar la base de datos.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-red-500">Error al cargar la base de datos.</td></tr>';
             }
         }
     </script>
