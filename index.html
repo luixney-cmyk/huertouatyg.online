@@ -900,7 +900,12 @@
             } else { document.getElementById('admin-pwd-error').classList.remove('hidden'); }
         });
 
-        document.getElementById('exit-admin-btn').addEventListener('click', async () => { if(html5QrCode) await html5QrCode.stop(); location.reload(); });
+        document.getElementById('exit-admin-btn').addEventListener('click', async () => { 
+            if(html5QrCode) {
+                try { await html5QrCode.stop(); } catch(e) { console.warn("Scanner ya detenido"); }
+            }
+            location.reload(); 
+        });
 
         // TABS
         document.getElementById('tab-scanner').addEventListener('click', (e) => { e.target.className="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700"; document.getElementById('tab-database').className="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500"; document.getElementById('view-scanner').classList.replace('hidden','block'); document.getElementById('view-database').classList.replace('block','hidden'); });
@@ -934,7 +939,7 @@
                         }
                     }
                     document.getElementById('last-scan-info').classList.remove('hidden');
-                    document.getElementById('last-scan-matricula').innerHTML = `<span class="${type==='entrada'?'text-emerald-600':'text-red-600'}">[${type.toUpperCase()}]</span> ${mat} <br><span class="text-sm font-normal text-gray-600">${data.nombre}</span>`;
+                    document.getElementById('scan-result-matricula').innerHTML = `<span class="${type==='entrada'?'text-emerald-600':'text-red-600'}">[${type.toUpperCase()}]</span> ${mat} <br><span class="text-sm font-normal text-gray-600">${data.nombre}</span>`;
                 }
             } catch(e) { alert("Error de red."); }
             
@@ -948,7 +953,14 @@
             try { await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess); } 
             catch(e) { alert("Sin cámara."); document.getElementById('start-scan-btn').classList.remove('hidden'); document.getElementById('scanner-container-wrapper').classList.add('hidden'); }
         });
-        document.getElementById('stop-scan-btn').addEventListener('click', async () => { if(html5QrCode) await html5QrCode.stop(); document.getElementById('start-scan-btn').classList.remove('hidden'); document.getElementById('scanner-container-wrapper').classList.add('hidden'); });
+        
+        document.getElementById('stop-scan-btn').addEventListener('click', async () => { 
+            if(html5QrCode) {
+                try { await html5QrCode.stop(); } catch(e) { console.warn("Scanner ya detenido"); }
+            }
+            document.getElementById('start-scan-btn').classList.remove('hidden'); 
+            document.getElementById('scanner-container-wrapper').classList.add('hidden'); 
+        });
 
         // REPORTE BASE DE DATOS
         let recToDelete=null;
