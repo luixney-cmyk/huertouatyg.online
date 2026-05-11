@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documento Rector: 1ra Eco-Semana UATyG 2026</title>
+    <!-- Desactiva la búsqueda infinita del ícono de pestaña -->
+    <link rel="icon" href="data:,">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -155,7 +157,6 @@
         
         <!-- DIAPOSITIVA 1: PORTADA -->
         <div class="slide active">
-            <!-- La estructura m-auto asegura centrado vertical perfecto SIN cortar el contenido si es muy grande -->
             <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
                 <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     <div class="z-10 order-2 md:order-1">
@@ -178,7 +179,8 @@
                     <div class="relative flex items-center justify-center order-1 md:order-2 py-8">
                         <div class="absolute w-72 h-72 md:w-96 md:h-96 rounded-full border border-arena z-0"></div>
                         <div class="absolute w-40 h-40 bg-terracota bg-opacity-20 rounded-full -left-4 bottom-4 z-0"></div>
-                        <img src="huertito1.jpg" alt="Póster Oficial" class="relative z-10 w-full max-w-[280px] md:max-w-sm shadow-2xl rounded-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1530836369250-ef71a3f5e9cb?q=80&w=800&auto=format&fit=crop'">
+                        <!-- Quitamos la imagen de respaldo externa que causaba el bloqueo -->
+                        <img src="huertito1.jpg" alt="Póster Oficial" class="relative z-10 w-full max-w-[280px] md:max-w-sm shadow-2xl rounded-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500" onerror="this.style.display='none'">
                     </div>
                 </div>
             </div>
@@ -776,6 +778,7 @@
                         <div class="bg-crema p-4 md:p-5 rounded-lg border border-arena text-center">
                             <h4 class="font-bold text-verdeoscuro text-lg mb-2">¡Pase Oficial Listo!</h4>
                             <div class="w-32 h-32 mx-auto bg-white border-2 border-verdeoscuro p-2 rounded-lg mb-3 flex items-center justify-center">
+                                <!-- Corrección onerror para evitar bucles -->
                                 <svg class="w-full h-full text-verdeoscuro" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 0h2v2h-2v-2zm3 3h3v2h-3v-2zm-2 3h2v2h-2v-2zm-3-3h2v2h-2v-2zm3 2h2v2h-2v-2zm-3-5h2v2h-2v-2zm0 3h2v2h-2v-2z"/>
                                 </svg>
@@ -801,7 +804,7 @@
         const totalNum = document.getElementById('total-slides-num');
         const currentNum = document.getElementById('current-slide-num');
         
-        // El total real es 17 (16 del documento + 1 del QR interactivo)
+        // Actualizamos dinámicamente el número total de diapositivas al cargarse (17 en total)
         totalNum.textContent = slides.length;
 
         function showSlide(index) {
@@ -837,6 +840,7 @@
             } else if (e.key === 'ArrowLeft') {
                 prevSlide();
             } else if (e.key === 'Space') {
+                // Solo si no estamos en un input y es un espacio
                 if(document.activeElement === document.body) {
                     e.preventDefault(); 
                     nextSlide();
