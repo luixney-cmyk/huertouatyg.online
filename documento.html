@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documento Rector: 1ra Eco-Semana UATyG 2026</title>
-    <!-- Desactiva la búsqueda infinita del ícono de pestaña -->
-    <link rel="icon" href="data:,">
+    <!-- Solución a la ruedita infinita: Agregamos un Favicon en formato SVG directamente en el código -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -31,10 +31,7 @@
         }
     </script>
     <style>
-        /* * FIX ESTRUCTURAL: 
-         * Forzamos el alto completo y dejamos que el scroll sea exclusivamente 
-         * interno en cada diapositiva para que nada se empalme ni se corte arriba.
-         */
+        /* FIX ESTRUCTURAL */
         html, body { 
             height: 100vh; 
             width: 100vw; 
@@ -66,7 +63,7 @@
             transition: opacity 0.4s ease-in-out;
             overflow-y: auto; 
             overflow-x: hidden;
-            padding-top: 5rem; /* Solo para librar la barra de navegación */
+            padding-top: 5rem; 
         }
         
         .slide.active { 
@@ -126,13 +123,11 @@
             top: -0.2rem;
         }
 
-        /* =========================================
-           CONFIGURACIÓN ESPECIAL PARA IMPRESIÓN Y PDF
-           ========================================= */
+        /* CONFIGURACIÓN ESPECIAL PARA IMPRESIÓN Y PDF */
         @media print {
             @page {
-                size: letter landscape; /* Forzamos tamaño carta y orientación horizontal */
-                margin: 0; /* Sin márgenes en blanco del navegador */
+                size: letter landscape; 
+                margin: 0; 
             }
             html, body { 
                 height: auto !important; 
@@ -140,32 +135,28 @@
                 overflow: visible !important; 
                 background-color: #F8F6F0 !important; 
                 -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; /* Fuerza a imprimir los colores de fondo */
+                print-color-adjust: exact !important; 
             }
-            /* Ocultamos la barra de botones superior */
             .fixed.top-0 { 
                 display: none !important; 
             }
-            /* Cambiamos el contenedor a modo bloque continuo */
             #presentation-container { 
                 display: block !important; 
                 position: static !important;
             }
-            /* Mostramos TODAS las diapositivas (no solo la activa) */
             .slide {
                 position: relative !important;
                 opacity: 1 !important;
                 visibility: visible !important;
                 display: flex !important;
-                height: 100vh !important; /* Cada diapositiva toma exactamente el 100% de la hoja */
+                height: 100vh !important; 
                 width: 100% !important;
-                page-break-after: always !important; /* Salto de página forzado después de cada slide */
+                page-break-after: always !important; 
                 break-after: page !important;
-                padding-top: 2rem !important; /* Ajustamos el aire de arriba al no estar la barra */
+                padding-top: 2rem !important; 
                 padding-bottom: 2rem !important;
                 overflow: hidden !important; 
             }
-            /* Quitamos barras de scroll para impresión */
             ::-webkit-scrollbar { 
                 display: none !important; 
             }
@@ -177,9 +168,9 @@
     <!-- BARRA DE NAVEGACIÓN FIJA -->
     <div class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-crema bg-opacity-95 backdrop-blur-md border-b border-arena shadow-sm h-20">
         <div class="flex items-center gap-4">
-            <img src="uan3.png" alt="UAN" class="h-8 md:h-10" onerror="this.style.display='none'">
-            <img src="unidad.png" alt="UATyG" class="h-8 md:h-10" onerror="this.style.display='none'">
-            <img src="cetyg.png" alt="CETyG" class="h-8 md:h-10" onerror="this.style.display='none'">
+            <img src="uan3.png" alt="UAN" class="h-8 md:h-10" onerror="this.onerror=null; this.style.display='none';">
+            <img src="unidad.png" alt="UATyG" class="h-8 md:h-10" onerror="this.onerror=null; this.style.display='none';">
+            <img src="cetyg.png" alt="CETyG" class="h-8 md:h-10" onerror="this.onerror=null; this.style.display='none';">
             <span class="ml-4 font-serif font-bold text-lg hidden md:block border-l-2 border-verdesalvia pl-4">Documento Rector</span>
         </div>
         <div class="flex items-center gap-4">
@@ -188,7 +179,7 @@
             </div>
             
             <div class="flex gap-2">
-                <!-- NUEVO: Botón de Imprimir / Guardar PDF -->
+                <!-- Botón de Imprimir / Guardar PDF -->
                 <button onclick="window.print()" title="Imprimir o Guardar como PDF" class="bg-terracota bg-opacity-10 border border-terracota text-terracota hover:bg-terracota hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-sm mr-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                 </button>
@@ -236,8 +227,7 @@
                     <div class="relative flex items-center justify-center order-1 md:order-2 py-8">
                         <div class="absolute w-72 h-72 md:w-96 md:h-96 rounded-full border border-arena z-0"></div>
                         <div class="absolute w-40 h-40 bg-terracota bg-opacity-20 rounded-full -left-4 bottom-4 z-0"></div>
-                        <!-- Quitamos la imagen de respaldo externa que causaba el bloqueo -->
-                        <img src="huertito1.jpg" alt="Póster Oficial" class="relative z-10 w-full max-w-[280px] md:max-w-sm shadow-2xl rounded-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500" onerror="this.style.display='none'">
+                        <img src="huertito1.jpg" alt="Póster Oficial" class="relative z-10 w-full max-w-[280px] md:max-w-sm shadow-2xl rounded-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500" onerror="this.onerror=null; this.style.display='none';">
                     </div>
                 </div>
             </div>
@@ -290,17 +280,15 @@
                 <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
                         <h2 class="section-title">1. PRESENTACIÓN DEL PROYECTO</h2>
-                        <p class="body-text">La “1ra ECO-SEMANA UATyG 2026: Sustentabilidad, Entorno, Turismo y Gastronomía” representa una propuesta académica interdisciplinaria orientada a fortalecer la identidad sustentable de la Unidad Académica de Turismo y Gastronomía mediante experiencias formativas, prácticas y comunitarias.</p>
-                        <p class="body-text">El proyecto surge con la intención de trascender el formato tradicional de semanas académicas o eventos temporales, proponiendo en su lugar una plataforma integral de aprendizaje y participación que deje un legado institucional permanente.</p>
-                        <p class="body-text">La Eco-Semana no se concibe únicamente como una serie de conferencias y talleres, sino como el inicio formal de una nueva cultura universitaria enfocada en la sustentabilidad aplicada al turismo, la gastronomía y el aprovechamiento responsable del entorno.</p>
-                        <p class="body-text">Como resultado tangible del proyecto, se plantea la inauguración oficial del Huerto Académico y la Estación de Compostaje de la UATyG, espacios concebidos como laboratorios vivos de aprendizaje práctico, innovación académica y participación estudiantil.</p>
+                        <p class="body-text">La <strong>“1ra ECO-SEMANA UATyG 2026”</strong> es una propuesta académica interdisciplinaria diseñada para fortalecer la identidad sustentable de nuestra Unidad mediante experiencias formativas y comunitarias.</p>
+                        <p class="body-text">Más que un evento temporal, buscamos establecer una plataforma de aprendizaje que deje un legado institucional: el inicio de una nueva cultura universitaria enfocada en la sustentabilidad práctica.</p>
+                        <p class="body-text">Como resultado tangible, inauguraremos oficialmente el <strong>Huerto Académico</strong> y la <strong>Estación de Compostaje</strong> de la UATyG, espacios concebidos como laboratorios vivos de innovación y participación estudiantil.</p>
                     </div>
                     <div>
                         <h2 class="section-title">2. INTRODUCCIÓN</h2>
-                        <p class="body-text">En el contexto actual, las institutions educativas enfrentan el desafío de formar profesionales capaces de responder a problemáticas ambientales, sociales y económicas desde una perspectiva interdisciplinaria y sustentable.</p>
-                        <p class="body-text">La industria turística y gastronómica, particularmente, atraviesa una transformación global donde conceptos como sostenibilidad, economía circular, producción local, turismo regenerativo y aprovechamiento responsable de recursos adquieren cada vez mayor relevancia.</p>
-                        <p class="body-text">Frente a este panorama, la Unidad Académica de Turismo y Gastronomía tiene la oportunidad de consolidarse como un referente universitario en innovación sustentable mediante la creación de espacios de aprendizaje experiencial que conecten la teoría con la práctica.</p>
-                        <p class="body-text">La 1ra ECO-SEMANA UATyG 2026 busca precisamente generar esta conexión, integrando actividades académicas, prácticas y comunitarias capaces de fortalecer la formación profesional de los estudiantes mientras se construye un proyecto institucional de largo alcance.</p>
+                        <p class="body-text">La industria turística y gastronómica atraviesa una transformación global donde la sostenibilidad, la economía circular y el turismo regenerativo son fundamentales. El reto educativo es formar profesionales que respondan a estos paradigmas.</p>
+                        <p class="body-text">Frente a este panorama, la UATyG tiene la oportunidad de consolidarse como un referente en innovación sustentable creando espacios de aprendizaje experiencial.</p>
+                        <p class="body-text">La 1ra ECO-SEMANA genera esta conexión, integrando teoría y práctica para fortalecer la formación profesional de los estudiantes a través de un proyecto de largo alcance.</p>
                     </div>
                 </div>
             </div>
@@ -312,44 +300,25 @@
                 <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
                         <h2 class="section-title">3. JUSTIFICACIÓN</h2>
-                        <p class="body-text">La creación de la 1ra ECO-SEMANA UATyG 2026 nace de la necesidad de alinear a la Unidad Académica de Turismo y Gastronomía con las tendencias globales de sustentabilidad, responsabilidad ambiental e innovación educativa.</p>
-                        <p class="body-text">Actualmente, las universidades no solo deben formar profesionistas técnicamente competentes, sino también ciudadanos capaces de comprender y responder a los retos ambientales y sociales contemporáneos.</p>
-                        <p class="body-text">En este sentido, la Eco-Semana representa una estrategia académica que permitirá integrar conocimientos teóricos y prácticos mediante actividades interdisciplinarias vinculadas con:</p>
+                        <p class="body-text">Este proyecto nace de la necesidad de alinear a la UATyG con las tendencias globales de responsabilidad ambiental, formando profesionistas conscientes y proactivos ante los retos actuales.</p>
+                        <p class="body-text">La Eco-Semana integrará conocimientos teóricos y prácticos mediante actividades vinculadas con:</p>
                         <ul class="bullet-list">
-                            <li>agricultura urbana,</li>
-                            <li>hidroponía,</li>
-                            <li>compostaje,</li>
-                            <li>paisajismo urbano,</li>
-                            <li>gastronomía sustentable,</li>
-                            <li>turismo regenerativo,</li>
-                            <li>aprovechamiento responsable de residuos,</li>
-                            <li>y participación comunitaria.</li>
+                            <li>agricultura urbana e hidroponía,</li>
+                            <li>compostaje y manejo de residuos,</li>
+                            <li>paisajismo y turismo regenerativo,</li>
+                            <li>gastronomía sustentable.</li>
                         </ul>
-                        <p class="body-text">Además de su valor académico, el proyecto busca dejar un legado institucional tangible mediante la creación del Huerto Académico y la Estación de Compostaje, espacios permanentes destinados al aprendizaje práctico, la integración estudiantil y la apropiación sustentable del entorno universitario.</p>
+                        <p class="body-text">El fin último es dejar un legado institucional permanente destinado a la integración estudiantil y la apropiación sustentable del entorno.</p>
                     </div>
                     <div>
                         <h2 class="section-title">4. CONTEXTO Y FUNDAMENTACIÓN</h2>
-                        <p class="body-text">La sustentabilidad se ha convertido en uno de los principales ejes de transformación dentro de las industrias turísticas y gastronómicas a nivel mundial.</p>
-                        <p class="body-text">Hoteles, restaurantes, destinos turísticos y espacios urbanos integran cada vez más prácticas relacionadas con:</p>
+                        <p class="body-text">Hoteles, restaurantes y destinos turísticos integran cada vez más prácticas de producción local, economía circular y consumo responsable. La formación universitaria debe evolucionar hacia modelos experienciales que reflejen esta realidad.</p>
+                        <p class="body-text">La Eco-Semana responde a esto, permitiendo que los estudiantes participen activamente en la creación y mantenimiento de espacios sustentables reales.</p>
+                        <p class="body-text">El Huerto Académico fungirá como entorno de aprendizaje constante para experimentar procesos de:</p>
                         <ul class="bullet-list">
-                            <li>reducción de residuos,</li>
-                            <li>producción local,</li>
-                            <li>diseño de espacios verdes,</li>
-                            <li>agricultura urbana,</li>
-                            <li>consumo responsable,</li>
-                            <li>y economía circular.</li>
-                        </ul>
-                        <p class="body-text">Bajo este contexto, la formación universitaria debe evolucionar hacia modelos educativos más experienciales y participativos.</p>
-                        <p class="body-text">El proyecto de la Eco-Semana responde precisamente a esta necesidad, permitiendo que los estudiantes no solo reciban información teórica, sino que participen activamente en la creación, implementación y mantenimiento de espacios sustentables reales.</p>
-                        <p class="body-text">La integración del Huerto Académico permitirá desarrollar un entorno de aprendizaje permanente donde los estudiantes podrán experimentar procesos relacionados con:</p>
-                        <ul class="bullet-list">
-                            <li>cultivo de aromáticas,</li>
-                            <li>hidroponía,</li>
-                            <li>germinados,</li>
-                            <li>compostaje,</li>
-                            <li>producción sustentable,</li>
-                            <li>paisajismo,</li>
-                            <li>y aplicaciones gastronómicas.</li>
+                            <li>cultivo de aromáticas y germinados,</li>
+                            <li>compostaje e hidroponía,</li>
+                            <li>paisajismo y aplicaciones culinarias.</li>
                         </ul>
                     </div>
                 </div>
