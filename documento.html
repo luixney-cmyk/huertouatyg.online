@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Rector: 1ra Eco-Semana UATyG 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        crema: '#F8F6F0',
+                        verdeoscuro: '#1E392A',
+                        verdesalvia: '#698B69',
+                        terracota: '#C27B67',
+                        arena: '#D4C5B0'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* * FIX ESTRUCTURAL: 
+         * Forzamos el alto completo y dejamos que el scroll sea exclusivamente 
+         * interno en cada diapositiva para que nada se empalme ni se corte arriba.
+         */
+        html, body { 
+            height: 100vh; 
+            width: 100vw; 
+            margin: 0; 
+            padding: 0;
+            background-color: #F8F6F0; 
+            overflow: hidden; 
+        }
+        
+        .bg-pattern {
+            background-image: radial-gradient(#D4C5B0 1px, transparent 1px);
+            background-size: 35px 35px;
+        }
+
+        #presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            opacity: 0; 
+            visibility: hidden; 
+            transition: opacity 0.4s ease-in-out;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            padding-top: 5rem; /* Solo para librar la barra de navegación */
+        }
+        
+        .slide.active { 
+            opacity: 1; 
+            visibility: visible; 
+            z-index: 10; 
+        }
+        
+        /* Barra de desplazamiento elegante */
+        .slide::-webkit-scrollbar { width: 8px; }
+        .slide::-webkit-scrollbar-track { background: transparent; }
+        .slide::-webkit-scrollbar-thumb { background: #D4C5B0; border-radius: 4px; border: 2px solid #F8F6F0; }
+        .slide::-webkit-scrollbar-thumb:hover { background: #698B69; }
+
+        /* Tipografía Editorial */
+        h2.section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #1E392A;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid #D4C5B0;
+            padding-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        p.body-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 1.2rem;
+        }
+        
+        ul.bullet-list {
+            list-style-type: none;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        ul.bullet-list li {
+            position: relative;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        ul.bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: -1.2rem;
+            color: #698B69;
+            font-weight: bold;
+            font-size: 1.5rem;
+            top: -0.2rem;
+        }
+    </style>
+</head>
+<body class="text-verdeoscuro antialiased bg-pattern">
+
+    <!-- BARRA DE NAVEGACIÓN FIJA -->
+    <div class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-crema bg-opacity-95 backdrop-blur-md border-b border-arena shadow-sm h-20">
+        <div class="flex items-center gap-4">
+            <img src="uan.png" alt="UAN" class="h-8 md:h-10" onerror="this.style.display='none'">
+            <img src="unidad.png" alt="UATyG" class="h-8 md:h-10" onerror="this.style.display='none'">
+            <img src="cetyg.png" alt="CETyG" class="h-8 md:h-10" onerror="this.style.display='none'">
+            <span class="ml-4 font-serif font-bold text-lg hidden md:block border-l-2 border-verdesalvia pl-4">Documento Rector</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-xs md:text-sm font-semibold text-verdesalvia tracking-widest uppercase">
+                Pág. <span id="current-slide-num">1</span> / <span id="total-slides-num">17</span>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="prevSlide()" class="bg-white border border-verdesalvia text-verdesalvia hover:bg-verdesalvia hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button onclick="nextSlide()" class="bg-verdeoscuro text-white hover:bg-verdesalvia rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div id="presentation-container">
+        
+        <!-- DIAPOSITIVA 1: PORTADA -->
+        <div class="slide active">
+            <!-- La estructura m-auto asegura centrado vertical perfecto SIN cortar el contenido si es muy grande -->
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="z-10 order-2 md:order-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="w-12 h-1 bg-terracota block"></span>
+                            <span class="text-terracota font-bold tracking-widest uppercase text-xs md:text-sm">Documento Rector del Proyecto</span>
+                        </div>
+                        <h1 class="font-serif text-5xl md:text-7xl font-black text-verdeoscuro leading-none mb-4">
+                            <span class="text-verdesalvia text-4xl md:text-5xl">1ra</span><br>ECO-SEMANA
+                        </h1>
+                        <h2 class="font-serif text-3xl md:text-4xl text-verdeoscuro mb-6 inline-block border-b-2 border-arena pb-2">UATyG 2026</h2>
+                        <p class="text-xl md:text-2xl font-light text-verdeoscuro mb-8">Sustentabilidad, Entorno, Turismo y Gastronomía</p>
+                        
+                        <div class="bg-white p-6 border-l-4 border-verdesalvia shadow-lg rounded-r-xl">
+                            <p class="font-serif text-xl md:text-2xl text-verdeoscuro italic">
+                                “Cultivando conocimiento, cosechando futuro.”
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex items-center justify-center order-1 md:order-2 py-8">
+                        <div class="absolute w-72 h-72 md:w-96 md:h-96 rounded-full border border-arena z-0"></div>
+                        <div class="absolute w-40 h-40 bg-terracota bg-opacity-20 rounded-full -left-4 bottom-4 z-0"></div>
+                        <img src="huertito1.jpg" alt="Póster Oficial" class="relative z-10 w-full max-w-[280px] md:max-w-sm shadow-2xl rounded-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1530836369250-ef71a3f5e9cb?q=80&w=800&auto=format&fit=crop'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 2: ÍNDICE -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-arena">
+                    <h2 class="section-title text-center !border-b-0 mb-8">ÍNDICE</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">1.</span> <span class="text-gray-800 font-medium">Presentación del Proyecto</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">2.</span> <span class="text-gray-800 font-medium">Introducción</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">3.</span> <span class="text-gray-800 font-medium">Justificación</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">4.</span> <span class="text-gray-800 font-medium">Contexto y Fundamentación</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">5.</span> <span class="text-gray-800 font-medium">Objetivo General</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">6.</span> <span class="text-gray-800 font-medium">Objetivos Específicos</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">7.</span> <span class="text-gray-800 font-medium">Filosofía del Proyecto</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">8.</span> <span class="text-gray-800 font-medium">Concepto General de la Eco-Semana</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">9.</span> <span class="text-gray-800 font-medium">Ejes Temáticos</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">10.</span> <span class="text-gray-800 font-medium">Impacto Académico</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">11.</span> <span class="text-gray-800 font-medium">Impacto Institucional</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">12.</span> <span class="text-gray-800 font-medium">Impacto Ambiental y Comunitario</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">13.</span> <span class="text-gray-800 font-medium">Descripción del Huerto Académico</span></div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">14.</span> <span class="text-gray-800 font-medium">Descripción de la Estación de Compostaje</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">15.</span> <span class="text-gray-800 font-medium">Sistema Digital e Innovación Tecnológica</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">16.</span> <span class="text-gray-800 font-medium">Experiencia Estudiantil y Participación</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">17.</span> <span class="text-gray-800 font-medium">Propuesta General de Actividades</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">18.</span> <span class="text-gray-800 font-medium">Calendario Tentativo</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">19.</span> <span class="text-gray-800 font-medium">Inauguración Oficial del Huerto Académico</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">20.</span> <span class="text-gray-800 font-medium">Estrategia de Identidad Visual y Difusión</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">21.</span> <span class="text-gray-800 font-medium">Organización y Comité Operativo</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">22.</span> <span class="text-gray-800 font-medium">Recursos Necesarios</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">23.</span> <span class="text-gray-800 font-medium">Vinculación y Potenciales Alianzas</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">24.</span> <span class="text-gray-800 font-medium">Proyección a Futuro</span></div>
+                            <div class="flex gap-3 items-start"><span class="text-verdesalvia font-bold">25.</span> <span class="text-gray-800 font-medium">Conclusión General</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 3: PRESENTACIÓN E INTRODUCCIÓN -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">1. PRESENTACIÓN DEL PROYECTO</h2>
+                        <p class="body-text">La “1ra ECO-SEMANA UATyG 2026: Sustentabilidad, Entorno, Turismo y Gastronomía” representa una propuesta académica interdisciplinaria orientada a fortalecer la identidad sustentable de la Unidad Académica de Turismo y Gastronomía mediante experiencias formativas, prácticas y comunitarias.</p>
+                        <p class="body-text">El proyecto surge con la intención de trascender el formato tradicional de semanas académicas o eventos temporales, proponiendo en su lugar una plataforma integral de aprendizaje y participación que deje un legado institucional permanente.</p>
+                        <p class="body-text">La Eco-Semana no se concibe únicamente como una serie de conferencias y talleres, sino como el inicio formal de una nueva cultura universitaria enfocada en la sustentabilidad aplicada al turismo, la gastronomía y el aprovechamiento responsable del entorno.</p>
+                        <p class="body-text">Como resultado tangible del proyecto, se plantea la inauguración oficial del Huerto Académico y la Estación de Compostaje de la UATyG, espacios concebidos como laboratorios vivos de aprendizaje práctico, innovación académica y participación estudiantil.</p>
+                    </div>
+                    <div>
+                        <h2 class="section-title">2. INTRODUCCIÓN</h2>
+                        <p class="body-text">En el contexto actual, las instituciones educativas enfrentan el desafío de formar profesionales capaces de responder a problemáticas ambientales, sociales y económicas desde una perspectiva interdisciplinaria y sustentable.</p>
+                        <p class="body-text">La industria turística y gastronómica, particularmente, atraviesa una transformación global donde conceptos como sostenibilidad, economía circular, producción local, turismo regenerativo y aprovechamiento responsable de recursos adquieren cada vez mayor relevancia.</p>
+                        <p class="body-text">Frente a este panorama, la Unidad Académica de Turismo y Gastronomía tiene la oportunidad de consolidarse como un referente universitario en innovación sustentable mediante la creación de espacios de aprendizaje experiencial que conecten la teoría con la práctica.</p>
+                        <p class="body-text">La 1ra ECO-SEMANA UATyG 2026 busca precisamente generar esta conexión, integrando actividades académicas, prácticas y comunitarias capaces de fortalecer la formación profesional de los estudiantes mientras se construye un proyecto institucional de largo alcance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 4: JUSTIFICACIÓN Y CONTEXTO -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">3. JUSTIFICACIÓN</h2>
+                        <p class="body-text">La creación de la 1ra ECO-SEMANA UATyG 2026 nace de la necesidad de alinear a la Unidad Académica de Turismo y Gastronomía con las tendencias globales de sustentabilidad, responsabilidad ambiental e innovación educativa.</p>
+                        <p class="body-text">Actualmente, las universidades no solo deben formar profesionistas técnicamente competentes, sino también ciudadanos capaces de comprender y responder a los retos ambientales y sociales contemporáneos.</p>
+                        <p class="body-text">En este sentido, la Eco-Semana representa una estrategia académica que permitirá integrar conocimientos teóricos y prácticos mediante actividades interdisciplinarias vinculadas con:</p>
+                        <ul class="bullet-list">
+                            <li>agricultura urbana,</li>
+                            <li>hidroponía,</li>
+                            <li>compostaje,</li>
+                            <li>paisajismo urbano,</li>
+                            <li>gastronomía sustentable,</li>
+                            <li>turismo regenerativo,</li>
+                            <li>aprovechamiento responsable de residuos,</li>
+                            <li>y participación comunitaria.</li>
+                        </ul>
+                        <p class="body-text">Además de su valor académico, el proyecto busca dejar un legado institucional tangible mediante la creación del Huerto Académico y la Estación de Compostaje, espacios permanentes destinados al aprendizaje práctico, la integración estudiantil y la apropiación sustentable del entorno universitario.</p>
+                    </div>
+                    <div>
+                        <h2 class="section-title">4. CONTEXTO Y FUNDAMENTACIÓN</h2>
+                        <p class="body-text">La sustentabilidad se ha convertido en uno de los principales ejes de transformación dentro de las industrias turísticas y gastronómicas a nivel mundial.</p>
+                        <p class="body-text">Hoteles, restaurantes, destinos turísticos y espacios urbanos integran cada vez más prácticas relacionadas con:</p>
+                        <ul class="bullet-list">
+                            <li>reducción de residuos,</li>
+                            <li>producción local,</li>
+                            <li>diseño de espacios verdes,</li>
+                            <li>agricultura urbana,</li>
+                            <li>consumo responsable,</li>
+                            <li>y economía circular.</li>
+                        </ul>
+                        <p class="body-text">Bajo este contexto, la formación universitaria debe evolucionar hacia modelos educativos más experienciales y participativos.</p>
+                        <p class="body-text">El proyecto de la Eco-Semana responde precisamente a esta necesidad, permitiendo que los estudiantes no solo reciban información teórica, sino que participen activamente en la creación, implementación y mantenimiento de espacios sustentables reales.</p>
+                        <p class="body-text">La integración del Huerto Académico permitirá desarrollar un entorno de aprendizaje permanente donde los estudiantes podrán experimentar procesos relacionados con:</p>
+                        <ul class="bullet-list">
+                            <li>cultivo de aromáticas,</li>
+                            <li>hidroponía,</li>
+                            <li>germinados,</li>
+                            <li>compostaje,</li>
+                            <li>producción sustentable,</li>
+                            <li>paisajismo,</li>
+                            <li>y aplicaciones gastronómicas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 5: OBJETIVOS -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl">
+                    <h2 class="section-title">5. OBJETIVO GENERAL</h2>
+                    <div class="bg-white p-8 rounded-2xl shadow-md border-l-4 border-verdesalvia mb-12">
+                        <p class="body-text font-serif italic text-xl md:text-2xl !text-verdeoscuro !mb-0">
+                            Inaugurar de manera oficial el Huerto Académico y la Estación de Compostaje de la UATyG mediante una semana intensiva de capacitación, integración y aprendizaje interdisciplinario orientado a la sustentabilidad aplicada al turismo y la gastronomía.
+                        </p>
+                    </div>
+
+                    <h2 class="section-title">6. OBJETIVOS ESPECÍFICOS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                        <ul class="bullet-list">
+                            <li>Capacitar a los estudiantes mediante talleres prácticos enfocados en hidroponía, compostaje, agricultura urbana y producción de germinados.</li>
+                            <li>Fortalecer el panorama profesional de ambas licenciaturas a través de conferencias especializadas en sustentabilidad, paisajismo urbano y turismo regenerativo.</li>
+                            <li>Promover el aprovechamiento responsable de residuos orgánicos mediante la implementación de una estación de compostaje universitaria.</li>
+                        </ul>
+                        <ul class="bullet-list">
+                            <li>Fomentar la participación comunitaria y el sentido de pertenencia mediante proyectos colaborativos de impacto permanente.</li>
+                            <li>Crear espacios universitarios funcionales, verdes y pedagógicos que fortalezcan la identidad sustentable de la unidad académica.</li>
+                            <li>Integrar herramientas tecnológicas y sistemas digitales para modernizar la experiencia académica y organizacional del evento.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 6: FILOSOFÍA Y CONCEPTO -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">7. FILOSOFÍA DEL PROYECTO</h2>
+                        <p class="body-text">La Eco-Semana UATyG 2026 se fundamenta en la idea de que la sustentabilidad debe vivirse, experimentarse y construirse colectivamente.</p>
+                        <p class="body-text">Más allá de un evento temporal, el proyecto busca sembrar una nueva cultura universitaria basada en:</p>
+                        <ul class="bullet-list">
+                            <li>aprendizaje práctico,</li>
+                            <li>responsabilidad ambiental,</li>
+                            <li>innovación,</li>
+                            <li>trabajo colaborativo,</li>
+                            <li>apropiación del entorno,</li>
+                            <li>y transformación institucional.</li>
+                        </ul>
+                        <p class="body-text">El concepto central del proyecto puede resumirse en una frase:</p>
+                        <div class="bg-terracota bg-opacity-10 p-6 rounded-xl border border-terracota text-center mt-6 shadow-sm">
+                            <p class="font-serif text-2xl text-terracota font-bold">“Transformar una semana académica en un legado permanente para la UATyG.”</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="section-title">8. CONCEPTO GENERAL DE LA ECO-SEMANA</h2>
+                        <p class="body-text">La 1ra ECO-SEMANA UATyG 2026 se plantea como una experiencia académica inmersiva que combina:</p>
+                        <ul class="bullet-list">
+                            <li>conferencias,</li>
+                            <li>talleres prácticos,</li>
+                            <li>participación estudiantil,</li>
+                            <li>innovación tecnológica,</li>
+                            <li>integración comunitaria,</li>
+                            <li>y transformación física del entorno universitario.</li>
+                        </ul>
+                        <p class="body-text">El evento se estructura bajo un modelo híbrido entre formación académica y experiencia participativa, donde los estudiantes no solo asisten a actividades, sino que forman parte activa del proyecto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 7: EJES TEMÁTICOS -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl">
+                    <h2 class="section-title text-center !border-b-0">9. EJES TEMÁTICOS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-white p-8 rounded-2xl border-t-4 border-verdesalvia shadow-md">
+                            <h3 class="font-bold text-xl mb-3 text-verdeoscuro">1. Gastronomía Sustentable</h3>
+                            <p class="body-text !text-sm">Aplicación de ingredientes frescos, aromáticas y productos de proximidad en la cocina contemporánea.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border-t-4 border-terracota shadow-md">
+                            <h3 class="font-bold text-xl mb-3 text-verdeoscuro">2. Agricultura Urbana e Hidroponía</h3>
+                            <p class="body-text !text-sm">Desarrollo de sistemas de cultivo adaptados a espacios urbanos y educativos.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border-t-4 border-verdeoscuro shadow-md">
+                            <h3 class="font-bold text-xl mb-3 text-verdeoscuro">3. Manejo Responsable de Residuos</h3>
+                            <p class="body-text !text-sm">Capacitación en compostaje y aprovechamiento de residuos orgánicos.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border-t-4 border-arena shadow-md md:col-start-1 md:col-end-3 lg:col-auto">
+                            <h3 class="font-bold text-xl mb-3 text-verdeoscuro">4. Turismo Sustentable y Paisajismo Urbano</h3>
+                            <p class="body-text !text-sm">Análisis del paisajismo y los espacios verdes como herramientas de desarrollo turístico.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border-t-4 border-verdesalvia shadow-md lg:col-start-2 lg:col-end-4">
+                            <h3 class="font-bold text-xl mb-3 text-verdeoscuro">5. Comunidad, Innovación y Participación</h3>
+                            <p class="body-text !text-sm">Fortalecimiento del trabajo colaborativo y apropiación de espacios universitarios.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 8: IMPACTO ACADÉMICO E INSTITUCIONAL -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">10. IMPACTO ACADÉMICO</h2>
+                        <p class="body-text">La Eco-Semana permitirá fortalecer las competencias profesionales de los estudiantes mediante experiencias de aprendizaje práctico vinculadas directamente con las tendencias contemporáneas del turismo y la gastronomía.</p>
+                        <p class="body-text">Los estudiantes podrán desarrollar habilidades relacionadas con:</p>
+                        <ul class="bullet-list">
+                            <li>producción sustentable,</li>
+                            <li>hidroponía,</li>
+                            <li>paisajismo,</li>
+                            <li>compostaje,</li>
+                            <li>manejo de aromáticas,</li>
+                            <li>diseño gastronómico,</li>
+                            <li>y sustentabilidad aplicada.</li>
+                        </ul>
+                        <p class="body-text">Asimismo, el Huerto Académico funcionará como un laboratorio vivo capaz de integrarse a futuras prácticas, talleres y proyectos interdisciplinarios.</p>
+                    </div>
+                    <div>
+                        <h2 class="section-title">11. IMPACTO INSTITUCIONAL</h2>
+                        <p class="body-text">La implementación del proyecto fortalecerá la identidad institucional de la UATyG mediante:</p>
+                        <ul class="bullet-list">
+                            <li>creación de espacios sustentables permanentes,</li>
+                            <li>integración interdisciplinaria,</li>
+                            <li>innovación académica,</li>
+                            <li>fortalecimiento de imagen institucional,</li>
+                            <li>participación estudiantil,</li>
+                            <li>y modernización de experiencias universitarias.</li>
+                        </ul>
+                        <p class="body-text mt-6 font-bold text-verdeoscuro">La Eco-Semana tiene potencial para consolidarse como un evento anual insignia de la unidad académica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 9: IMPACTO AMBIENTAL Y HUERTO -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">12. IMPACTO AMBIENTAL Y COMUNITARIO</h2>
+                        <p class="body-text">El proyecto contribuirá al desarrollo de una cultura ambiental universitaria enfocada en:</p>
+                        <ul class="bullet-list">
+                            <li>reducción de residuos,</li>
+                            <li>compostaje,</li>
+                            <li>reutilización,</li>
+                            <li>conciencia ecológica,</li>
+                            <li>y apropiación responsable de espacios comunes.</li>
+                        </ul>
+                        <p class="body-text">Además, permitirá fortalecer la convivencia estudiantil y el trabajo colaborativo entre ambas licenciaturas.</p>
+                    </div>
+                    <div>
+                        <h2 class="section-title">13. DESCRIPCIÓN DEL HUERTO ACADÉMICO</h2>
+                        <p class="body-text">El Huerto Académico será un espacio permanente destinado al aprendizaje práctico, la experimentación y la convivencia universitaria.</p>
+                        <p class="body-text">Se contempla integrar:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>aromáticas culinarias,</li>
+                            <li>hidroponía básica,</li>
+                            <li>señalética educativa,</li>
+                            <li>zonas verdes,</li>
+                            <li>áreas de interacción,</li>
+                            <li class="col-span-2">y sistemas sustentables de mantenimiento.</li>
+                        </ul>
+                        <p class="body-text mt-4">Las principales especies contempladas incluyen:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>romero,</li>
+                            <li>tomillo,</li>
+                            <li>albahaca,</li>
+                            <li>hierbabuena,</li>
+                            <li>menta,</li>
+                            <li class="col-span-2">y otras plantas aromáticas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 10: COMPOSTAJE Y SISTEMA DIGITAL -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">14. DESCRIPCIÓN DE LA ESTACIÓN DE COMPOSTAJE</h2>
+                        <p class="body-text">La estación de compostaje tendrá como objetivo aprovechar residuos orgánicos generados dentro de la unidad académica para producir composta destinada al mantenimiento del Huerto Académico.</p>
+                        <p class="body-text">El sistema permitirá:</p>
+                        <ul class="bullet-list">
+                            <li>reducir residuos,</li>
+                            <li>fomentar la economía circular,</li>
+                            <li>fortalecer la educación ambiental,</li>
+                            <li>y demostrar procesos sustentables aplicados.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="section-title">15. SISTEMA DIGITAL E INNOVACIÓN TECNOLÓGICA</h2>
+                        <p class="body-text">Como parte de la modernización del evento, se plantea la implementación de un sistema digital de gestión académica y participación estudiantil.</p>
+                        <p class="body-text">Este sistema incluirá:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>registro digital,</li>
+                            <li>selección de talleres,</li>
+                            <li>control de cupos,</li>
+                            <li>acreditación mediante QR,</li>
+                            <li>validación de asistencia,</li>
+                            <li>insignias digitales,</li>
+                            <li>y panel administrativo.</li>
+                        </ul>
+                        <p class="body-text mt-4">El objetivo es generar una experiencia organizada, innovadora y alineada con tendencias tecnológicas contemporáneas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 11: EXPERIENCIA Y PROPUESTA DE ACTIVIDADES -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">16. EXPERIENCIA ESTUDIANTIL Y PARTICIPACIÓN</h2>
+                        <p class="body-text">La Eco-Semana busca que los estudiantes vivan una experiencia activa e inmersiva.</p>
+                        <p class="body-text">Por ello, el proyecto contempla:</p>
+                        <ul class="bullet-list">
+                            <li>talleres prácticos,</li>
+                            <li>participación en el montaje del huerto,</li>
+                            <li>dinámicas colaborativas,</li>
+                            <li>retos ecológicos,</li>
+                            <li>actividades interdisciplinarias,</li>
+                            <li>y procesos de apropiación del espacio universitario.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="section-title">17. PROPUESTA GENERAL DE ACTIVIDADES</h2>
+                        <p class="body-text">Las actividades estarán divididas entre:</p>
+                        <div class="bg-white p-6 rounded-2xl border border-arena shadow-sm mb-6">
+                            <h3 class="font-bold text-xl text-verdeoscuro mb-2 border-b border-gray-100 pb-2">Turno Matutino</h3>
+                            <p class="body-text !mb-0">Conferencias, paneles y charlas académicas.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-arena shadow-sm">
+                            <h3 class="font-bold text-xl text-verdeoscuro mb-2 border-b border-gray-100 pb-2">Turno Vespertino</h3>
+                            <p class="body-text !mb-0">Talleres prácticos, experiencias colaborativas y actividades de aplicación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 12: CALENDARIO -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl">
+                    <h2 class="section-title text-center !border-b-0 mb-8">18. CALENDARIO TENTATIVO</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl border border-arena shadow-sm">
+                            <h3 class="font-serif text-2xl font-bold text-verdeoscuro mb-4 border-b border-gray-100 pb-2">Lunes</h3>
+                            <p class="text-sm font-bold text-verdesalvia uppercase">Conferencia Magistral:</p>
+                            <p class="body-text !text-base mb-4">“El Huerto como Atractivo: Paisajismo Urbano y Agroturismo”</p>
+                            <p class="text-sm font-bold text-terracota uppercase">Taller:</p>
+                            <p class="body-text !text-base !mb-0">“Introducción a la Hidroponía”</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-arena shadow-sm">
+                            <h3 class="font-serif text-2xl font-bold text-verdeoscuro mb-4 border-b border-gray-100 pb-2">Martes</h3>
+                            <p class="text-sm font-bold text-verdesalvia uppercase">Conferencia:</p>
+                            <p class="body-text !text-base mb-4">“Economía Circular y Reducción de Desperdicios en la Cocina”</p>
+                            <p class="text-sm font-bold text-terracota uppercase">Taller:</p>
+                            <p class="body-text !text-base !mb-0">“Estación de Compostaje”</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-arena shadow-sm">
+                            <h3 class="font-serif text-2xl font-bold text-verdeoscuro mb-4 border-b border-gray-100 pb-2">Miércoles</h3>
+                            <p class="text-sm font-bold text-verdesalvia uppercase">Conferencia:</p>
+                            <p class="body-text !text-base mb-4">“Botánica Culinaria: El Valor del Entorno en la Alta Cocina”</p>
+                            <p class="text-sm font-bold text-terracota uppercase">Taller:</p>
+                            <p class="body-text !text-base !mb-0">“Producción de Germinados y Brotes”</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-arena shadow-sm lg:col-start-1 lg:col-end-3">
+                            <h3 class="font-serif text-2xl font-bold text-verdeoscuro mb-4 border-b border-gray-100 pb-2">Jueves</h3>
+                            <p class="text-sm font-bold text-verdesalvia uppercase">Panel:</p>
+                            <p class="body-text !text-base mb-4">“Comunidad y Espacios Universitarios Sustentables”</p>
+                            <p class="text-sm font-bold text-terracota uppercase">Taller:</p>
+                            <p class="body-text !text-base !mb-0">“Ensaladas, Aderezos y Emplatados Técnicos”</p>
+                        </div>
+                        <div class="bg-verdeoscuro p-6 rounded-xl border border-arena shadow-sm text-white flex flex-col justify-center">
+                            <h3 class="font-serif text-2xl font-bold mb-4 border-b border-gray-600 pb-2">Viernes</h3>
+                            <p class="font-bold text-lg">Gran inauguración oficial del Huerto Académico y la Estación de Compostaje.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 13: INAUGURACIÓN E IDENTIDAD VISUAL -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">19. INAUGURACIÓN OFICIAL DEL HUERTO ACADÉMICO</h2>
+                        <p class="body-text">La jornada de clausura estará destinada a la inauguración oficial del proyecto mediante:</p>
+                        <ul class="bullet-list">
+                            <li>recorrido guiado,</li>
+                            <li>siembra simbólica,</li>
+                            <li>activación de composta,</li>
+                            <li>exhibiciones estudiantiles,</li>
+                            <li>degustaciones,</li>
+                            <li>y convivencia institucional.</li>
+                        </ul>
+                        <p class="body-text mt-6">La intención es consolidar el cierre del evento como una experiencia significativa y representativa para la comunidad universitaria.</p>
+                    </div>
+                    <div>
+                        <h2 class="section-title">20. ESTRATEGIA DE IDENTIDAD VISUAL Y DIFUSIÓN</h2>
+                        <p class="body-text">La Eco-Semana contará con una identidad visual contemporánea y profesional alineada con conceptos de:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>sustentabilidad,</li>
+                            <li>innovación,</li>
+                            <li>diseño editorial,</li>
+                            <li>y branding académico.</li>
+                        </ul>
+                        <p class="body-text mt-6">La difusión incluirá:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>carteles,</li>
+                            <li>redes sociales,</li>
+                            <li>sistema digital,</li>
+                            <li>acreditaciones,</li>
+                            <li>señalética,</li>
+                            <li>y materiales institucionales.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 14: ORGANIZACIÓN Y RECURSOS -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">21. ORGANIZACIÓN Y COMITÉ OPERATIVO</h2>
+                        <p class="body-text">Se propone integrar un comité organizador conformado por estudiantes y docentes responsables de:</p>
+                        <ul class="bullet-list">
+                            <li>coordinación general,</li>
+                            <li>logística,</li>
+                            <li>talleres,</li>
+                            <li>conferencias,</li>
+                            <li>difusión,</li>
+                            <li>tecnología,</li>
+                            <li>protocolo,</li>
+                            <li>y brigada verde.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="section-title">22. RECURSOS NECESARIOS</h2>
+                        <p class="body-text">El proyecto requerirá recursos relacionados con:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>materiales para huerto,</li>
+                            <li>composta,</li>
+                            <li>hidroponía,</li>
+                            <li>impresión,</li>
+                            <li>acreditaciones,</li>
+                            <li>decoración,</li>
+                            <li>señalética,</li>
+                            <li>equipo audiovisual,</li>
+                            <li class="col-span-2">y logística general.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 15: VINCULACIÓN Y PROYECCIÓN -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="section-title">23. VINCULACIÓN Y POTENCIALES ALIANZAS</h2>
+                        <p class="body-text">La Eco-Semana tiene potencial para generar vinculación con:</p>
+                        <ul class="bullet-list">
+                            <li>instituciones ambientales,</li>
+                            <li>viveros,</li>
+                            <li>empresas sustentables,</li>
+                            <li>restaurantes,</li>
+                            <li>chefs,</li>
+                            <li>organismos turísticos,</li>
+                            <li>y proyectos de agricultura urbana.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="section-title">24. PROYECCIÓN A FUTURO</h2>
+                        <p class="body-text">La 1ra ECO-Semana UATyG 2026 representa el inicio de una estrategia institucional orientada a consolidar una cultura universitaria sustentable.</p>
+                        <p class="body-text">Se contempla que el proyecto evolucione hacia:</p>
+                        <ul class="bullet-list grid grid-cols-2 gap-x-4">
+                            <li>futuras ediciones anuales,</li>
+                            <li>expansión del huerto,</li>
+                            <li>integración curricular,</li>
+                            <li>nuevas áreas verdes,</li>
+                            <li>brigadas permanentes,</li>
+                            <li class="col-span-2">y vinculación externa.</li>
+                        </ul>
+                        <p class="body-text mt-6 font-bold text-verdeoscuro">El objetivo a largo plazo es consolidar a la UATyG como un referente universitario en sustentabilidad aplicada al turismo y la gastronomía.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 16: CONCLUSIÓN -->
+        <div class="slide bg-verdeoscuro text-white">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16 relative">
+                <div class="absolute w-40 h-40 border border-verdesalvia rounded-full opacity-20 -top-4 -left-10 z-0 pointer-events-none"></div>
+                <div class="absolute w-64 h-64 border border-terracota rounded-full opacity-20 -bottom-10 -right-10 z-0 pointer-events-none"></div>
+                
+                <div class="m-auto w-full max-w-5xl relative z-10 py-6">
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-8 text-arena border-b border-verdesalvia pb-4 inline-block">25. CONCLUSIÓN GENERAL</h2>
+                    
+                    <p class="text-lg md:text-xl font-light leading-relaxed mb-5">La 1ra ECO-SEMANA UATyG 2026 no representa únicamente un evento académico.</p>
+                    <p class="text-lg md:text-xl font-light leading-relaxed mb-5">Representa una propuesta de transformación institucional basada en la sustentabilidad, la innovación y la construcción colectiva de espacios de aprendizaje permanente.</p>
+                    <p class="text-lg md:text-xl font-light leading-relaxed mb-5">A través del Huerto Académico, la Estación de Compostaje y las actividades interdisciplinarias planteadas, el proyecto busca fortalecer la formación profesional de los estudiantes mientras se construye una nueva identidad universitaria orientada al futuro.</p>
+                    <p class="text-lg md:text-xl font-light leading-relaxed mb-5">Más allá de las actividades programadas, la Eco-Semana pretende dejar una huella tangible y simbólica dentro de la comunidad académica.</p>
+                    <p class="text-lg md:text-xl font-bold text-arena leading-relaxed mb-8">Porque lo que se busca sembrar no son únicamente plantas o espacios verdes. Lo que se busca sembrar es una nueva cultura universitaria.</p>
+                    
+                    <div class="bg-white bg-opacity-5 p-8 rounded-2xl border border-white border-opacity-10 backdrop-blur-sm text-center">
+                        <p class="font-serif text-2xl md:text-3xl italic text-verdesalvia font-bold mb-4">“Lo que sembramos hoy, transformará el entorno universitario mañana.”</p>
+                        <p class="font-bold tracking-widest text-arena">ECO-SEMANA UATyG 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= PARTE FINAL: MOSTRAR SISTEMA EN VIVO ======================= -->
+
+        <!-- DIAPOSITIVA 17: VISUAL - SISTEMA QR Y LINK -->
+        <div class="slide">
+            <div class="flex flex-col min-h-full py-10 px-6 md:px-16">
+                <div class="m-auto w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="w-8 h-1 bg-terracota block"></span>
+                            <span class="text-terracota font-bold tracking-widest uppercase text-xs">Gestión Tecnológica Lista</span>
+                        </div>
+                        <h2 class="font-serif text-3xl md:text-4xl text-verdeoscuro font-bold mb-4">Acreditación mediante QR</h2>
+                        <p class="text-base text-gray-700 mb-6 leading-relaxed">
+                            Desarrollamos una <strong>Plataforma Web Exclusiva</strong> conectada en tiempo real para garantizar el orden de los créditos.
+                        </p>
+                        
+                        <div class="space-y-3 mb-10">
+                            <div class="flex items-start gap-3 bg-white p-3 md:p-4 rounded-xl border border-arena shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-verdesalvia text-white flex items-center justify-center flex-shrink-0 font-bold text-sm">1</div>
+                                <div>
+                                    <h4 class="font-bold text-verdeoscuro text-sm">Reglas de Asistencia</h4>
+                                    <p class="text-xs text-gray-600 mt-1">El alumno elige <strong>3 conferencias y 2 talleres</strong> exactos desde la plataforma.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white p-3 md:p-4 rounded-xl border border-arena shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-verdesalvia text-white flex items-center justify-center flex-shrink-0 font-bold text-sm">2</div>
+                                <div>
+                                    <h4 class="font-bold text-verdeoscuro text-sm">Pase Cero Papel</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Un código QR dinámico que agiliza las filas y el acceso.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white p-3 md:p-4 rounded-xl border border-arena shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-verdesalvia text-white flex items-center justify-center flex-shrink-0 font-bold text-sm">3</div>
+                                <div>
+                                    <h4 class="font-bold text-verdeoscuro text-sm">Reporte para Dirección</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Entrega automática de base de datos final de alumnos que cumplieron los créditos.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTÓN CON ENLACE AL SISTEMA EN VIVO -->
+                        <a href="https://huertouatyg.online" target="_blank" class="inline-flex items-center gap-3 bg-verdeoscuro text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-verdesalvia transition-all transform hover:-translate-y-1">
+                            <span>Ver Sistema en Vivo</span>
+                            <span class="font-light border-l border-white border-opacity-30 pl-3">huertouatyg.online</span>
+                            <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                    
+                    <!-- Mockup de la plataforma -->
+                    <div class="relative bg-white p-3 md:p-4 rounded-2xl shadow-xl border-2 border-gray-100 transform rotate-1 max-w-sm mx-auto mt-6 md:mt-0">
+                        <div class="w-full h-6 bg-gray-100 rounded-t-lg mb-3 flex items-center px-3 gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                            <div class="ml-2 bg-white px-2 py-0.5 rounded text-[10px] text-gray-400 flex-1 truncate">huertouatyg.online</div>
+                        </div>
+                        <div class="bg-crema p-4 md:p-5 rounded-lg border border-arena text-center">
+                            <h4 class="font-bold text-verdeoscuro text-lg mb-2">¡Pase Oficial Listo!</h4>
+                            <div class="w-32 h-32 mx-auto bg-white border-2 border-verdeoscuro p-2 rounded-lg mb-3 flex items-center justify-center">
+                                <svg class="w-full h-full text-verdeoscuro" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 0h2v2h-2v-2zm3 3h3v2h-3v-2zm-2 3h2v2h-2v-2zm-3-3h2v2h-2v-2zm3 2h2v2h-2v-2zm-3-5h2v2h-2v-2zm0 3h2v2h-2v-2z"/>
+                                </svg>
+                            </div>
+                            <p class="font-bold text-verdeoscuro text-sm">García López, Juan</p>
+                            <p class="text-[11px] text-gray-600 mb-2">Matrícula: 23456781 | Grupo: D5</p>
+                            <div class="flex gap-2 justify-center mt-3">
+                                <span class="bg-verdesalvia bg-opacity-20 text-verdesalvia text-[10px] font-bold px-2 py-1 rounded">3 Conf.</span>
+                                <span class="bg-terracota bg-opacity-20 text-terracota text-[10px] font-bold px-2 py-1 rounded">2 Talleres</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT PARA CONTROLAR LA PRESENTACIÓN -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalNum = document.getElementById('total-slides-num');
+        const currentNum = document.getElementById('current-slide-num');
+        
+        // El total real es 17 (16 del documento + 1 del QR interactivo)
+        totalNum.textContent = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                    slide.scrollTop = 0; 
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            currentNum.textContent = index + 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Control con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'Space') {
+                if(document.activeElement === document.body) {
+                    e.preventDefault(); 
+                    nextSlide();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
