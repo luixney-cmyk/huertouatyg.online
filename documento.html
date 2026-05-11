@@ -125,6 +125,51 @@
             font-size: 1.5rem;
             top: -0.2rem;
         }
+
+        /* =========================================
+           CONFIGURACIÓN ESPECIAL PARA IMPRESIÓN Y PDF
+           ========================================= */
+        @media print {
+            @page {
+                size: letter landscape; /* Forzamos tamaño carta y orientación horizontal */
+                margin: 0; /* Sin márgenes en blanco del navegador */
+            }
+            html, body { 
+                height: auto !important; 
+                width: 100% !important;
+                overflow: visible !important; 
+                background-color: #F8F6F0 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; /* Fuerza a imprimir los colores de fondo */
+            }
+            /* Ocultamos la barra de botones superior */
+            .fixed.top-0 { 
+                display: none !important; 
+            }
+            /* Cambiamos el contenedor a modo bloque continuo */
+            #presentation-container { 
+                display: block !important; 
+                position: static !important;
+            }
+            /* Mostramos TODAS las diapositivas (no solo la activa) */
+            .slide {
+                position: relative !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                display: flex !important;
+                height: 100vh !important; /* Cada diapositiva toma exactamente el 100% de la hoja */
+                width: 100% !important;
+                page-break-after: always !important; /* Salto de página forzado después de cada slide */
+                break-after: page !important;
+                padding-top: 2rem !important; /* Ajustamos el aire de arriba al no estar la barra */
+                padding-bottom: 2rem !important;
+                overflow: hidden !important; 
+            }
+            /* Quitamos barras de scroll para impresión */
+            ::-webkit-scrollbar { 
+                display: none !important; 
+            }
+        }
     </style>
 </head>
 <body class="text-verdeoscuro antialiased bg-pattern">
@@ -138,10 +183,22 @@
             <span class="ml-4 font-serif font-bold text-lg hidden md:block border-l-2 border-verdesalvia pl-4">Documento Rector</span>
         </div>
         <div class="flex items-center gap-4">
-            <div class="text-xs md:text-sm font-semibold text-verdesalvia tracking-widest uppercase">
+            <div class="text-xs md:text-sm font-semibold text-verdesalvia tracking-widest uppercase mr-2">
                 Pág. <span id="current-slide-num">1</span> / <span id="total-slides-num">17</span>
             </div>
+            
             <div class="flex gap-2">
+                <!-- NUEVO: Botón de Imprimir / Guardar PDF -->
+                <button onclick="window.print()" title="Imprimir o Guardar como PDF" class="bg-terracota bg-opacity-10 border border-terracota text-terracota hover:bg-terracota hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-sm mr-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                </button>
+
+                <!-- Botón de Inicio (Regresar a Diapositiva 1) -->
+                <button onclick="goHome()" title="Volver al inicio" class="bg-arena bg-opacity-30 border border-arena text-verdeoscuro hover:bg-arena hover:text-verdeoscuro rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-sm mr-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                </button>
+            
+                <!-- Flechas de navegación -->
                 <button onclick="prevSlide()" class="bg-white border border-verdesalvia text-verdesalvia hover:bg-verdesalvia hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
@@ -240,7 +297,7 @@
                     </div>
                     <div>
                         <h2 class="section-title">2. INTRODUCCIÓN</h2>
-                        <p class="body-text">En el contexto actual, las instituciones educativas enfrentan el desafío de formar profesionales capaces de responder a problemáticas ambientales, sociales y económicas desde una perspectiva interdisciplinaria y sustentable.</p>
+                        <p class="body-text">En el contexto actual, las institutions educativas enfrentan el desafío de formar profesionales capaces de responder a problemáticas ambientales, sociales y económicas desde una perspectiva interdisciplinaria y sustentable.</p>
                         <p class="body-text">La industria turística y gastronómica, particularmente, atraviesa una transformación global donde conceptos como sostenibilidad, economía circular, producción local, turismo regenerativo y aprovechamiento responsable de recursos adquieren cada vez mayor relevancia.</p>
                         <p class="body-text">Frente a este panorama, la Unidad Académica de Turismo y Gastronomía tiene la oportunidad de consolidarse como un referente universitario en innovación sustentable mediante la creación de espacios de aprendizaje experiencial que conecten la teoría con la práctica.</p>
                         <p class="body-text">La 1ra ECO-SEMANA UATyG 2026 busca precisamente generar esta conexión, integrando actividades académicas, prácticas y comunitarias capaces de fortalecer la formación profesional de los estudiantes mientras se construye un proyecto institucional de largo alcance.</p>
@@ -831,6 +888,12 @@
                 currentSlide--;
                 showSlide(currentSlide);
             }
+        }
+        
+        // NUEVA FUNCION PARA VOLVER AL INICIO
+        function goHome() {
+            currentSlide = 0;
+            showSlide(currentSlide);
         }
 
         // Control con teclado
