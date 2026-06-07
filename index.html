@@ -210,7 +210,7 @@
                 <!-- INFO DE PAGO Y CÓDIGO -->
                 <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 text-left shadow-sm">
                     <h4 class="font-extrabold text-emerald-800 flex items-center gap-2 mb-2 text-lg">
-                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08-.402-2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Costo de Inscripción: $150 MXN
                     </h4>
                     <p class="text-sm text-emerald-700 mb-4 leading-relaxed">
@@ -737,7 +737,6 @@
         
         // DECLARACION GLOBAL
         let db, auth, registrosRef = null, codigosRef = null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
@@ -754,7 +753,7 @@
             const icon = document.getElementById('alert-icon');
             icon.className = isErr ? "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6" : "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6";
             icon.innerHTML = isErr ? `<svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>` : `<svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
-            document.getElementById('alert-close-btn').className = isErr ? "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-red-600 text-white font-medium hover:bg-red-700" : "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-emerald-700";
+            document.getElementById('alert-close-btn').className = isErr ? "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-red-700" : "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-emerald-700";
             alertModal.classList.remove('hidden');
         }
         document.getElementById('alert-close-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
@@ -773,8 +772,16 @@
                     await signInAnonymously(auth);
                 }
                 
-                registrosRef = collection(db, 'artifacts', appId, 'public', 'data', 'registros');
-                codigosRef = collection(db, 'artifacts', appId, 'public', 'data', 'codigos_acceso');
+                const isCanvasEnv = typeof __app_id !== 'undefined';
+                const currentAppId = isCanvasEnv ? __app_id : 'default';
+
+                if (isCanvasEnv) {
+                    registrosRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'registros');
+                    codigosRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'codigos_acceso');
+                } else {
+                    registrosRef = collection(db, 'registros');
+                    codigosRef = collection(db, 'codigos_acceso');
+                }
                 
                 onSnapshot(registrosRef, (snapshot) => {
                     const newCaps = {};
