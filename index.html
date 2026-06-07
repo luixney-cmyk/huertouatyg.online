@@ -98,7 +98,7 @@
                     </div>
                 </div>
 
-                <!-- Botón Portal Alumnos -->
+                <!-- Botones Principales -->
                 <div class="mt-14 flex justify-center gap-4 flex-wrap">
                     <a href="#registro" class="bg-emerald-600 text-white font-bold px-8 py-4 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:bg-emerald-500 hover:-translate-y-1 transform transition-all text-base md:text-lg flex items-center gap-3">
                         Inscribirme Ahora
@@ -196,7 +196,7 @@
             </div>
         </section>
 
-        <!-- SISTEMA DE REGISTRO -->
+        <!-- SISTEMA DE REGISTRO Y VALIDACIÓN -->
         <section id="registro" class="bg-gray-100 py-20 px-6 border-t border-gray-200 min-h-screen flex flex-col justify-center">
             
             <!-- 1. PANTALLA DE VALIDACIÓN DE CÓDIGO -->
@@ -387,45 +387,45 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- SECCIÓN DEL QR GENERADO -->
-                <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
-                    <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
-                    <p class="text-gray-600 mb-6 font-medium">Descarga tu código QR o toma captura. <span class="text-emerald-600 block mt-1 font-bold">¡Cuidemos el planeta, no lo imprimas! 🌎</span></p>
+            <!-- SECCIÓN DEL QR GENERADO (Ubicado correctamente fuera del form) -->
+            <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
+                <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
+                <p class="text-gray-600 mb-6 font-medium">Descarga tu código QR o toma captura. <span class="text-emerald-600 block mt-1 font-bold">¡Cuidemos el planeta, no lo imprimas! 🌎</span></p>
+                
+                <!-- INICIO DEL PASE A DESCARGAR -->
+                <div id="ticket-to-capture" class="bg-white p-6 rounded-3xl mx-auto inline-block shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-gray-100 w-full">
+                    <div class="bg-white p-4 rounded-2xl flex justify-center mb-4 shadow-inner border border-gray-100">
+                        <div id="qrcode"></div>
+                    </div>
                     
-                    <!-- INICIO DEL PASE A DESCARGAR -->
-                    <div id="ticket-to-capture" class="bg-white p-6 rounded-3xl mx-auto inline-block shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-gray-100 w-full">
-                        <div class="bg-white p-4 rounded-2xl flex justify-center mb-4 shadow-inner border border-gray-100">
-                            <div id="qrcode"></div>
-                        </div>
-                        
-                        <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200 mb-4">
-                            <p class="text-sm text-gray-700 mb-2"><strong>Titular:</strong> <span id="res-name" class="font-semibold text-gray-900"></span></p>
-                            <p class="text-sm text-gray-700 mb-2 flex justify-between">
-                                <span><strong>Matrícula:</strong> <span id="res-id" class="font-semibold text-gray-900"></span></span>
-                                <span><strong>Grupo:</strong> <span id="res-group" class="font-semibold text-gray-900"></span></span>
-                            </p>
-                            <p class="text-sm text-gray-700"><strong>Licenciatura:</strong> <span id="res-program" class="font-semibold text-gray-900"></span></p>
-                        </div>
+                    <div class="text-left bg-gray-50 p-5 rounded-2xl border border-gray-200 mb-4">
+                        <p class="text-sm text-gray-700 mb-2"><strong>Titular:</strong> <span id="res-name" class="font-semibold text-gray-900"></span></p>
+                        <p class="text-sm text-gray-700 mb-2 flex justify-between">
+                            <span><strong>Matrícula:</strong> <span id="res-id" class="font-semibold text-gray-900"></span></span>
+                            <span><strong>Grupo:</strong> <span id="res-group" class="font-semibold text-gray-900"></span></span>
+                        </p>
+                        <p class="text-sm text-gray-700"><strong>Licenciatura:</strong> <span id="res-program" class="font-semibold text-gray-900"></span></p>
+                    </div>
 
-                        <!-- Contenedor de Insignias a Desbloquear -->
-                        <div class="text-left bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-                            <p class="text-xs font-bold text-emerald-800 mb-2 uppercase">Insignias por Desbloquear:</p>
-                            <div id="badges-container" class="flex flex-wrap gap-2">
-                                <!-- Se llenará con JS -->
-                            </div>
+                    <!-- Contenedor de Insignias a Desbloquear -->
+                    <div class="text-left bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                        <p class="text-xs font-bold text-emerald-800 mb-2 uppercase">Insignias por Desbloquear:</p>
+                        <div id="badges-container" class="flex flex-wrap gap-2">
+                            <!-- Se llenará con JS -->
                         </div>
                     </div>
-                    <!-- FIN DEL PASE A DESCARGAR -->
-                    
-                    <div class="mt-8 flex flex-col gap-3">
-                        <button id="download-btn" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition flex justify-center items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            <span id="download-text">Guardar Pase QR Completo</span>
-                        </button>
-                        <button id="close-qr-btn" class="w-full bg-white text-emerald-600 font-bold py-3 rounded-xl border-2 border-emerald-600 hover:bg-emerald-50 transition">Cerrar y volver al inicio</button>
-                    </div>
+                </div>
+                <!-- FIN DEL PASE A DESCARGAR -->
+                
+                <div class="mt-8 flex flex-col gap-3">
+                    <button id="download-btn" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition flex justify-center items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span id="download-text">Guardar Pase QR Completo</span>
+                    </button>
+                    <button id="close-qr-btn" class="w-full bg-white text-emerald-600 font-bold py-3 rounded-xl border-2 border-emerald-600 hover:bg-emerald-50 transition">Cerrar y volver al inicio</button>
                 </div>
             </div>
         </section>
@@ -513,7 +513,7 @@
 
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
-        <!-- Contenido dinámico -->
+        <!-- Contenido dinámico (Insignias agregadas en script) -->
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative transform transition-all">
             <button onclick="closeActivityModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -568,6 +568,7 @@
             <h3 class="text-2xl font-bold text-gray-900 mb-2">¿Eliminar registro?</h3>
             <p class="text-gray-600 mb-6" id="delete-confirm-text">Se liberarán los espacios.</p>
             <div class="flex gap-3">
+                <!-- Ya están los ID y serán controlados por Javascript al final -->
                 <button id="cancel-delete-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition">Cancelar</button>
                 <button id="confirm-delete-btn" class="flex-1 rounded-xl px-4 py-3 bg-red-600 text-white hover:bg-red-700 transition">Eliminar</button>
             </div>
@@ -590,6 +591,7 @@
             <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8 overflow-x-auto">
                 <button id="tab-scanner" class="flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
                 <button id="tab-database" class="flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos Final</button>
+                <!-- RESTAURADO TAB CÓDIGOS DE ACCESO -->
                 <button id="tab-codes" class="flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Códigos de Acceso</button>
             </div>
 
@@ -653,7 +655,7 @@
                 </div>
             </div>
 
-            <!-- CODES VIEW (NEW) -->
+            <!-- CODES VIEW (RESTAURADO) -->
             <div id="view-codes" class="hidden">
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
@@ -683,6 +685,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -753,19 +756,19 @@
             const icon = document.getElementById('alert-icon');
             icon.className = isErr ? "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6" : "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6";
             icon.innerHTML = isErr ? `<svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>` : `<svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
-            document.getElementById('alert-close-btn').className = isErr ? "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-red-700" : "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-emerald-700";
+            document.getElementById('alert-close-btn').className = isErr ? "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-red-600 text-white font-medium hover:bg-red-700" : "w-full inline-flex justify-center rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium hover:bg-emerald-700";
             alertModal.classList.remove('hidden');
         }
         document.getElementById('alert-close-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
 
-        // --- INICIALIZACIÓN DE FIREBASE ---
+        // --- INICIALIZACIÓN SEGURA DE FIREBASE ---
         const initApp = async () => {
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app); 
                 auth = getAuth(app);
                 
-                // AUTENTICACIÓN SEGURA CON TOKEN DE SESIÓN
+                // AUTENTICACIÓN SEGURA CON TOKEN DE SESIÓN PARA PERMISOS DE ESCRITURA
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
@@ -1355,8 +1358,11 @@
             document.getElementById('scanner-container-wrapper').classList.add('hidden'); 
         });
 
+        // REPORTE BASE DE DATOS Y BOTONES DE ELIMINAR REPARADOS
         let recToDelete=null;
-        window.confirmDel = async function() {
+        
+        // Asignación de clics a los botones de eliminar y cancelar del modal
+        document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
             document.getElementById('delete-confirm-modal').classList.add('hidden');
             if(recToDelete) { 
                 try {
@@ -1367,19 +1373,30 @@
                     await deleteDoc(doc(registrosRef, recToDelete)); 
                     
                     // Liberar el código para que vuelva a estar disponible si es necesario
-                    if (codUtilizado) {
+                    if (codUtilizado && codigosRef) {
                         await updateDoc(doc(codigosRef, codUtilizado), {
                             usado: false, fechaUso: null, matricula: null, nombre: null, grupo: null
                         });
                     }
-                    showAlert("Borrado", "Alumno borrado y código liberado.", false); 
+                    showAlert("Borrado", "Alumno borrado exitosamente y código liberado.", false); 
                     generateDbReport();
                 } catch(e) {
                     showAlert("Error", "Error al borrar registro.", true);
                 }
+                recToDelete = null;
             }
+        });
+
+        document.getElementById('cancel-delete-btn').addEventListener('click', () => {
+            document.getElementById('delete-confirm-modal').classList.add('hidden'); 
+            recToDelete = null;
+        });
+
+        // Función que abre el modal desde la tabla
+        window.openDeleteModal = function(matricula) {
+            recToDelete = matricula;
+            document.getElementById('delete-confirm-modal').classList.remove('hidden');
         };
-        window.cancelDel = function() { document.getElementById('delete-confirm-modal').classList.add('hidden'); recToDelete=null; };
         
         async function generateDbReport() {
             const tbody = document.getElementById('db-table-body'); tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4">Cargando...</td></tr>';
@@ -1396,7 +1413,7 @@
                         <td class="p-3 font-mono">${dt.matricula}</td><td class="p-3"><b>${dt.nombre}</b></td>
                         <td class="p-3 text-center ${conf>=3?'text-green-600 font-bold':''}">${conf}/3</td><td class="p-3 text-center ${tall>=2?'text-green-600 font-bold':''}">${tall}/2</td>
                         <td class="p-3 text-center">${isOk?'<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">OK</span>':'<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">FALTA</span>'}</td>
-                        <td class="p-3 text-center"><button class="text-red-500 bg-red-50 p-2 rounded" onclick="recToDelete='${dt.matricula}'; document.getElementById('delete-confirm-modal').classList.remove('hidden')">🗑️</button></td>
+                        <td class="p-3 text-center"><button class="text-red-500 bg-red-50 p-2 rounded hover:bg-red-100 transition" onclick="window.openDeleteModal('${dt.matricula}')">🗑️</button></td>
                     </tr>`;
                 });
                 tbody.innerHTML=html; document.getElementById('count-accredited').textContent=ok; document.getElementById('count-failed').textContent=no;
