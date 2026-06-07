@@ -720,7 +720,7 @@
     <!-- Scripts de Firebase y Lógica Principal -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURACIÓN FIREBASE
@@ -737,7 +737,7 @@
         
         // DECLARACION GLOBAL
         let db, auth, registrosRef = null, codigosRef = null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
@@ -766,7 +766,12 @@
                 db = getFirestore(app); 
                 auth = getAuth(app);
                 
-                await signInAnonymously(auth);
+                // AUTENTICACIÓN SEGURA CON TOKEN DE SESIÓN
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
                 
                 registrosRef = collection(db, 'artifacts', appId, 'public', 'data', 'registros');
                 codigosRef = collection(db, 'artifacts', appId, 'public', 'data', 'codigos_acceso');
