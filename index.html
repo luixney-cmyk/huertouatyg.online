@@ -41,6 +41,17 @@
         .cert-signatures { display: flex; justify-content: space-around; margin-top: 60px; }
         .cert-sign-block { text-align: center; width: 40%; }
         .cert-sign-line { border-top: 1px solid #111827; margin-bottom: 10px; width: 100%; }
+
+        /* Estilos de Impresión de Códigos */
+        @media print {
+            body * { visibility: hidden; }
+            #print-area, #print-area * { visibility: visible; }
+            #print-area { position: absolute; left: 0; top: 0; width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; align-content: flex-start; }
+            .print-ticket { border: 2px dashed #000; padding: 20px; margin-bottom: 20px; width: 48%; box-sizing: border-box; page-break-inside: avoid; }
+            .print-ticket h2 { font-size: 16px; text-align: center; font-weight: bold; margin-bottom: 10px; }
+            .print-ticket .code-text { font-size: 32px; text-align: center; font-family: monospace; font-weight: bold; margin: 15px 0; }
+            .print-ticket p { font-size: 12px; text-align: center; line-height: 1.4; }
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -87,8 +98,11 @@
                     </div>
                 </div>
 
-                <!-- Botón Portal Alumnos (Reubicado al centro) -->
-                <div class="mt-14 flex justify-center">
+                <!-- Botón Portal Alumnos -->
+                <div class="mt-14 flex justify-center gap-4 flex-wrap">
+                    <a href="#registro" class="bg-emerald-600 text-white font-bold px-8 py-4 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:bg-emerald-500 hover:-translate-y-1 transform transition-all text-base md:text-lg flex items-center gap-3">
+                        Inscribirme Ahora
+                    </a>
                     <button id="student-portal-btn" class="bg-white text-emerald-700 font-bold px-8 py-4 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:bg-emerald-50 hover:-translate-y-1 transform transition-all border border-emerald-200 text-base md:text-lg flex items-center gap-3">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Mi Estado y Reconocimiento
@@ -183,9 +197,51 @@
         </section>
 
         <!-- SISTEMA DE REGISTRO -->
-        <section id="registro" class="bg-gray-100 py-20 px-6 border-t border-gray-200">
-            <div class="max-w-4xl mx-auto">
+        <section id="registro" class="bg-gray-100 py-20 px-6 border-t border-gray-200 min-h-screen flex flex-col justify-center">
+            
+            <!-- 1. PANTALLA DE VALIDACIÓN DE CÓDIGO -->
+            <div id="code-validation-section" class="max-w-lg w-full mx-auto bg-white rounded-3xl p-8 border border-gray-200 shadow-2xl text-center transition-all duration-500">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6 shadow-inner">
+                    <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900 mb-2 tracking-tight">Inscripción y Acceso</h3>
+                <p class="text-gray-600 mb-6 text-sm">Para continuar con tu registro oficial, necesitas un código único de acceso.</p>
+
+                <!-- INFO DE PAGO Y CÓDIGO -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 text-left shadow-sm">
+                    <h4 class="font-extrabold text-emerald-800 flex items-center gap-2 mb-2 text-lg">
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Costo de Inscripción: $150 MXN
+                    </h4>
+                    <p class="text-sm text-emerald-700 mb-4 leading-relaxed">
+                        Esta cuota de recuperación se utiliza íntegramente para cubrir los gastos de materiales en los talleres prácticos, actividades del huerto y logística de las conferencias.
+                    </p>
+                    <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                        <p class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            ¿Cómo obtener tu código de acceso?
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-2 ml-1">
+                            <li><span class="font-bold text-emerald-600">1.</span> Realiza tu pago directamente con <strong>Tania</strong> en el área de <strong>Dirección</strong>.</li>
+                            <li><span class="font-bold text-emerald-600">2.</span> Ella te entregará un ticket con tu <strong>Código Único de 6 caracteres</strong>.</li>
+                            <li><span class="font-bold text-emerald-600">3.</span> Ingrésalo aquí abajo para desbloquear el formulario de horarios.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-4 relative">
+                    <input type="text" id="access-code-input" class="w-full p-4 rounded-xl border-2 border-gray-300 focus:ring-0 focus:border-emerald-500 bg-gray-50 text-center font-bold text-3xl tracking-[0.25em] uppercase text-emerald-900" placeholder="XXXXXX" maxlength="6">
+                </div>
+                <button id="validate-code-btn" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition shadow-lg text-lg flex items-center justify-center gap-2">
+                    Validar Código
+                </button>
+                <p id="code-validation-msg" class="mt-4 text-sm font-bold hidden"></p>
+            </div>
+
+            <!-- 2. FORMULARIO DE REGISTRO (Oculto inicialmente) -->
+            <div id="registration-form-section" class="max-w-4xl mx-auto hidden transition-all duration-500">
                 <div class="text-center mb-12">
+                    <span class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3 border border-emerald-300">Código Validado</span>
                     <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">Sistema de Acreditación</h2>
                     <p class="mt-4 text-gray-600 text-lg">Personaliza tu experiencia. <br> <strong class="text-emerald-600">Requisito para créditos:</strong> Elegir exactamente 3 conferencias y 2 talleres.</p>
                 </div>
@@ -457,7 +513,7 @@
 
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
-        <!-- Contenido dinámico (Insignias agregadas en script) -->
+        <!-- Contenido dinámico -->
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative transform transition-all">
             <button onclick="closeActivityModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -518,6 +574,9 @@
         </div>
     </div>
 
+    <!-- CONTENEDOR OCULTO PARA IMPRIMIR COMPROBANTES DE CÓDIGOS -->
+    <div id="print-area" style="display: none;"></div>
+
     <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden min-h-screen bg-gray-100 pb-20">
         <div class="bg-gray-900 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
@@ -527,15 +586,16 @@
             <button id="exit-admin-btn" class="text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg border border-gray-700 transition">Cerrar Sesión</button>
         </div>
 
-        <div class="max-w-4xl mx-auto px-4 py-8">
-            <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8">
-                <button id="tab-scanner" class="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
-                <button id="tab-database" class="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos Final</button>
+        <div class="max-w-5xl mx-auto px-4 py-8">
+            <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8 overflow-x-auto">
+                <button id="tab-scanner" class="flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
+                <button id="tab-database" class="flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos Final</button>
+                <button id="tab-codes" class="flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Códigos de Acceso</button>
             </div>
 
             <!-- SCANNER VIEW -->
             <div id="view-scanner" class="block">
-                <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200 text-center">
+                <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200 text-center max-w-4xl mx-auto">
                     <h2 class="text-2xl font-black text-gray-900 mb-6">Control de Acceso</h2>
                     
                     <div class="mb-6 text-left">
@@ -592,6 +652,37 @@
                     </table>
                 </div>
             </div>
+
+            <!-- CODES VIEW (NEW) -->
+            <div id="view-codes" class="hidden">
+                <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                        <h2 class="text-2xl font-black text-gray-900">Códigos de Acceso Emitidos</h2>
+                        <div class="flex flex-wrap gap-2">
+                            <button id="generate-codes-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Generar 150 Códigos</button>
+                            <button id="export-codes-btn" class="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-900 transition shadow-sm">Exportar CSV</button>
+                            <button id="print-codes-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition shadow-sm">Imprimir</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6 grid grid-cols-3 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-center"><p class="text-xs font-bold text-gray-500 uppercase">Total Creados</p><p class="text-2xl font-black text-gray-800" id="codes-count-total">0</p></div>
+                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 text-center"><p class="text-xs font-bold text-emerald-600 uppercase">Disponibles</p><p class="text-2xl font-black text-emerald-700" id="codes-count-avail">0</p></div>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-center"><p class="text-xs font-bold text-amber-600 uppercase">Utilizados</p><p class="text-2xl font-black text-amber-700" id="codes-count-used">0</p></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="text" id="search-codes-input" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-emerald-500 bg-gray-50 text-sm" placeholder="🔍 Buscar por código, matrícula o nombre...">
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[700px]">
+                            <thead><tr class="bg-gray-100 text-gray-700 text-sm"><th class="p-3 font-bold">Código</th><th class="p-3 font-bold">Estado</th><th class="p-3 font-bold">Alumno</th><th class="p-3 font-bold">Matrícula</th><th class="p-3 font-bold">Grupo</th><th class="p-3 font-bold text-right">Fecha Uso</th></tr></thead>
+                            <tbody id="codes-table-body" class="text-sm"><tr><td colspan="6" class="p-4 text-center">Cargando códigos...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -630,7 +721,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURACIÓN FIREBASE
         const externalFirebaseConfig = {
@@ -644,12 +735,16 @@
         
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         
-        // DECLARACION FORMAL DE VARIABLES GLOBALES PARA EVITAR ERRORES DE REFERENCIA
-        let db, auth, registrosRef = null;
-        let html5QrCode = null; // Esta variable faltaba declarar y causaba el congelamiento.
+        // DECLARACION GLOBAL
+        let db, auth, registrosRef = null, codigosRef = null;
+        let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
         let currentCapacities = {};
+        
+        // CÓDIGO DE VALIDACIÓN
+        let validatedAccessCode = null;
+        let loadedAdminCodes = [];
 
         // ALERTS GLOBALES
         const alertModal = document.getElementById('custom-alert-modal');
@@ -663,18 +758,17 @@
         }
         document.getElementById('alert-close-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
 
-        // --- INICIALIZACIÓN SEGURA DE FIREBASE ---
+        // --- INICIALIZACIÓN DE FIREBASE ---
         const initApp = async () => {
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app); 
                 auth = getAuth(app);
                 
-                // 1. ESPERAR AUTENTICACIÓN ANÓNIMA ANTES DE LEER LA BASE DE DATOS
                 await signInAnonymously(auth);
                 
-                // 2. UNA VEZ AUTENTICADOS, CREAR REFERENCIA Y LEER ESPACIOS EN VIVO
                 registrosRef = collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'registros');
+                codigosRef = collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'codigos_acceso');
                 
                 onSnapshot(registrosRef, (snapshot) => {
                     const newCaps = {};
@@ -690,7 +784,50 @@
                 console.error("Error al conectar con la base de datos:", e);
             }
         };
-        initApp(); // Ejecutar inicialización
+        initApp(); 
+
+        // --- SISTEMA DE VALIDACIÓN DE CÓDIGO (PÚBLICO) ---
+        const btnValidateCode = document.getElementById('validate-code-btn');
+        const inputCode = document.getElementById('access-code-input');
+        const msgValidation = document.getElementById('code-validation-msg');
+
+        btnValidateCode.addEventListener('click', async () => {
+            let code = inputCode.value.trim().toUpperCase();
+            if(code.length !== 6) {
+                msgValidation.textContent = "El código debe tener 6 caracteres.";
+                msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
+                return;
+            }
+            
+            btnValidateCode.textContent = "Verificando...";
+            btnValidateCode.disabled = true;
+
+            try {
+                const codeDoc = await getDoc(doc(codigosRef, code));
+                if (!codeDoc.exists()) {
+                    msgValidation.textContent = "El código ingresado no existe.";
+                    msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
+                } else {
+                    const codeData = codeDoc.data();
+                    if (codeData.usado) {
+                        msgValidation.textContent = "Este código ya fue utilizado.";
+                        msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
+                    } else {
+                        // ÉXITO - CÓDIGO VÁLIDO
+                        validatedAccessCode = code;
+                        document.getElementById('code-validation-section').classList.add('hidden');
+                        document.getElementById('registration-form-section').classList.remove('hidden');
+                        window.scrollTo({ top: document.getElementById('registration-form-section').offsetTop - 50, behavior: 'smooth' });
+                    }
+                }
+            } catch (e) {
+                msgValidation.textContent = "Error de conexión. Intenta de nuevo.";
+                msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
+            }
+            
+            btnValidateCode.textContent = "Validar Código";
+            btnValidateCode.disabled = false;
+        });
 
         function updateCapacityUI() {
             document.querySelectorAll('.conf-checkbox').forEach(cb => {
@@ -698,7 +835,7 @@
                 const txt = document.getElementById(`cap-${cb.value}`);
                 if(cap >= MAX_CONF) { 
                     txt.innerHTML = '<span class="text-red-600 font-bold">Sin espacios</span>'; 
-                    if(cb.checked) cb.checked = false; // Desmarcar si se llenó
+                    if(cb.checked) cb.checked = false; 
                 } else { 
                     txt.innerHTML = `<span class="text-emerald-600 font-semibold">${MAX_CONF - cap} libres</span>`; 
                 }
@@ -724,39 +861,33 @@
             document.getElementById('conf-count').textContent = confs; 
             document.getElementById('workshop-count').textContent = talls;
             
-            // Bloqueo de conferencias restantes si se llega a 3 o si están llenas
+            // Bloqueo de conferencias
             document.querySelectorAll('.conf-checkbox').forEach(cb => {
                 const label = cb.closest('.activity-label');
                 const isFull = (currentCapacities[cb.value] || 0) >= MAX_CONF;
                 if (!cb.checked) {
                     if (confs >= 3 || isFull) {
-                        cb.disabled = true;
-                        label.classList.add('locked-option');
+                        cb.disabled = true; label.classList.add('locked-option');
                     } else {
-                        cb.disabled = false;
-                        label.classList.remove('locked-option');
+                        cb.disabled = false; label.classList.remove('locked-option');
                     }
                 } else {
-                    cb.disabled = false;
-                    label.classList.remove('locked-option');
+                    cb.disabled = false; label.classList.remove('locked-option');
                 }
             });
 
-            // Bloqueo de talleres restantes si se llega a 2 o si están llenos
+            // Bloqueo de talleres
             document.querySelectorAll('.workshop-checkbox').forEach(cb => {
                 const label = cb.closest('.activity-label');
                 const isFull = (currentCapacities[cb.value] || 0) >= MAX_TALLER;
                 if (!cb.checked) {
                     if (talls >= 2 || isFull) {
-                        cb.disabled = true;
-                        label.classList.add('locked-option');
+                        cb.disabled = true; label.classList.add('locked-option');
                     } else {
-                        cb.disabled = false;
-                        label.classList.remove('locked-option');
+                        cb.disabled = false; label.classList.remove('locked-option');
                     }
                 } else {
-                    cb.disabled = false;
-                    label.classList.remove('locked-option');
+                    cb.disabled = false; label.classList.remove('locked-option');
                 }
             });
             
@@ -773,9 +904,11 @@
         document.querySelectorAll('.user-input, .conf-checkbox, .workshop-checkbox').forEach(el => el.addEventListener('change', evaluateFormState));
         document.querySelectorAll('.user-input').forEach(el => el.addEventListener('input', evaluateFormState));
 
-        // GENERAR PASE
+        // GENERAR PASE Y QUEMAR CÓDIGO
         submitBtn.addEventListener('click', async () => {
             if(!auth || !auth.currentUser) return showAlert("Error", "Sistema desconectado. Revisa tu internet o recarga la página.", true);
+            if(!validatedAccessCode) return showAlert("Error Crítico", "No hay código de acceso validado.", true);
+
             const dataObj = {
                 nombre: document.getElementById('studentName').value.trim(),
                 matricula: document.getElementById('studentId').value.trim(),
@@ -784,21 +917,36 @@
                 conferencias_seleccionadas: Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb=>cb.value),
                 talleres_seleccionados: Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb=>cb.value),
                 asistencias: [],
-                fecha_registro: new Date().toISOString()
+                fecha_registro: new Date().toISOString(),
+                codigoUtilizado: validatedAccessCode // Vinculación
             };
 
             submitBtn.classList.add('hidden'); document.getElementById('loading-spinner').classList.remove('hidden');
 
             try {
+                // Doble chequeo de seguridad del código
+                const codeCheck = await getDoc(doc(codigosRef, validatedAccessCode));
+                if(!codeCheck.exists() || codeCheck.data().usado) {
+                    throw new Error("El código fue utilizado en otra ventana mientras llenabas el formulario.");
+                }
+
+                // Chequeo de duplicado de matrícula
                 const docRef = doc(registrosRef, dataObj.matricula);
                 if ((await getDoc(docRef)).exists()) {
                     showAlert("Registro Duplicado", `La matrícula ${dataObj.matricula} ya se encuentra registrada en el sistema.`, true);
-                    submitBtn.classList.remove('hidden');
-                    document.getElementById('loading-spinner').classList.add('hidden');
+                    submitBtn.classList.remove('hidden'); document.getElementById('loading-spinner').classList.add('hidden');
                     return;
                 }
                 
+                // GUARDADO SIMULTANEO
                 await setDoc(docRef, dataObj);
+                await updateDoc(doc(codigosRef, validatedAccessCode), {
+                    usado: true,
+                    fechaUso: new Date().toISOString(),
+                    matricula: dataObj.matricula,
+                    nombre: dataObj.nombre,
+                    grupo: dataObj.grupo
+                });
                 
                 // Construir Pase visual
                 document.getElementById('res-name').textContent = dataObj.nombre;
@@ -806,7 +954,6 @@
                 document.getElementById('res-group').textContent = dataObj.grupo;
                 document.getElementById('res-program').textContent = dataObj.carrera;
                 
-                // Renderizar insignias
                 const badgesDiv = document.getElementById('badges-container');
                 badgesDiv.innerHTML = '';
                 [...dataObj.conferencias_seleccionadas, ...dataObj.talleres_seleccionados, 'gran-cierre'].forEach(id => {
@@ -816,16 +963,16 @@
                 document.getElementById('qrcode').innerHTML = "";
                 new QRCode(document.getElementById("qrcode"), { text: `UATYG2026|${dataObj.matricula}`, width: 200, height: 200, colorDark: "#064e3b" });
 
+                document.getElementById('registration-form-section').classList.add('hidden');
                 document.getElementById('qr-result-section').classList.remove('hidden');
                 document.getElementById('qr-result-section').scrollIntoView({ behavior: 'smooth' });
                 
                 setTimeout(() => showAlert("Registro Exitoso", `¡Listo! Se ha guardado tu lugar. Recuerda guardar la captura de tu pase para acceder al evento.`, false), 1000);
 
             } catch (error) {
-                showAlert("Error", "Hubo un fallo al registrar.", true);
-            } finally {
-                document.getElementById('loading-spinner').classList.add('hidden');
-            }
+                showAlert("Error", error.message || "Hubo un fallo al registrar.", true);
+                submitBtn.classList.remove('hidden'); document.getElementById('loading-spinner').classList.add('hidden');
+            } 
         });
 
         // DESCARGAR PASE
@@ -838,12 +985,15 @@
             });
         });
 
-        // CERRAR PASE Y VOLVER A INICIO (Reparado sin usar location.reload)
+        // CERRAR PASE Y REINICIAR LA VISTA DE USUARIO
         document.getElementById('close-qr-btn').addEventListener('click', () => { 
             document.getElementById('qr-result-section').classList.add('hidden');
+            document.getElementById('code-validation-section').classList.remove('hidden');
             document.querySelectorAll('.user-input').forEach(i => i.value = '');
             document.querySelectorAll('.conf-checkbox').forEach(cb => cb.checked = false);
             document.querySelectorAll('.workshop-checkbox').forEach(cb => cb.checked = false);
+            inputCode.value = '';
+            validatedAccessCode = null;
             evaluateFormState();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -871,7 +1021,6 @@
                 const data = docSnap.data();
                 const asis = data.asistencias || [];
                 
-                // Para contar completado, debe tener _entrada Y _salida
                 let confComp = 0, tallComp = 0;
                 if(data.conferencias_seleccionadas) {
                     data.conferencias_seleccionadas.forEach(c => { if(asis.includes(`${c}_entrada`) && asis.includes(`${c}_salida`)) confComp++; });
@@ -899,10 +1048,8 @@
             const originalHTML = btn.innerHTML;
             btn.innerHTML = "Procesando certificado en Alta Calidad...";
             
-            // Llenar datos en el template invisible
             document.getElementById('cert-student-name').textContent = document.getElementById('portal-nombre').textContent;
             
-            // Generar imagen
             html2canvas(document.getElementById('certificate-template'), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
                 const a = document.createElement('a'); a.href = canvas.toDataURL("image/png"); a.download = `Reconocimiento_${document.getElementById('portal-matricula').value}.png`; a.click();
                 btn.innerHTML = originalHTML;
@@ -910,7 +1057,7 @@
             });
         });
 
-        // --- SISTEMA ADMIN ---
+        // --- SISTEMA ADMIN Y CÓDIGOS DE ACCESO ---
         const admTrig=document.getElementById('secret-admin-trigger'), pwdMod=document.getElementById('admin-pwd-modal');
         admTrig.addEventListener('click', () => { document.getElementById('admin-pwd-input').value=''; pwdMod.classList.remove('hidden'); });
         document.getElementById('cancel-admin-btn').addEventListener('click', () => pwdMod.classList.add('hidden'));
@@ -924,47 +1071,232 @@
                 document.getElementById('tab-scanner').click();
             } else if (pwd === 'reset0738') {
                 pwdMod.classList.add('hidden');
-                showAlert("Borrando...", "Eliminando todos los registros...", false);
+                showAlert("Borrando Sistema...", "Eliminando alumnos y códigos...", false);
                 try {
-                    const qSnap = await getDocs(registrosRef);
-                    const proms = []; qSnap.forEach(d => proms.push(deleteDoc(doc(registrosRef, d.id))));
-                    await Promise.all(proms);
-                    showAlert("Limpio", `Se eliminaron ${proms.length} alumnos.`, false);
-                } catch(e) { showAlert("Error", "Fallo al resetear.", true); }
+                    // 1. Borrar todos los alumnos registrados
+                    const qSnapAlumnos = await getDocs(registrosRef);
+                    const promsAlumnos = []; 
+                    qSnapAlumnos.forEach(d => promsAlumnos.push(deleteDoc(doc(registrosRef, d.id))));
+                    await Promise.all(promsAlumnos);
+
+                    // 2. Borrar todos los códigos de acceso generados
+                    const qSnapCodigos = await getDocs(codigosRef);
+                    const promsCodigos = [];
+                    qSnapCodigos.forEach(d => promsCodigos.push(deleteDoc(doc(codigosRef, d.id))));
+                    await Promise.all(promsCodigos);
+
+                    showAlert("Sistema Reiniciado", `Se eliminaron ${promsAlumnos.length} alumnos y ${promsCodigos.length} códigos de acceso. Listo para producción.`, false);
+                } catch(e) { showAlert("Error Crítico", "Fallo al resetear la base de datos.", true); }
             } else { document.getElementById('admin-pwd-error').classList.remove('hidden'); }
         });
 
-        // SALIR DE ADMIN SEGURAMENTE
         document.getElementById('exit-admin-btn').addEventListener('click', async () => { 
-            // 1. Apagar cámara si existe
             if(typeof html5QrCode !== 'undefined' && html5QrCode !== null) {
-                try { await html5QrCode.stop(); } catch(e) { console.warn("Cámara ya estaba apagada."); }
+                try { await html5QrCode.stop(); } catch(e) {}
             }
-            
-            // 2. Restaurar la interfaz de admin para la próxima vez
             document.getElementById('start-scan-btn').classList.remove('hidden'); 
             document.getElementById('scanner-container-wrapper').classList.add('hidden'); 
             document.getElementById('admin-activity-select').disabled = false;
-
-            // 3. Cambiar de pantalla a inicio
             document.getElementById('admin-dashboard').classList.add('hidden');
             document.getElementById('main-landing').classList.remove('hidden');
             window.scrollTo(0,0);
         });
 
         // TABS
-        document.getElementById('tab-scanner').addEventListener('click', (e) => { e.target.className="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700"; document.getElementById('tab-database').className="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500"; document.getElementById('view-scanner').classList.replace('hidden','block'); document.getElementById('view-database').classList.replace('block','hidden'); });
-        document.getElementById('tab-database').addEventListener('click', (e) => { e.target.className="flex-1 py-3 text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700"; document.getElementById('tab-scanner').className="flex-1 py-3 text-sm font-bold rounded-lg text-gray-500"; document.getElementById('view-database').classList.replace('hidden','block'); document.getElementById('view-scanner').classList.replace('block','hidden'); generateDbReport(); });
+        function switchAdminTab(activeId, viewId) {
+            ['tab-scanner', 'tab-database', 'tab-codes'].forEach(id => {
+                document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
+            });
+            ['view-scanner', 'view-database', 'view-codes'].forEach(id => {
+                document.getElementById(id).classList.replace(id === viewId ? 'hidden' : 'block', id === viewId ? 'block' : 'hidden');
+            });
+        }
+        document.getElementById('tab-scanner').addEventListener('click', () => switchAdminTab('tab-scanner', 'view-scanner'));
+        document.getElementById('tab-database').addEventListener('click', () => { switchAdminTab('tab-database', 'view-database'); generateDbReport(); });
+        document.getElementById('tab-codes').addEventListener('click', () => { switchAdminTab('tab-codes', 'view-codes'); loadAdminCodes(); });
 
-        // ESCÁNER (DOBLE: ENTRADA Y SALIDA)
+        // --- FUNCIONES DEL GENERADOR DE CÓDIGOS ---
+        function generateSecureCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let result = '';
+            const randomArray = new Uint8Array(6);
+            crypto.getRandomValues(randomArray);
+            for (let i = 0; i < 6; i++) {
+                result += chars[randomArray[i] % chars.length];
+            }
+            return result;
+        }
+
+        document.getElementById('generate-codes-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('generate-codes-btn');
+            btn.disabled = true; btn.textContent = "Generando...";
+
+            try {
+                // Obtener existentes para no duplicar
+                const existingSnap = await getDocs(codigosRef);
+                const existingCodes = new Set();
+                existingSnap.forEach(d => existingCodes.add(d.id));
+
+                const newCodes = [];
+                while (newCodes.length < 150) {
+                    const code = generateSecureCode();
+                    if (!existingCodes.has(code) && !newCodes.includes(code)) {
+                        newCodes.push(code);
+                    }
+                }
+
+                // Escribir en batch
+                const batch = writeBatch(db);
+                newCodes.forEach(code => {
+                    const docRef = doc(codigosRef, code);
+                    batch.set(docRef, {
+                        codigo: code,
+                        usado: false,
+                        fechaCreacion: new Date().toISOString(),
+                        fechaUso: null,
+                        matricula: null,
+                        nombre: null,
+                        grupo: null
+                    });
+                });
+                
+                await batch.commit();
+                showAlert("Éxito", "Se han generado 150 códigos nuevos correctamente.", false);
+                loadAdminCodes();
+            } catch (e) {
+                showAlert("Error", "Error al generar los códigos.", true);
+            }
+            
+            btn.disabled = false; btn.textContent = "Generar 150 Códigos";
+        });
+
+        // CARGAR TABLA DE CÓDIGOS
+        async function loadAdminCodes() {
+            const tbody = document.getElementById('codes-table-body');
+            tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center">Cargando códigos...</td></tr>';
+            try {
+                const qSnap = await getDocs(codigosRef);
+                loadedAdminCodes = [];
+                let total = 0, used = 0;
+                
+                qSnap.forEach(d => {
+                    const data = d.data();
+                    loadedAdminCodes.push(data);
+                    total++;
+                    if(data.usado) used++;
+                });
+
+                // Ordenar: No usados primero, luego alfabéticamente
+                loadedAdminCodes.sort((a,b) => (a.usado === b.usado) ? a.codigo.localeCompare(b.codigo) : (a.usado ? 1 : -1));
+
+                document.getElementById('codes-count-total').textContent = total;
+                document.getElementById('codes-count-used').textContent = used;
+                document.getElementById('codes-count-avail').textContent = total - used;
+                
+                renderCodesTable(loadedAdminCodes);
+                
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-red-500">Error al cargar datos.</td></tr>';
+            }
+        }
+
+        function renderCodesTable(dataList) {
+            const tbody = document.getElementById('codes-table-body');
+            let html = '';
+            if(dataList.length === 0) {
+                html = '<tr><td colspan="6" class="p-4 text-center">No hay códigos registrados.</td></tr>';
+            } else {
+                dataList.forEach(c => {
+                    const statusBadge = c.usado 
+                        ? '<span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs font-bold whitespace-nowrap">Utilizado</span>' 
+                        : '<span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs font-bold whitespace-nowrap">Disponible</span>';
+                    const fechaFmt = c.fechaUso ? new Date(c.fechaUso).toLocaleString() : '-';
+                    
+                    html += `<tr class="border-b hover:bg-gray-50 transition">
+                        <td class="p-3 font-mono font-bold text-gray-800">${c.codigo}</td>
+                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 font-medium text-gray-600">${c.nombre || '-'}</td>
+                        <td class="p-3">${c.matricula || '-'}</td>
+                        <td class="p-3">${c.grupo || '-'}</td>
+                        <td class="p-3 text-right text-xs text-gray-500">${fechaFmt}</td>
+                    </tr>`;
+                });
+            }
+            tbody.innerHTML = html;
+        }
+
+        // BUSCADOR EN TABLA DE CÓDIGOS
+        document.getElementById('search-codes-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = loadedAdminCodes.filter(c => 
+                c.codigo.toLowerCase().includes(term) || 
+                (c.nombre && c.nombre.toLowerCase().includes(term)) ||
+                (c.matricula && c.matricula.toLowerCase().includes(term))
+            );
+            renderCodesTable(filtered);
+        });
+
+        // EXPORTAR CÓDIGOS CSV
+        document.getElementById('export-codes-btn').addEventListener('click', () => {
+            if(loadedAdminCodes.length === 0) return alert("No hay códigos para exportar.");
+            let csvContent = "data:text/csv;charset=utf-8,Codigo,Estado,Alumno,Matricula,Grupo,FechaUso\n";
+            loadedAdminCodes.forEach(c => {
+                const row = [
+                    c.codigo,
+                    c.usado ? "Utilizado" : "Disponible",
+                    c.nombre || "",
+                    c.matricula || "",
+                    c.grupo || "",
+                    c.fechaUso || ""
+                ].map(item => `"${String(item).replace(/"/g, '""')}"`).join(",");
+                csvContent += row + "\r\n";
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Codigos_UATyG_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // IMPRIMIR COMPROBANTES (Oculta la página y solo muestra el área de print)
+        document.getElementById('print-codes-btn').addEventListener('click', () => {
+            const disponibles = loadedAdminCodes.filter(c => !c.usado);
+            if(disponibles.length === 0) return alert("No hay códigos disponibles (no usados) para imprimir.");
+            
+            const printArea = document.getElementById('print-area');
+            let htmlContent = '';
+            
+            disponibles.forEach(c => {
+                htmlContent += `
+                <div class="print-ticket">
+                    <h2>1ra ECO-SEMANA UATyG 2026</h2>
+                    <p>Código de Acceso:</p>
+                    <div class="code-text">${c.codigo}</div>
+                    <p><strong>Importante:</strong><br>Este código es único e intransferible.<br>Una vez utilizado no podrá volver a registrarse.<br><br>Conserva este comprobante.</p>
+                </div>`;
+            });
+            
+            printArea.innerHTML = htmlContent;
+            
+            // Invocamos ventana de impresión del navegador. El CSS Media Print se encargará del resto.
+            setTimeout(() => {
+                window.print();
+                // Limpiar después de imprimir para no saturar el DOM
+                setTimeout(() => printArea.innerHTML = '', 1000); 
+            }, 500);
+        });
+
+        // --- RESTO DE FUNCIONES DE ADMIN ---
         let isProcessing = false;
         async function onScanSuccess(text) {
             if(isProcessing || !text.startsWith('UATYG2026|')) return;
             isProcessing = true;
             const mat = text.split('|')[1];
             const act = document.getElementById('admin-activity-select').value;
-            const type = document.querySelector('input[name="scan_type"]:checked').value; // 'entrada' o 'salida'
-            const recordStr = `${act}_${type}`; // Ej: conf-1_entrada
+            const type = document.querySelector('input[name="scan_type"]:checked').value; 
+            const recordStr = `${act}_${type}`; 
             
             document.getElementById('qr-reader').style.border = type === 'entrada' ? "4px solid #10b981" : "4px solid #ef4444";
             
@@ -976,7 +1308,6 @@
                     if(data.asistencias && data.asistencias.includes(recordStr)) {
                         console.log("Ya existía este pase.");
                     } else {
-                        // Verifica si intenta hacer salida sin tener entrada
                         if(type === 'salida' && (!data.asistencias || !data.asistencias.includes(`${act}_entrada`))) {
                             alert("¡CUIDADO! Este alumno quiere registrar Salida pero NO registró Entrada a esta actividad.");
                         } else {
@@ -1001,17 +1332,35 @@
         
         document.getElementById('stop-scan-btn').addEventListener('click', async () => { 
             if(html5QrCode) {
-                try { await html5QrCode.stop(); } catch(e) { console.warn("Scanner ya detenido"); }
+                try { await html5QrCode.stop(); } catch(e) { }
             }
             document.getElementById('start-scan-btn').classList.remove('hidden'); 
             document.getElementById('scanner-container-wrapper').classList.add('hidden'); 
         });
 
-        // REPORTE BASE DE DATOS
         let recToDelete=null;
         window.confirmDel = async function() {
             document.getElementById('delete-confirm-modal').classList.add('hidden');
-            if(recToDelete) { await deleteDoc(doc(registrosRef, recToDelete)); showAlert("Borrado", "Alumno borrado", false); generateDbReport(); }
+            if(recToDelete) { 
+                try {
+                    const docSnap = await getDoc(doc(registrosRef, recToDelete));
+                    const codUtilizado = docSnap.exists() ? docSnap.data().codigoUtilizado : null;
+                    
+                    // Borrar el registro del alumno
+                    await deleteDoc(doc(registrosRef, recToDelete)); 
+                    
+                    // Liberar el código para que vuelva a estar disponible si es necesario
+                    if (codUtilizado) {
+                        await updateDoc(doc(codigosRef, codUtilizado), {
+                            usado: false, fechaUso: null, matricula: null, nombre: null, grupo: null
+                        });
+                    }
+                    showAlert("Borrado", "Alumno borrado y código liberado.", false); 
+                    generateDbReport();
+                } catch(e) {
+                    showAlert("Error", "Error al borrar registro.", true);
+                }
+            }
         };
         window.cancelDel = function() { document.getElementById('delete-confirm-modal').classList.add('hidden'); recToDelete=null; };
         
