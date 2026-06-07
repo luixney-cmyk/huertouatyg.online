@@ -737,6 +737,7 @@
         
         // DECLARACION GLOBAL
         let db, auth, registrosRef = null, codigosRef = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'eco-semana-uatyg';
         let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
@@ -767,8 +768,8 @@
                 
                 await signInAnonymously(auth);
                 
-                registrosRef = collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'registros');
-                codigosRef = collection(db, 'artifacts', 'eco-semana-uatyg', 'public', 'data', 'codigos_acceso');
+                registrosRef = collection(db, 'artifacts', appId, 'public', 'data', 'registros');
+                codigosRef = collection(db, 'artifacts', appId, 'public', 'data', 'codigos_acceso');
                 
                 onSnapshot(registrosRef, (snapshot) => {
                     const newCaps = {};
@@ -1086,7 +1087,10 @@
                     await Promise.all(promsCodigos);
 
                     showAlert("Sistema Reiniciado", `Se eliminaron ${promsAlumnos.length} alumnos y ${promsCodigos.length} códigos de acceso. Listo para producción.`, false);
-                } catch(e) { showAlert("Error Crítico", "Fallo al resetear la base de datos.", true); }
+                } catch(e) { 
+                    console.error("Error al resetear:", e);
+                    showAlert("Error Crítico", e.message || "Fallo al resetear la base de datos.", true); 
+                }
             } else { document.getElementById('admin-pwd-error').classList.remove('hidden'); }
         });
 
@@ -1164,7 +1168,8 @@
                 showAlert("Éxito", "Se han generado 150 códigos nuevos correctamente.", false);
                 loadAdminCodes();
             } catch (e) {
-                showAlert("Error", "Error al generar los códigos.", true);
+                console.error("Error al generar códigos:", e);
+                showAlert("Error", e.message || "Error al generar los códigos.", true);
             }
             
             btn.disabled = false; btn.textContent = "Generar 150 Códigos";
