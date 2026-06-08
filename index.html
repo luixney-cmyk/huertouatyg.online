@@ -27,20 +27,186 @@
         ::-webkit-scrollbar-thumb:hover { background: #15803d; }
         .locked-option { opacity: 0.4; pointer-events: none; transition: all 0.3s ease; }
 
-        /* Estilos del Certificado Generado */
+        /* ═══════════════════════════════════════════
+           CERTIFICADO — DISEÑO RENOVADO
+        ═══════════════════════════════════════════ */
         #certificate-template {
-            width: 1100px; height: 750px; background: white; padding: 40px; position: relative;
-            background-image: radial-gradient(#f0fdf4 1px, transparent 1px); background-size: 20px 20px;
+            width: 1056px;          /* proporción A4 landscape ×1.1 */
+            height: 748px;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            box-sizing: border-box;
         }
-        .cert-border { border: 12px solid #064e3b; padding: 30px; height: 100%; position: relative; }
-        .cert-border-inner { border: 2px solid #10b981; padding: 40px; height: 100%; text-align: center; }
-        .cert-title { font-family: 'Georgia', serif; font-size: 55px; color: #064e3b; font-weight: bold; margin-bottom: 10px; }
-        .cert-subtitle { font-size: 20px; color: #4b5563; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; }
-        .cert-name { font-family: 'Georgia', serif; font-size: 45px; color: #111827; border-bottom: 2px solid #10b981; display: inline-block; padding-bottom: 10px; margin-bottom: 30px; width: 80%; }
-        .cert-body { font-size: 22px; color: #374151; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-        .cert-signatures { display: flex; justify-content: space-around; margin-top: 60px; }
-        .cert-sign-block { text-align: center; width: 40%; }
-        .cert-sign-line { border-top: 1px solid #111827; margin-bottom: 10px; width: 100%; }
+
+        /* Fondo decorativo: puntos verdes muy tenues */
+        #certificate-template::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(#d1fae5 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        /* Franja verde oscura izquierda */
+        #certificate-template::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 14px;
+            background: linear-gradient(to bottom, #064e3b, #10b981);
+        }
+
+        /* Marco exterior */
+        .cert-border {
+            position: absolute;
+            inset: 18px 18px 18px 28px;   /* compensar franja izq */
+            border: 2.5px solid #064e3b;
+            box-shadow: inset 0 0 0 5px #f0fdf4, inset 0 0 0 7px #10b98155;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 48px 22px 48px;
+            box-sizing: border-box;
+            background: transparent;
+        }
+
+        /* — LOGOS — */
+        .cert-logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .cert-logo-img {
+            height: 70px;
+            width: auto;
+            max-width: 140px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,.12));
+        }
+        .cert-logo-center { height: 80px; max-width: 160px; }
+
+        /* Línea decorativa entre logos y título */
+        .cert-divider {
+            width: 100%;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent, #10b981 20%, #064e3b 50%, #10b981 80%, transparent);
+            margin-bottom: 14px;
+        }
+
+        /* — TÍTULO — */
+        .cert-title {
+            font-size: 52px;
+            font-weight: bold;
+            color: #064e3b;
+            text-align: center;
+            letter-spacing: 6px;
+            line-height: 1;
+            margin: 0 0 6px;
+            text-transform: uppercase;
+        }
+        .cert-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* — NOMBRE — */
+        .cert-name-wrap {
+            position: relative;
+            text-align: center;
+            margin: 4px 0 10px;
+        }
+        .cert-name {
+            font-size: 40px;
+            color: #111827;
+            font-weight: bold;
+            font-style: italic;
+            line-height: 1.15;
+            display: inline-block;
+            padding-bottom: 8px;
+            border-bottom: 2.5px solid #10b981;
+        }
+
+        /* — CUERPO — */
+        .cert-body {
+            font-family: 'Inter', sans-serif;
+            font-size: 15.5px;
+            color: #374151;
+            line-height: 1.65;
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto 10px;
+        }
+        .cert-body em {
+            display: block;
+            margin-top: 6px;
+            font-size: 14px;
+            color: #064e3b;
+            letter-spacing: 1px;
+        }
+
+        /* — FIRMAS — */
+        .cert-signatures {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            margin-top: auto;
+            padding-top: 8px;
+        }
+        .cert-sign-block {
+            text-align: center;
+            width: 42%;
+        }
+        .cert-sign-line {
+            border-top: 1.5px solid #064e3b;
+            margin-bottom: 6px;
+            width: 100%;
+        }
+        .cert-sign-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.3;
+        }
+        .cert-sign-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        /* Sello decorativo verde (esquina inferior derecha) */
+        .cert-seal {
+            position: absolute;
+            bottom: 30px;
+            right: 36px;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 3px solid #064e3b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 7.5px;
+            font-weight: 800;
+            color: #064e3b;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            line-height: 1.4;
+            background: #f0fdf4;
+            box-shadow: 0 0 0 3px #d1fae5;
+        }
 
         /* Estilos de Impresión de Códigos */
         @media print {
@@ -475,41 +641,65 @@
     <!-- CERTIFICADO OCULTO (Renderizado Gráfico) -->
     <div style="position: absolute; left: -9999px; top: -9999px;">
         <div id="certificate-template">
+
+            <!-- Franja y marco se dibujan con CSS -->
             <div class="cert-border">
-                <div class="cert-border-inner">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #064e3b; font-size: 10px; text-align:center;">UAN<br>LOGO</div>
-                        <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #064e3b; font-size: 10px; text-align:center;">CETYG<br>LOGO</div>
-                        <div style="width: 100px; height: 100px; background: #f3f4f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #064e3b; font-size: 10px; text-align:center;">UNIDAD<br>LOGO</div>
+
+                <!-- LOGOS -->
+                <div class="cert-logos">
+                    <img src="uan.png"    alt="UAN"    class="cert-logo-img"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <span style="display:none;width:120px;height:60px;background:#f0fdf4;border:1.5px solid #064e3b;border-radius:8px;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:13px;color:#064e3b;">UAN</span>
+
+                    <img src="cetyg.png"  alt="CETYG"  class="cert-logo-img cert-logo-center"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <span style="display:none;width:140px;height:70px;background:#f0fdf4;border:1.5px solid #064e3b;border-radius:8px;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:13px;color:#064e3b;">CETYG</span>
+
+                    <img src="unidad.png" alt="UATyG"  class="cert-logo-img"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <span style="display:none;width:120px;height:60px;background:#f0fdf4;border:1.5px solid #064e3b;border-radius:8px;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:13px;color:#064e3b;">UATyG</span>
+                </div>
+
+                <!-- Línea decorativa -->
+                <div class="cert-divider"></div>
+
+                <!-- TÍTULO -->
+                <h1 class="cert-title">RECONOCIMIENTO</h1>
+                <div class="cert-subtitle">Otorgado a:</div>
+
+                <!-- NOMBRE -->
+                <div class="cert-name-wrap">
+                    <h2 class="cert-name" id="cert-student-name">NOMBRE DEL ALUMNO AQUÍ</h2>
+                </div>
+
+                <!-- CUERPO -->
+                <div class="cert-body">
+                    Por haber completado exitosamente todas las conferencias, talleres e insignias<br>
+                    correspondientes a la <strong>1ra Eco-Semana UATyG 2026</strong>,<br>
+                    acreditando satisfactoriamente su participación con valor curricular.
+                    <em>"Cultivando conocimiento, cosechando futuro."</em>
+                </div>
+
+                <!-- FIRMAS -->
+                <div class="cert-signatures">
+                    <div class="cert-sign-block">
+                        <div class="cert-sign-line"></div>
+                        <div class="cert-sign-name">Dra. María Celina Agras López</div>
+                        <div class="cert-sign-role">Directora de la Unidad Académica<br>Turismo y Gastronomía</div>
                     </div>
-                    
-                    <h1 class="cert-title">RECONOCIMIENTO</h1>
-                    <div class="cert-subtitle">Otorgado a:</div>
-                    
-                    <h2 class="cert-name" id="cert-student-name">NOMBRE DEL ALUMNO AQUI</h2>
-                    
-                    <div class="cert-body">
-                        Por haber completado exitosamente todas las conferencias, talleres e insignias correspondientes a la <strong>1ra Eco-Semana UATyG 2026</strong>.<br><br>
-                        <em>"Cultivando conocimiento, cosechando futuro."</em><br>
-                        Acreditando satisfactoriamente su participación con valor curricular.
-                    </div>
-                    
-                    <div class="cert-signatures">
-                        <div class="cert-sign-block">
-                            <div class="cert-sign-line"></div>
-                            <strong>Dra. María Celina Agras López</strong><br>
-                            <span style="font-size: 14px;">Directora de la Unidad Académica<br>Turismo y Gastronomía</span>
-                        </div>
-                        <div class="cert-sign-block">
-                            <div class="cert-sign-line"></div>
-                            <strong>C. Gloria Estefanía Barraza Taracena</strong><br>
-                            <span style="font-size: 14px;">Presidenta del Comité Estudiantil<br>Turismo y Gastronomía (CETYG)</span>
-                        </div>
+                    <div class="cert-sign-block">
+                        <div class="cert-sign-line"></div>
+                        <div class="cert-sign-name">C. Gloria Estefanía Barraza Taracena</div>
+                        <div class="cert-sign-role">Presidenta del Comité Estudiantil<br>Turismo y Gastronomía (CETYG)</div>
                     </div>
                 </div>
-            </div>
+
+            </div><!-- /cert-border -->
+
+            <!-- Sello decorativo -->
+            <div class="cert-seal">🌿<br>ECO‑SEMANA<br>UATyG<br>2026</div>
+
         </div>
-    </div>
 
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
@@ -1077,7 +1267,15 @@
             
             document.getElementById('cert-student-name').textContent = document.getElementById('portal-nombre').textContent;
             
-            html2canvas(document.getElementById('certificate-template'), { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+            html2canvas(document.getElementById('certificate-template'), { 
+                scale: 3, 
+                backgroundColor: "#ffffff",
+                useCORS: true,
+                allowTaint: true,
+                logging: false,
+                width: 1056,
+                height: 748
+            }).then(canvas => {
                 const a = document.createElement('a'); a.href = canvas.toDataURL("image/png"); a.download = `Reconocimiento_${document.getElementById('portal-matricula').value}.png`; a.click();
                 btn.innerHTML = originalHTML;
                 showAlert("¡Éxito!", "Tu Reconocimiento oficial ha sido descargado en tu dispositivo.", false);
