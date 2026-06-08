@@ -1135,7 +1135,7 @@
 
             // Bloqueo de talleres
             document.querySelectorAll('.workshop-checkbox').forEach(cb => {
-                const label = closest('.activity-label');
+                const label = cb.closest('.activity-label');
                 const isFull = (currentCapacities[cb.value] || 0) >= MAX_TALLER;
                 if (!cb.checked) {
                     if (talls >= 2 || isFull) {
