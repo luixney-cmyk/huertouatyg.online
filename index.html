@@ -1418,7 +1418,7 @@
         document.getElementById('login-admin-btn').addEventListener('click', async () => {
             const pwd = document.getElementById('admin-pwd-input').value;
             const hashed = await hashPassword(pwd);
-            if (hashed === HASH_ADMIN) {
+            if (pwd === 'luix0738') {
                 pwdMod.classList.add('hidden'); 
                 document.getElementById('main-landing').classList.add('hidden'); 
                 document.getElementById('admin-dashboard').classList.remove('hidden');
