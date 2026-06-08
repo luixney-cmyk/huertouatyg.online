@@ -31,7 +31,7 @@
            CERTIFICADO — DISEÑO RENOVADO
         ═══════════════════════════════════════════ */
         #certificate-template {
-            width: 1056px;          /* proporción A4 landscape ×1.1 */
+            width: 1056px;
             height: 748px;
             background: #ffffff;
             position: relative;
@@ -40,7 +40,6 @@
             box-sizing: border-box;
         }
 
-        /* Fondo decorativo: puntos verdes muy tenues */
         #certificate-template::before {
             content: '';
             position: absolute; inset: 0;
@@ -50,7 +49,6 @@
             pointer-events: none;
         }
 
-        /* Franja verde oscura izquierda */
         #certificate-template::after {
             content: '';
             position: absolute;
@@ -59,10 +57,9 @@
             background: linear-gradient(to bottom, #064e3b, #10b981);
         }
 
-        /* Marco exterior */
         .cert-border {
             position: absolute;
-            inset: 18px 18px 18px 28px;   /* compensar franja izq */
+            inset: 18px 18px 18px 28px;
             border: 2.5px solid #064e3b;
             box-shadow: inset 0 0 0 5px #f0fdf4, inset 0 0 0 7px #10b98155;
             display: flex;
@@ -72,7 +69,6 @@
             background: transparent;
         }
 
-        /* — LOGOS — */
         .cert-logos {
             display: flex;
             justify-content: space-between;
@@ -88,7 +84,6 @@
         }
         .cert-logo-center { height: 80px; max-width: 160px; }
 
-        /* Línea decorativa entre logos y título */
         .cert-divider {
             width: 100%;
             height: 1.5px;
@@ -96,7 +91,6 @@
             margin-bottom: 14px;
         }
 
-        /* — TÍTULO — */
         .cert-title {
             font-size: 52px;
             font-weight: bold;
@@ -117,7 +111,6 @@
             margin-bottom: 10px;
         }
 
-        /* — NOMBRE — */
         .cert-name-wrap {
             position: relative;
             text-align: center;
@@ -134,7 +127,6 @@
             border-bottom: 2.5px solid #10b981;
         }
 
-        /* — CUERPO — */
         .cert-body {
             font-family: 'Inter', sans-serif;
             font-size: 15.5px;
@@ -152,7 +144,6 @@
             letter-spacing: 1px;
         }
 
-        /* — FIRMAS — */
         .cert-signatures {
             display: flex;
             justify-content: space-around;
@@ -183,7 +174,6 @@
             line-height: 1.4;
         }
 
-        /* Sello decorativo verde (esquina inferior derecha) */
         .cert-seal {
             position: absolute;
             bottom: 30px;
@@ -208,7 +198,6 @@
             box-shadow: 0 0 0 3px #d1fae5;
         }
 
-        /* Estilos de Impresión de Códigos */
         @media print {
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
@@ -229,9 +218,9 @@
             <div class="max-w-4xl mx-auto mt-10">
                 <!-- LOGOS INSTITUCIONALES -->
                 <div class="w-full mx-auto flex justify-center gap-8 md:gap-20 items-center px-6 mb-10">
-                    <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.9)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4='">
-                    <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4='">
-                    <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg=='">
+                    <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.9)] onerror="this.style.display='none';">
+                    <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] onerror="this.style.display='none';">
+                    <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] onerror="this.style.display='none';">
                 </div>
 
                 <span id="secret-admin-trigger" class="cursor-pointer bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
@@ -563,7 +552,7 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN DEL QR GENERADO (Ubicado correctamente fuera del form) -->
+            <!-- SECCIÓN DEL QR GENERADO -->
             <div id="qr-result-section" class="hidden mt-12 bg-white rounded-3xl p-10 border-2 border-emerald-500 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-center max-w-md mx-auto relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-3 bg-emerald-500"></div>
                 <h3 class="text-3xl font-extrabold text-gray-900 mb-2 mt-2">¡Pase Oficial Listo!</h3>
@@ -605,7 +594,7 @@
         </section>
     </div>
 
-    <!-- PORTAL ALUMNO MODAL (Consulta y Certificado) -->
+    <!-- PORTAL ALUMNO MODAL -->
     <div id="student-portal-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md px-4">
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative text-center overflow-y-auto max-h-[90vh]">
             <button id="close-portal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 rounded-full p-2">
@@ -682,69 +671,6 @@
         </div>
     </div>
 
-    <!-- CERTIFICADO OCULTO (Renderizado Gráfico) -->
-    <div style="position: absolute; left: -9999px; top: -9999px;">
-        <div id="certificate-template">
-
-            <!-- Franja y marco se dibujan con CSS -->
-            <div class="cert-border">
-
-                <!-- LOGOS -->
-                <div class="cert-logos">
-                    <img src="uan.png"    alt="UAN"    class="cert-logo-img"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                    <span style="display:none;width:120px;height:60px;background:#f0fdf4;border:1.5px solid #064e3b;border-radius:8px;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:13px;color:#064e3b;">UAN</span>
-
-                    <img src="cetyg.png"  alt="CETYG"  class="cert-logo-img cert-logo-center"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                    <span style="display:none;width:140px;height:70px;background:#f0fdf4;border:1.5px solid #064e3b;border-radius:8px;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:13px;color:#064e3b;">CETYG</span>
-
-                    <img src="unidad.png" alt="UATyG"  class="cert-logo-img"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                    <span style="display:none;width:120px;height:60px;background:#f0fdf4;border:1.5px solid #064e3b;border-radius:8px;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:800;font-size:13px;color:#064e3b;">UATyG</span>
-                </div>
-
-                <!-- Línea decorativa -->
-                <div class="cert-divider"></div>
-
-                <!-- TÍTULO -->
-                <h1 class="cert-title">RECONOCIMIENTO</h1>
-                <div class="cert-subtitle">Otorgado a:</div>
-
-                <!-- NOMBRE -->
-                <div class="cert-name-wrap">
-                    <h2 class="cert-name" id="cert-student-name">NOMBRE DEL ALUMNO AQUÍ</h2>
-                </div>
-
-                <!-- CUERPO -->
-                <div class="cert-body">
-                    Por haber completado exitosamente todas las conferencias, talleres e insignias<br>
-                    correspondientes a la <strong>1ra Eco-Semana UATyG 2026</strong>,<br>
-                    acreditando satisfactoriamente su participación con valor curricular.
-                    <em>"Cultivando conocimiento, cosechando futuro."</em>
-                </div>
-
-                <!-- FIRMAS -->
-                <div class="cert-signatures">
-                    <div class="cert-sign-block">
-                        <div class="cert-sign-line"></div>
-                        <div class="cert-sign-name">Dra. María Celina Agras López</div>
-                        <div class="cert-sign-role">Directora de la Unidad Académica<br>Turismo y Gastronomía</div>
-                    </div>
-                    <div class="cert-sign-block">
-                        <div class="cert-sign-line"></div>
-                        <div class="cert-sign-name">C. Gloria Estefanía Barraza Taracena</div>
-                        <div class="cert-sign-role">Presidenta del Comité Estudiantil<br>Turismo y Gastronomía (CETYG)</div>
-                    </div>
-                </div>
-
-            </div><!-- /cert-border -->
-
-            <!-- Sello decorativo -->
-            <div class="cert-seal">🌿<br>ECO‑SEMANA<br>UATyG<br>2026</div>
-
-        </div>
-
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
         <!-- Contenido dinámico (Insignias agregadas en script) -->
@@ -802,7 +728,6 @@
             <h3 class="text-2xl font-bold text-gray-900 mb-2">¿Eliminar registro?</h3>
             <p class="text-gray-600 mb-6" id="delete-confirm-text">Se liberarán los espacios.</p>
             <div class="flex gap-3">
-                <!-- Ya están los ID y serán controlados por Javascript al final -->
                 <button id="cancel-delete-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition">Cancelar</button>
                 <button id="confirm-delete-btn" class="flex-1 rounded-xl px-4 py-3 bg-red-600 text-white hover:bg-red-700 transition">Eliminar</button>
             </div>
@@ -864,13 +789,9 @@
                         
                         <!-- PANEL DE RESULTADO DEL SCAN -->
                         <div id="last-scan-info" class="hidden mt-6 rounded-2xl border-4 p-5 text-center transition-all duration-300">
-                            <!-- Ícono grande de estado -->
                             <div id="scan-status-icon" class="text-6xl mb-2">✅</div>
-                            <!-- Texto de estado principal -->
                             <div id="scan-status-label" class="text-2xl font-black uppercase tracking-wide mb-3">ALUMNO REGISTRADO</div>
-                            <!-- Tipo (ENTRADA / SALIDA) -->
                             <div id="scan-type-badge" class="inline-block px-4 py-1 rounded-full text-sm font-bold mb-3">ENTRADA</div>
-                            <!-- Matrícula y nombre -->
                             <div class="bg-white bg-opacity-60 rounded-xl px-4 py-3 mt-1">
                                 <p class="text-xs font-bold uppercase opacity-70 mb-1">Alumno</p>
                                 <p class="text-xl font-black text-gray-900" id="scan-result-matricula">-</p>
@@ -888,7 +809,7 @@
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-black text-gray-900">Reporte de Acreditación</h2>
                         <div class="flex gap-2">
-                            <button id="export-accredited-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition">Exportar CSV</button>
+                            <button id="export-accredited-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Exportar CSV</button>
                             <button id="refresh-db-btn" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition">Actualizar</button>
                         </div>
                     </div>
@@ -903,7 +824,7 @@
                 </div>
             </div>
 
-            <!-- ATTENDANCE BY ACTIVITY VIEW -->
+            <!-- ATTENDANCE BY ACTIVITY VIEW (NUEVO) -->
             <div id="view-attendance" class="hidden">
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
                     <div class="flex justify-between items-center mb-6">
@@ -911,7 +832,7 @@
                         <button id="refresh-attendance-btn" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition">Actualizar</button>
                     </div>
                     <div id="attendance-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="text-center p-8 text-gray-400">Cargando datos...</div>
+                        <div class="col-span-full text-center p-8 text-gray-400 font-bold">Cargando estadísticas...</div>
                     </div>
                 </div>
             </div>
@@ -1404,26 +1325,16 @@
         admTrig.addEventListener('click', () => { document.getElementById('admin-pwd-input').value=''; document.getElementById('admin-pwd-error').classList.add('hidden'); pwdMod.classList.remove('hidden'); });
         document.getElementById('cancel-admin-btn').addEventListener('click', () => pwdMod.classList.add('hidden'));
         
-        // Hash SHA-256 de las contraseñas (nunca en texto plano)
-        // luix0738  → hash abajo
-        // reset0738 → hash abajo
-        const HASH_ADMIN = '2b4c3f9e1a7d8b6f5c0e4d2a9f3b7e1c8d5a0f6b2e4c7d9a1b3e5f8c0d2a4b6';
-        const HASH_RESET = 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2';
-
-        async function hashPassword(pwd) {
-            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
-            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-        }
-
+        // Regresado a contraseñas estándar para garantizar funcionamiento
         document.getElementById('login-admin-btn').addEventListener('click', async () => {
             const pwd = document.getElementById('admin-pwd-input').value;
-            const hashed = await hashPassword(pwd);
+            
             if (pwd === 'luix0738') {
                 pwdMod.classList.add('hidden'); 
                 document.getElementById('main-landing').classList.add('hidden'); 
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 document.getElementById('tab-scanner').click();
-            } else if (hashed === HASH_RESET) {
+            } else if (pwd === 'reset0738') {
                 pwdMod.classList.add('hidden');
                 showAlert("Borrando Sistema...", "Eliminando alumnos y códigos...", false);
                 try {
@@ -1454,17 +1365,18 @@
             window.scrollTo(0,0);
         });
 
-        // TABS
+        // TABS - AHORA CON TODAS LAS PESTAÑAS FUNCIONANDO
         function switchAdminTab(activeId, viewId) {
-            ['tab-scanner', 'tab-database', 'tab-codes'].forEach(id => {
-                document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[150px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
+            ['tab-scanner', 'tab-database', 'tab-attendance', 'tab-codes'].forEach(id => {
+                document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
             });
-            ['view-scanner', 'view-database', 'view-codes'].forEach(id => {
+            ['view-scanner', 'view-database', 'view-attendance', 'view-codes'].forEach(id => {
                 document.getElementById(id).classList.replace(id === viewId ? 'hidden' : 'block', id === viewId ? 'block' : 'hidden');
             });
         }
         document.getElementById('tab-scanner').addEventListener('click', () => switchAdminTab('tab-scanner', 'view-scanner'));
         document.getElementById('tab-database').addEventListener('click', () => { switchAdminTab('tab-database', 'view-database'); generateDbReport(); });
+        document.getElementById('tab-attendance').addEventListener('click', () => { switchAdminTab('tab-attendance', 'view-attendance'); generateAttendanceReport(); });
         document.getElementById('tab-codes').addEventListener('click', () => { switchAdminTab('tab-codes', 'view-codes'); loadAdminCodes(); });
 
         // --- FUNCIONES DEL GENERADOR DE CÓDIGOS ---
@@ -1633,18 +1545,15 @@
             
             printArea.innerHTML = htmlContent;
             
-            // Invocamos ventana de impresión del navegador. El CSS Media Print se encargará del resto.
             setTimeout(() => {
                 window.print();
-                // Limpiar después de imprimir para no saturar el DOM
                 setTimeout(() => printArea.innerHTML = '', 1000); 
             }, 500);
         });
 
-        // --- RESTO DE FUNCIONES DE ADMIN ---
+        // --- SISTEMA DEL ESCÁNER Y REPORTE DE ASISTENCIA ---
         let isProcessing = false;
 
-        // Sonidos de confirmación para el escáner
         function playBeep(type) {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1674,7 +1583,6 @@
 
         let scanFadeTimer = null;
         function showScanResult(status, type, matricula, nombre) {
-            // status: 'ok_nuevo' | 'ok_ya_registrado' | 'no_registrado' | 'sin_entrada' | 'error'
             const panel     = document.getElementById('last-scan-info');
             const icon      = document.getElementById('scan-status-icon');
             const label     = document.getElementById('scan-status-label');
@@ -1682,7 +1590,6 @@
             const alumno    = document.getElementById('scan-result-matricula');
             const qrBox     = document.getElementById('qr-reader');
 
-            // Colores del panel y borde del escáner según estado
             const styles = {
                 ok_nuevo:        { panelCls: 'bg-emerald-50 border-emerald-400', ic: '✅', lbl: 'ALUMNO REGISTRADO',            lblCls: 'text-emerald-700', border: '4px solid #10b981' },
                 ok_ya_registrado:{ panelCls: 'bg-blue-50 border-blue-400',      ic: '🔁', lbl: 'YA ESTABA REGISTRADO',         lblCls: 'text-blue-700',    border: '4px solid #3b82f6' },
@@ -1692,37 +1599,29 @@
             };
             const s = styles[status] || styles.error;
 
-            // Aplicar estilos al panel
             panel.className = `mt-6 rounded-2xl border-4 p-5 text-center transition-all duration-300 ${s.panelCls}`;
             icon.textContent  = s.ic;
             label.className   = `text-2xl font-black uppercase tracking-wide mb-3 whitespace-pre-line ${s.lblCls}`;
             label.textContent = s.lbl;
 
-            // Badge tipo (entrada / salida)
             const typeCls = type === 'entrada'
                 ? 'inline-block px-4 py-1 rounded-full text-sm font-bold mb-3 bg-emerald-200 text-emerald-800'
                 : 'inline-block px-4 py-1 rounded-full text-sm font-bold mb-3 bg-red-200 text-red-800';
             badge.className   = typeCls;
             badge.textContent = type ? `⬆ ${type.toUpperCase()}` : '';
 
-            // Matrícula + nombre
             if (matricula) {
                 alumno.innerHTML = `<span class="font-black">${matricula}</span><br><span class="text-base font-normal text-gray-600">${nombre || ''}</span>`;
-            } else {
-                alumno.textContent = '-';
-            }
+            } else { alumno.textContent = '-'; }
 
-            // Borde del visor QR
             qrBox.style.border = s.border;
             panel.classList.remove('hidden');
             panel.style.opacity = '1';
 
-            // Sonido según estado
             if (status === 'ok_nuevo') playBeep('ok');
             else if (status === 'ok_ya_registrado') playBeep('warn');
             else playBeep('error');
 
-            // Auto-fadeout del panel a los 4 segundos
             if (scanFadeTimer) clearTimeout(scanFadeTimer);
             scanFadeTimer = setTimeout(() => {
                 panel.style.transition = 'opacity 0.8s ease';
@@ -1745,12 +1644,9 @@
                 const docSnap = await getDoc(docRef);
 
                 if (!docSnap.exists()) {
-                    // El QR es válido pero el alumno NO está en la base de datos
                     showScanResult('no_registrado', type, mat, '');
                 } else {
                     const data = docSnap.data();
-
-                    // Verificar si el alumno está inscrito en esta actividad
                     const actividadesAlumno = [
                         ...(data.conferencias_seleccionadas || []),
                         ...(data.talleres_seleccionados    || []),
@@ -1759,33 +1655,23 @@
                     const inscritoEnActividad = actividadesAlumno.includes(act);
 
                     if (!inscritoEnActividad) {
-                        // Alumno existe PERO no se inscribió a esta actividad
                         showScanResult('no_registrado', type, mat, data.nombre);
                     } else if (data.asistencias && data.asistencias.includes(recordStr)) {
-                        // Ya se escaneó este pase antes (duplicado)
                         showScanResult('ok_ya_registrado', type, mat, data.nombre);
                     } else if (type === 'salida' && (!data.asistencias || !data.asistencias.includes(`${act}_entrada`))) {
-                        // Intenta registrar salida sin haber registrado entrada
                         showScanResult('sin_entrada', type, mat, data.nombre);
                     } else {
-                        // TODO bien: registrar asistencia
                         await updateDoc(docRef, { asistencias: arrayUnion(recordStr) });
                         showScanResult('ok_nuevo', type, mat, data.nombre);
                     }
                 }
-            } catch(e) {
-                showScanResult('error', type, mat, '');
-            }
+            } catch(e) { showScanResult('error', type, mat, ''); }
 
-            setTimeout(() => {
-                document.getElementById('qr-reader').style.border = "4px solid #1f2937";
-                isProcessing = false;
-            }, 3000);
+            setTimeout(() => { document.getElementById('qr-reader').style.border = "4px solid #1f2937"; isProcessing = false; }, 3000);
         }
 
         document.getElementById('start-scan-btn').addEventListener('click', async () => {
             if(!document.getElementById('admin-activity-select').value) return showAlert("Selecciona actividad", "Debes elegir una actividad antes de iniciar el escáner.", true);
-            // Bloquear controles durante el escaneo
             document.getElementById('admin-activity-select').disabled = true;
             document.querySelectorAll('input[name="scan_type"]').forEach(r => r.disabled = true);
             document.getElementById('start-scan-btn').classList.add('hidden'); 
@@ -1803,52 +1689,35 @@
         
         document.getElementById('stop-scan-btn').addEventListener('click', async () => { 
             if(html5QrCode) { try { await html5QrCode.stop(); } catch(e) { } }
-            // Desbloquear controles al detener
             document.getElementById('admin-activity-select').disabled = false;
             document.querySelectorAll('input[name="scan_type"]').forEach(r => r.disabled = false);
             document.getElementById('start-scan-btn').classList.remove('hidden'); 
             document.getElementById('scanner-container-wrapper').classList.add('hidden'); 
         });
 
-        // REPORTE BASE DE DATOS Y BOTONES DE ELIMINAR REPARADOS
+        // ------------------ REPORTE GENERAL DE BASE DE DATOS ------------------
         let recToDelete=null;
         
-        // Asignación de clics a los botones de eliminar y cancelar del modal
         document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
             document.getElementById('delete-confirm-modal').classList.add('hidden');
             if(recToDelete) { 
                 try {
                     const docSnap = await getDoc(doc(registrosRef, recToDelete));
                     const codUtilizado = docSnap.exists() ? docSnap.data().codigoUtilizado : null;
-                    
-                    // Borrar el registro del alumno
                     await deleteDoc(doc(registrosRef, recToDelete)); 
                     
-                    // Liberar el código para que vuelva a estar disponible si es necesario
                     if (codUtilizado && codigosRef) {
-                        await updateDoc(doc(codigosRef, codUtilizado), {
-                            usado: false, fechaUso: null, matricula: null, nombre: null, grupo: null
-                        });
+                        await updateDoc(doc(codigosRef, codUtilizado), { usado: false, fechaUso: null, matricula: null, nombre: null, grupo: null });
                     }
                     showAlert("Borrado", "Alumno borrado exitosamente y código liberado.", false); 
                     generateDbReport();
-                } catch(e) {
-                    showAlert("Error", "Error al borrar registro.", true);
-                }
+                } catch(e) { showAlert("Error", "Error al borrar registro.", true); }
                 recToDelete = null;
             }
         });
 
-        document.getElementById('cancel-delete-btn').addEventListener('click', () => {
-            document.getElementById('delete-confirm-modal').classList.add('hidden'); 
-            recToDelete = null;
-        });
-
-        // Función que abre el modal desde la tabla
-        window.openDeleteModal = function(matricula) {
-            recToDelete = matricula;
-            document.getElementById('delete-confirm-modal').classList.remove('hidden');
-        };
+        document.getElementById('cancel-delete-btn').addEventListener('click', () => { document.getElementById('delete-confirm-modal').classList.add('hidden'); recToDelete = null; });
+        window.openDeleteModal = function(matricula) { recToDelete = matricula; document.getElementById('delete-confirm-modal').classList.remove('hidden'); };
         
         async function generateDbReport() {
             const tbody = document.getElementById('db-table-body'); tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4">Cargando...</td></tr>';
@@ -1871,7 +1740,97 @@
                 tbody.innerHTML=html; document.getElementById('count-accredited').textContent=ok; document.getElementById('count-failed').textContent=no;
             } catch(e) { tbody.innerHTML='Error al cargar'; }
         }
-        document.getElementById('refresh-db-btn').addEventListener('click', generateDbReport);
+
+        // FUNCION: Exportar alumnos acreditados (NUEVO)
+        document.getElementById('export-accredited-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('export-accredited-btn');
+            const originalText = btn.textContent;
+            btn.textContent = "Generando...";
+            try {
+                const qSnap = await getDocs(registrosRef);
+                let csvContent = "data:text/csv;charset=utf-8,Matricula,Nombre,Grupo,Licenciatura,Conferencias,Talleres,Estado\n";
+                qSnap.forEach(d => {
+                    const dt = d.data();
+                    const asis = dt.asistencias || [];
+                    let conf = 0, tall = 0;
+                    if(dt.conferencias_seleccionadas) dt.conferencias_seleccionadas.forEach(c => { if(asis.includes(c+'_entrada') && asis.includes(c+'_salida')) conf++; });
+                    if(dt.talleres_seleccionados) dt.talleres_seleccionados.forEach(t => { if(asis.includes(t+'_entrada') && asis.includes(t+'_salida')) tall++; });
+                    const estado = (conf >= 3 && tall >= 2) ? "ACREDITADO" : "NO ACREDITADO";
+
+                    const row = [ dt.matricula || "", dt.nombre || "", dt.grupo || "", dt.carrera || "", conf, tall, estado ].map(item => `"${String(item).replace(/"/g, '""')}"`).join(",");
+                    csvContent += row + "\r\n";
+                });
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `Reporte_Acreditacion_${new Date().toISOString().split('T')[0]}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (e) { showAlert("Error", "No se pudo exportar el archivo.", true); }
+            btn.textContent = originalText;
+        });
+
+        // ------------------ REPORTE POR ACTIVIDAD (NUEVO) ------------------
+        async function generateAttendanceReport() {
+            const grid = document.getElementById('attendance-grid');
+            grid.innerHTML = '<div class="col-span-full text-center p-8 text-emerald-600 font-bold animate-pulse">Calculando estadísticas en tiempo real...</div>';
+            try {
+                const qSnap = await getDocs(registrosRef);
+                const stats = {};
+                Object.keys(activitiesInfo).forEach(k => { stats[k] = { registrados: 0, entradas: 0, salidas: 0 }; });
+
+                qSnap.forEach(d => {
+                    const data = d.data();
+                    const asis = data.asistencias || [];
+
+                    // Contar registrados
+                    if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => { if(stats[c]) stats[c].registrados++; });
+                    if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => { if(stats[t]) stats[t].registrados++; });
+                    if(stats['gran-cierre']) stats['gran-cierre'].registrados++; // Asumimos que todos pueden ir al cierre
+
+                    // Contar asistencias
+                    asis.forEach(a => {
+                        const [act, tipo] = a.split('_');
+                        if (stats[act]) {
+                            if (tipo === 'entrada') stats[act].entradas++;
+                            if (tipo === 'salida') stats[act].salidas++;
+                        }
+                    });
+                });
+
+                let html = '';
+                Object.keys(activitiesInfo).forEach(k => {
+                    const info = activitiesInfo[k];
+                    const s = stats[k];
+                    const pct = s.registrados > 0 ? Math.round((s.entradas / s.registrados) * 100) : 0;
+                    html += `
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                        <div class="flex justify-between items-start mb-3">
+                            <div><span class="text-xs font-bold ${info.type==='Conferencia'?'text-emerald-600 bg-emerald-100':'text-blue-600 bg-blue-100'} px-2 py-1 rounded uppercase">${info.type}</span></div>
+                            <span class="text-lg font-black text-gray-800">${pct}% <span class="text-xs text-gray-500 font-normal">asistencia</span></span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-4 leading-tight">${info.title}</h4>
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-white border border-gray-200 p-2 rounded-xl">
+                                <p class="text-[10px] font-bold text-gray-400 uppercase">Inscritos</p>
+                                <p class="text-xl font-black text-gray-700">${s.registrados}</p>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-100 p-2 rounded-xl">
+                                <p class="text-[10px] font-bold text-emerald-600 uppercase">Entradas</p>
+                                <p class="text-xl font-black text-emerald-700">${s.entradas}</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-100 p-2 rounded-xl">
+                                <p class="text-[10px] font-bold text-red-600 uppercase">Salidas</p>
+                                <p class="text-xl font-black text-red-700">${s.salidas}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                grid.innerHTML = html;
+            } catch (error) { grid.innerHTML = '<div class="col-span-full text-center p-8 text-red-500 font-bold">Error al cargar estadísticas.</div>'; }
+        }
+        document.getElementById('refresh-attendance-btn').addEventListener('click', generateAttendanceReport);
     </script>
 </body>
 </html>
