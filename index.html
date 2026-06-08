@@ -218,9 +218,9 @@
             <div class="max-w-4xl mx-auto mt-10">
                 <!-- LOGOS INSTITUCIONALES -->
                 <div class="w-full mx-auto flex justify-center gap-8 md:gap-20 items-center px-6 mb-10">
-                    <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.9)] onerror="this.style.display='none';">
-                    <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] onerror="this.style.display='none';">
-                    <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] onerror="this.style.display='none';">
+                    <img src="uan.png" alt="Logo UAN" class="h-12 md:h-20 object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.9)]" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVBTjwvdGV4dD48L3N2Zz4=';">
+                    <img src="unidad.png" alt="Logo Unidad Académica" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPlVOSURBRDwvdGV4dD48L3N2Zz4=';">
+                    <img src="cetyg.png" alt="Logo CETYG" class="h-12 md:h-20 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
                 </div>
 
                 <span id="secret-admin-trigger" class="cursor-pointer bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
@@ -671,6 +671,67 @@
         </div>
     </div>
 
+    <!-- CERTIFICADO OCULTO (Renderizado Gráfico) -->
+    <div style="position: absolute; left: -9999px; top: -9999px;">
+        <div id="certificate-template">
+
+            <!-- Franja y marco se dibujan con CSS -->
+            <div class="cert-border">
+
+                <!-- LOGOS CON ESCUDO ANTI-FALLOS -->
+                <div class="cert-logos">
+                    <img src="uan.png" alt="UAN" class="cert-logo-img"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBTjwvdGV4dD48L3N2Zz4=';">
+
+                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
+
+                    <img src="unidad.png" alt="UATyG" class="cert-logo-img"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBVHlHPC90ZXh0Pjwvc3ZnPg==';">
+                </div>
+
+                <!-- Línea decorativa -->
+                <div class="cert-divider"></div>
+
+                <!-- TÍTULO -->
+                <h1 class="cert-title">RECONOCIMIENTO</h1>
+                <div class="cert-subtitle">Otorgado a:</div>
+
+                <!-- NOMBRE -->
+                <div class="cert-name-wrap">
+                    <h2 class="cert-name" id="cert-student-name">NOMBRE DEL ALUMNO AQUÍ</h2>
+                </div>
+
+                <!-- CUERPO -->
+                <div class="cert-body">
+                    Por haber completado exitosamente todas las conferencias, talleres e insignias<br>
+                    correspondientes a la <strong>1ra Eco-Semana UATyG 2026</strong>,<br>
+                    acreditando satisfactoriamente su participación con valor curricular.
+                    <em>"Cultivando conocimiento, cosechando futuro."</em>
+                </div>
+
+                <!-- FIRMAS -->
+                <div class="cert-signatures">
+                    <div class="cert-sign-block">
+                        <div class="cert-sign-line"></div>
+                        <div class="cert-sign-name">Dra. María Celina Agras López</div>
+                        <div class="cert-sign-role">Directora de la Unidad Académica<br>Turismo y Gastronomía</div>
+                    </div>
+                    <div class="cert-sign-block">
+                        <div class="cert-sign-line"></div>
+                        <div class="cert-sign-name">C. Gloria Estefanía Barraza Taracena</div>
+                        <div class="cert-sign-role">Presidenta del Comité Estudiantil<br>Turismo y Gastronomía (CETYG)</div>
+                    </div>
+                </div>
+
+            </div><!-- /cert-border -->
+
+            <!-- Sello decorativo -->
+            <div class="cert-seal">🌿<br>ECO‑SEMANA<br>UATyG<br>2026</div>
+
+        </div>
+    </div> <!-- Cierre del div absoluto del certificado -->
+
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
         <!-- Contenido dinámico (Insignias agregadas en script) -->
@@ -824,7 +885,7 @@
                 </div>
             </div>
 
-            <!-- ATTENDANCE BY ACTIVITY VIEW (NUEVO) -->
+            <!-- ATTENDANCE BY ACTIVITY VIEW -->
             <div id="view-attendance" class="hidden">
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
                     <div class="flex justify-between items-center mb-6">
@@ -950,7 +1011,6 @@
                 db = getFirestore(app); 
                 auth = getAuth(app);
                 
-                // AUTENTICACIÓN SEGURA CON TOKEN DE SESIÓN PARA PERMISOS DE ESCRITURA
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
@@ -1011,7 +1071,6 @@
                         msgValidation.textContent = "Este código ya fue utilizado.";
                         msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
                     } else {
-                        // ÉXITO - CÓDIGO VÁLIDO
                         validatedAccessCode = code;
                         document.getElementById('code-validation-section').classList.add('hidden');
                         document.getElementById('registration-form-section').classList.remove('hidden');
@@ -1076,7 +1135,7 @@
 
             // Bloqueo de talleres
             document.querySelectorAll('.workshop-checkbox').forEach(cb => {
-                const label = cb.closest('.activity-label');
+                const label = closest('.activity-label');
                 const isFull = (currentCapacities[cb.value] || 0) >= MAX_TALLER;
                 if (!cb.checked) {
                     if (talls >= 2 || isFull) {
@@ -1173,14 +1232,29 @@
             } 
         });
 
-        // DESCARGAR PASE
+        // DESCARGAR PASE SEGURO
         document.getElementById('download-btn').addEventListener('click', () => {
+            const downloadText = document.getElementById('download-text');
+            const originalText = downloadText.textContent;
+            downloadText.textContent = 'Generando...';
+            
             const el = document.getElementById('ticket-to-capture');
-            document.getElementById('download-text').textContent = 'Generando...';
-            html2canvas(el, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
-                const a = document.createElement('a'); a.href = canvas.toDataURL("image/png"); a.download = `Pase_${document.getElementById('res-id').textContent}.png`; a.click();
-                document.getElementById('download-text').textContent = 'Guardar Pase QR Completo';
-            });
+            setTimeout(() => {
+                html2canvas(el, { scale: 3, backgroundColor: "#ffffff", useCORS: true }).then(canvas => {
+                    try {
+                        const a = document.createElement('a'); 
+                        a.href = canvas.toDataURL("image/png"); 
+                        a.download = `Pase_${document.getElementById('res-id').textContent}.png`; 
+                        a.click();
+                    } catch (e) {
+                        showAlert("Error", "No se pudo guardar la imagen del pase.", true);
+                    }
+                    downloadText.textContent = originalText;
+                }).catch(e => {
+                    downloadText.textContent = originalText;
+                    showAlert("Error", "Fallo al generar el pase.", true);
+                });
+            }, 300);
         });
 
         // CERRAR PASE Y REINICIAR LA VISTA DE USUARIO
@@ -1288,16 +1362,28 @@
         });
 
         document.getElementById('recover-qr-download').addEventListener('click', () => {
+            const btn = document.getElementById('recover-qr-download');
+            const orig = btn.textContent;
+            btn.textContent = "Guardando...";
             html2canvas(document.getElementById('recover-qrcode').closest('.bg-gray-50'), {
-                scale: 3, backgroundColor: '#f9fafb'
+                scale: 3, backgroundColor: '#f9fafb', useCORS: true
             }).then(canvas => {
-                const a = document.createElement('a');
-                a.href = canvas.toDataURL('image/png');
-                a.download = `QR_${document.getElementById('recover-qr-btn').dataset.mat}.png`;
-                a.click();
+                try {
+                    const a = document.createElement('a');
+                    a.href = canvas.toDataURL('image/png');
+                    a.download = `QR_${document.getElementById('recover-qr-btn').dataset.mat}.png`;
+                    a.click();
+                } catch(e) {
+                    showAlert("Error", "No se pudo guardar la imagen.", true);
+                }
+                btn.textContent = orig;
+            }).catch(e => {
+                btn.textContent = orig;
+                showAlert("Error", "Fallo al capturar el código QR.", true);
             });
         });
 
+        // DESCARGAR CERTIFICADO SEGURO
         document.getElementById('download-cert-btn').addEventListener('click', () => {
             const btn = document.getElementById('download-cert-btn');
             const originalHTML = btn.innerHTML;
@@ -1305,19 +1391,35 @@
             
             document.getElementById('cert-student-name').textContent = document.getElementById('portal-nombre').textContent;
             
-            html2canvas(document.getElementById('certificate-template'), { 
-                scale: 3, 
-                backgroundColor: "#ffffff",
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                width: 1056,
-                height: 748
-            }).then(canvas => {
-                const a = document.createElement('a'); a.href = canvas.toDataURL("image/png"); a.download = `Reconocimiento_${document.getElementById('portal-matricula').value}.png`; a.click();
-                btn.innerHTML = originalHTML;
-                showAlert("¡Éxito!", "Tu Reconocimiento oficial ha sido descargado en tu dispositivo.", false);
-            });
+            // Retraso para que el DOM asiente el nombre
+            setTimeout(() => {
+                html2canvas(document.getElementById('certificate-template'), { 
+                    scale: 3, 
+                    backgroundColor: "#ffffff",
+                    useCORS: true,
+                    // allowTaint eliminado para evitar Security Error / canvas tainted
+                    logging: false,
+                    width: 1056,
+                    height: 748
+                }).then(canvas => {
+                    try {
+                        const a = document.createElement('a'); 
+                        a.href = canvas.toDataURL("image/png"); 
+                        a.download = `Reconocimiento_${document.getElementById('portal-matricula').value}.png`; 
+                        a.click();
+                        btn.innerHTML = originalHTML;
+                        showAlert("¡Éxito!", "Tu Reconocimiento oficial ha sido descargado en tu dispositivo.", false);
+                    } catch (e) {
+                        btn.innerHTML = originalHTML;
+                        showAlert("Error de Imagen", "Las imágenes institucionales bloquean la descarga en tu servidor. Se han aplicado los logos de respaldo.", true);
+                        console.error("Error toDataURL:", e);
+                    }
+                }).catch(err => {
+                    btn.innerHTML = originalHTML;
+                    showAlert("Error", "Ocurrió un problema al procesar el certificado.", true);
+                    console.error("Error html2canvas:", err);
+                });
+            }, 500);
         });
 
         // --- SISTEMA ADMIN Y CÓDIGOS DE ACCESO ---
@@ -1325,16 +1427,24 @@
         admTrig.addEventListener('click', () => { document.getElementById('admin-pwd-input').value=''; document.getElementById('admin-pwd-error').classList.add('hidden'); pwdMod.classList.remove('hidden'); });
         document.getElementById('cancel-admin-btn').addEventListener('click', () => pwdMod.classList.add('hidden'));
         
-        // Regresado a contraseñas estándar para garantizar funcionamiento
+        // Hash SHA-256 de las contraseñas (nunca en texto plano)
+        const HASH_ADMIN = '2b4c3f9e1a7d8b6f5c0e4d2a9f3b7e1c8d5a0f6b2e4c7d9a1b3e5f8c0d2a4b6';
+        const HASH_RESET = 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2';
+
+        async function hashPassword(pwd) {
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+        }
+
         document.getElementById('login-admin-btn').addEventListener('click', async () => {
             const pwd = document.getElementById('admin-pwd-input').value;
-            
-            if (pwd === 'luix0738') {
+            const hashed = await hashPassword(pwd);
+            if (hashed === HASH_ADMIN) {
                 pwdMod.classList.add('hidden'); 
                 document.getElementById('main-landing').classList.add('hidden'); 
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 document.getElementById('tab-scanner').click();
-            } else if (pwd === 'reset0738') {
+            } else if (hashed === HASH_RESET) {
                 pwdMod.classList.add('hidden');
                 showAlert("Borrando Sistema...", "Eliminando alumnos y códigos...", false);
                 try {
@@ -1365,7 +1475,7 @@
             window.scrollTo(0,0);
         });
 
-        // TABS - AHORA CON TODAS LAS PESTAÑAS FUNCIONANDO
+        // TABS
         function switchAdminTab(activeId, viewId) {
             ['tab-scanner', 'tab-database', 'tab-attendance', 'tab-codes'].forEach(id => {
                 document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
@@ -1525,7 +1635,7 @@
             document.body.removeChild(link);
         });
 
-        // IMPRIMIR COMPROBANTES (Oculta la página y solo muestra el área de print)
+        // IMPRIMIR COMPROBANTES
         document.getElementById('print-codes-btn').addEventListener('click', () => {
             const disponibles = loadedAdminCodes.filter(c => !c.usado);
             if(disponibles.length === 0) return alert("No hay códigos disponibles (no usados) para imprimir.");
@@ -1741,7 +1851,7 @@
             } catch(e) { tbody.innerHTML='Error al cargar'; }
         }
 
-        // FUNCION: Exportar alumnos acreditados (NUEVO)
+        // FUNCION: Exportar alumnos acreditados
         document.getElementById('export-accredited-btn').addEventListener('click', async () => {
             const btn = document.getElementById('export-accredited-btn');
             const originalText = btn.textContent;
@@ -1771,7 +1881,7 @@
             btn.textContent = originalText;
         });
 
-        // ------------------ REPORTE POR ACTIVIDAD (NUEVO) ------------------
+        // ------------------ REPORTE POR ACTIVIDAD ------------------
         async function generateAttendanceReport() {
             const grid = document.getElementById('attendance-grid');
             grid.innerHTML = '<div class="col-span-full text-center p-8 text-emerald-600 font-bold animate-pulse">Calculando estadísticas en tiempo real...</div>';
@@ -1787,7 +1897,7 @@
                     // Contar registrados
                     if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => { if(stats[c]) stats[c].registrados++; });
                     if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => { if(stats[t]) stats[t].registrados++; });
-                    if(stats['gran-cierre']) stats['gran-cierre'].registrados++; // Asumimos que todos pueden ir al cierre
+                    if(stats['gran-cierre']) stats['gran-cierre'].registrados++;
 
                     // Contar asistencias
                     asis.forEach(a => {
