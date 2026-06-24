@@ -1495,23 +1495,34 @@
             }
         }
 
-        // 1. INICIAR SESIÓN CON GOOGLE (Administrador)
-        document.getElementById('btn-google-login').addEventListener('click', async () => {
-            errP.classList.add('hidden');
-            const provider = new GoogleAuthProvider();
-            try {
-                // Llamamos a la ventana emergente oficial de Google
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
+      // 1. INICIAR SESIÓN CON GOOGLE (Administrador)
+document.getElementById('btn-google-login').addEventListener('click', async () => {
+    errP.classList.add('hidden');
 
-                if (user.email === 'luixnay@gmail.com') {
-                enterDashboard('admin');
-                } else {
-                    await auth.signOut();
-                    errP.textContent = "Acceso denegado. Esta cuenta no está autorizada como administrador.";
-                    errP.classList.remove('hidden');
-                        }
-        });
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+        prompt: 'select_account'
+    });
+
+    try {
+        // Llamamos a la ventana emergente oficial de Google
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        if (user.email === 'luixnay@gmail.com') {
+            enterDashboard('admin');
+        } else {
+            await signOut(auth);
+            errP.textContent = "Acceso denegado. Esta cuenta no está autorizada como administrador.";
+            errP.classList.remove('hidden');
+        }
+
+    } catch (error) {
+        console.error("Error en login con Google:", error);
+        errP.textContent = "Error al conectar con Google: " + error.message;
+        errP.classList.remove('hidden');
+    }
+});
 
         // 2. INICIAR SESIÓN CON CÓDIGO (Staff / Comité)
         document.getElementById('login-staff-btn').addEventListener('click', async () => {
