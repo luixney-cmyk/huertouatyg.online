@@ -674,34 +674,23 @@
     <!-- CERTIFICADO OCULTO (Renderizado Gráfico) -->
     <div style="position: absolute; left: -9999px; top: -9999px;">
         <div id="certificate-template">
-
             <!-- Franja y marco se dibujan con CSS -->
             <div class="cert-border">
-
                 <!-- LOGOS CON ESCUDO ANTI-FALLOS -->
                 <div class="cert-logos">
-                    <img src="uan3.png" alt="UAN" class="cert-logo-img"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBTjwvdGV4dD48L3N2Zz4=';">
-
-                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
-
-                    <img src="unidad.png" alt="UATyG" class="cert-logo-img"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBVHlHPC90ZXh0Pjwvc3ZnPg==';">
+                    <img src="uan3.png" alt="UAN" class="cert-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBTjwvdGV4dD48L3N2Zz4=';">
+                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
+                    <img src="unidad.png" alt="UATyG" class="cert-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBVHlHPC90ZXh0Pjwvc3ZnPg==';">
                 </div>
-
                 <!-- Línea decorativa -->
                 <div class="cert-divider"></div>
-
                 <!-- TÍTULO -->
                 <h1 class="cert-title">RECONOCIMIENTO</h1>
                 <div class="cert-subtitle">Otorgado a:</div>
-
                 <!-- NOMBRE -->
                 <div class="cert-name-wrap">
                     <h2 class="cert-name" id="cert-student-name">NOMBRE DEL ALUMNO AQUÍ</h2>
                 </div>
-
                 <!-- CUERPO -->
                 <div class="cert-body">
                     Por haber completado exitosamente todas las conferencias, talleres e insignias<br>
@@ -709,7 +698,6 @@
                     acreditando satisfactoriamente su participación con valor curricular.
                     <em>"Cultivando conocimiento, cosechando futuro."</em>
                 </div>
-
                 <!-- FIRMAS -->
                 <div class="cert-signatures">
                     <div class="cert-sign-block">
@@ -723,18 +711,15 @@
                         <div class="cert-sign-role">Presidenta del Comité Estudiantil<br>Turismo y Gastronomía (CETYG)</div>
                     </div>
                 </div>
-
             </div><!-- /cert-border -->
-
             <!-- Sello decorativo -->
             <div class="cert-seal">🌿<br>ECO‑SEMANA<br>UATyG<br>2026</div>
-
         </div>
-    </div> <!-- Cierre del div absoluto del certificado -->
+    </div> 
 
     <!-- ACTIVITY DETAILS MODAL -->
     <div id="activity-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[60] flex justify-center items-center backdrop-blur-sm px-4">
-        <!-- Contenido dinámico (Insignias agregadas en script) -->
+        <!-- Contenido dinámico -->
         <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative transform transition-all">
             <button onclick="closeActivityModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -759,22 +744,40 @@
         </div>
     </div>
 
-    <!-- ADMIN PASSWORD MODAL -->
-    <div id="admin-pwd-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md">
-        <div class="bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl">
-            <h3 class="text-xl font-bold text-emerald-400 mb-2">Acceso Administrativo</h3>
-            <p class="text-gray-400 text-sm mb-6">Ingrese la clave de operaciones</p>
-            <input type="password" id="admin-pwd-input" class="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none text-center mb-4" placeholder="••••••••">
-            <div class="flex gap-3">
-                <button id="cancel-admin-btn" class="flex-1 bg-gray-700 text-white font-bold py-3 rounded-xl hover:bg-gray-600 transition">Cancelar</button>
-                <button id="login-admin-btn" class="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition">Entrar</button>
+    <!-- ADMIN LOGIN MODAL (Renovado con Google y Staff Codes) -->
+    <div id="admin-pwd-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[80] flex justify-center items-center backdrop-blur-md px-4">
+        <div class="bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl relative">
+            <button id="cancel-admin-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white transition bg-gray-800 rounded-full p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-2xl font-bold text-emerald-400 mb-2 mt-2">Acceso al Panel</h3>
+            <p class="text-gray-400 text-sm mb-6">Selecciona tu método de ingreso</p>
+
+            <div class="flex flex-col gap-4">
+                <!-- ACCESO ADMINISTRADOR PRINCIPAL (Google) -->
+                <button id="btn-google-login" class="w-full bg-white text-gray-900 font-bold py-3 px-4 rounded-xl hover:bg-gray-100 transition flex items-center justify-center gap-3 shadow-lg">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Administrador (Google)
+                </button>
+
+                <div class="flex items-center justify-between my-2">
+                    <span class="w-1/5 border-b border-gray-700"></span>
+                    <span class="text-xs text-gray-500 font-bold uppercase tracking-wider">O acceso de comité</span>
+                    <span class="w-1/5 border-b border-gray-700"></span>
+                </div>
+
+                <!-- ACCESO STAFF COMITÉ (Código) -->
+                <input type="text" id="staff-code-input" class="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-emerald-400 font-mono text-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-center tracking-widest uppercase" placeholder="CÓDIGO DE STAFF">
+                <button id="login-staff-btn" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition shadow-lg">
+                    Entrar como Comité
+                </button>
+                <p id="admin-error-msg" class="text-red-400 text-sm mt-2 hidden"></p>
             </div>
-            <p id="admin-pwd-error" class="text-red-400 text-sm mt-3 hidden">Contraseña incorrecta</p>
         </div>
     </div>
 
     <!-- CUSTOM MODAL ALERTS -->
-    <div id="custom-alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[70] flex justify-center items-center backdrop-blur-sm">
+    <div id="custom-alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[90] flex justify-center items-center backdrop-blur-sm">
         <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform transition-all">
             <div id="alert-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6"></div>
             <h3 class="text-2xl font-bold text-gray-900 mb-2" id="alert-title">Éxito</h3>
@@ -801,8 +804,8 @@
     <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden min-h-screen bg-gray-100 pb-20">
         <div class="bg-gray-900 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
-            <div class="font-bold text-lg flex items-center">
-                <span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Control UATyG
+            <div class="font-bold text-lg flex items-center" id="dashboard-main-title">
+                <span class="bg-blue-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Control UATyG
             </div>
             <button id="exit-admin-btn" class="text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg border border-gray-700 transition">Cerrar Sesión</button>
         </div>
@@ -815,7 +818,7 @@
                 <button id="tab-codes"      class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Códigos</button>
             </div>
 
-            <!-- SCANNER VIEW -->
+            <!-- SCANNER VIEW (Vista disponible para Admin y Comité) -->
             <div id="view-scanner" class="block">
                 <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200 text-center max-w-4xl mx-auto">
                     <h2 class="text-2xl font-black text-gray-900 mb-6">Control de Acceso</h2>
@@ -864,7 +867,7 @@
                 </div>
             </div>
 
-            <!-- DATABASE VIEW -->
+            <!-- DATABASE VIEW (Sólo Administrador Principal) -->
             <div id="view-database" class="hidden">
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 overflow-x-auto">
                     <div class="flex justify-between items-center mb-6">
@@ -885,7 +888,7 @@
                 </div>
             </div>
 
-            <!-- ATTENDANCE BY ACTIVITY VIEW -->
+            <!-- ATTENDANCE BY ACTIVITY VIEW (Sólo Administrador Principal) -->
             <div id="view-attendance" class="hidden">
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
                     <div class="flex justify-between items-center mb-6">
@@ -898,11 +901,31 @@
                 </div>
             </div>
 
-            <!-- CODES VIEW -->
+            <!-- CODES VIEW (Sólo Administrador Principal) -->
             <div id="view-codes" class="hidden">
+                <!-- SECCIÓN: CÓDIGOS DE STAFF (NUEVO) -->
+                <div class="bg-indigo-50 rounded-3xl shadow-sm p-6 border border-indigo-200 mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-indigo-900 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                Accesos para el Comité (Escáner)
+                            </h3>
+                            <p class="text-sm text-indigo-700 mt-1">Genera 6 códigos para que tus compañeros registren asistencias desde su celular. <strong>Al generar nuevos códigos, los anteriores se desactivarán.</strong></p>
+                        </div>
+                        <button id="generate-staff-btn" class="bg-indigo-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-indigo-700 transition shadow-md whitespace-nowrap">
+                            Generar 6 Códigos
+                        </button>
+                    </div>
+                    <div id="staff-codes-grid" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <p class="text-sm text-indigo-500 col-span-full">Haz clic en generar para crear los accesos.</p>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: CÓDIGOS DE ALUMNOS (Existente) -->
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                        <h2 class="text-2xl font-black text-gray-900">Códigos de Acceso Emitidos</h2>
+                        <h2 class="text-2xl font-black text-gray-900">Códigos de Acceso (Alumnos)</h2>
                         <div class="flex flex-wrap gap-2">
                             <button id="generate-codes-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Generar 150 Códigos</button>
                             <button id="export-codes-btn" class="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-900 transition shadow-sm">Exportar CSV</button>
@@ -966,8 +989,9 @@
     <!-- Scripts de Firebase y Lógica Principal -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // IMPORTANTE: Ahora importamos GoogleAuthProvider y signInWithPopup
+        import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURACIÓN FIREBASE
         const externalFirebaseConfig = {
@@ -982,7 +1006,7 @@
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         
         // DECLARACION GLOBAL
-        let db, auth, registrosRef = null, codigosRef = null;
+        let db, auth, registrosRef = null, codigosRef = null, staffCodesRef = null;
         let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
@@ -1011,6 +1035,7 @@
                 db = getFirestore(app); 
                 auth = getAuth(app);
                 
+                // Login inicial para los alumnos o vista por defecto
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
@@ -1021,11 +1046,13 @@
                 const currentAppId = isCanvasEnv ? __app_id : 'default';
 
                 if (isCanvasEnv) {
-                    registrosRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'registros');
-                    codigosRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'codigos_acceso');
+                    registrosRef  = collection(db, 'artifacts', currentAppId, 'public', 'data', 'registros');
+                    codigosRef    = collection(db, 'artifacts', currentAppId, 'public', 'data', 'codigos_acceso');
+                    staffCodesRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'staff_codes');
                 } else {
-                    registrosRef = collection(db, 'registros');
-                    codigosRef = collection(db, 'codigos_acceso');
+                    registrosRef  = collection(db, 'registros');
+                    codigosRef    = collection(db, 'codigos_acceso');
+                    staffCodesRef = collection(db, 'staff_codes');
                 }
                 
                 onSnapshot(registrosRef, (snapshot) => {
@@ -1044,7 +1071,7 @@
         };
         initApp(); 
 
-        // --- SISTEMA DE VALIDACIÓN DE CÓDIGO (PÚBLICO) ---
+        // --- SISTEMA DE VALIDACIÓN DE CÓDIGO ALUMNO (PÚBLICO) ---
         const btnValidateCode = document.getElementById('validate-code-btn');
         const inputCode = document.getElementById('access-code-input');
         const msgValidation = document.getElementById('code-validation-msg');
@@ -1161,7 +1188,7 @@
         document.querySelectorAll('.user-input, .conf-checkbox, .workshop-checkbox').forEach(el => el.addEventListener('change', evaluateFormState));
         document.querySelectorAll('.user-input').forEach(el => el.addEventListener('input', evaluateFormState));
 
-        // GENERAR PASE Y QUEMAR CÓDIGO
+        // GENERAR PASE ALUMNO
         submitBtn.addEventListener('click', async () => {
             if(!auth || !auth.currentUser) return showAlert("Error", "Sistema desconectado. Revisa tu internet o recarga la página.", true);
             if(!validatedAccessCode) return showAlert("Error Crítico", "No hay código de acceso validado.", true);
@@ -1391,16 +1418,9 @@
             
             document.getElementById('cert-student-name').textContent = document.getElementById('portal-nombre').textContent;
             
-            // Retraso para que el DOM asiente el nombre
             setTimeout(() => {
                 html2canvas(document.getElementById('certificate-template'), { 
-                    scale: 3, 
-                    backgroundColor: "#ffffff",
-                    useCORS: true,
-                    // allowTaint eliminado para evitar Security Error / canvas tainted
-                    logging: false,
-                    width: 1056,
-                    height: 748
+                    scale: 3, backgroundColor: "#ffffff", useCORS: true, logging: false, width: 1056, height: 748
                 }).then(canvas => {
                     try {
                         const a = document.createElement('a'); 
@@ -1412,53 +1432,97 @@
                     } catch (e) {
                         btn.innerHTML = originalHTML;
                         showAlert("Error de Imagen", "Las imágenes institucionales bloquean la descarga en tu servidor. Se han aplicado los logos de respaldo.", true);
-                        console.error("Error toDataURL:", e);
                     }
                 }).catch(err => {
                     btn.innerHTML = originalHTML;
                     showAlert("Error", "Ocurrió un problema al procesar el certificado.", true);
-                    console.error("Error html2canvas:", err);
                 });
             }, 500);
         });
 
-        // --- SISTEMA ADMIN Y CÓDIGOS DE ACCESO ---
-        const admTrig=document.getElementById('secret-admin-trigger'), pwdMod=document.getElementById('admin-pwd-modal');
-        admTrig.addEventListener('click', () => { document.getElementById('admin-pwd-input').value=''; document.getElementById('admin-pwd-error').classList.add('hidden'); pwdMod.classList.remove('hidden'); });
-        document.getElementById('cancel-admin-btn').addEventListener('click', () => pwdMod.classList.add('hidden'));
+        // --- SISTEMA ADMIN RENOVADO (Google Auth + Staff Codes) ---
+        const admTrig = document.getElementById('secret-admin-trigger');
+        const pwdMod = document.getElementById('admin-pwd-modal');
+        const errP = document.getElementById('admin-error-msg');
         
-        // --- VALIDACION DE CONTRASEÑA DIRECTA SIN HASH ---
-        document.getElementById('login-admin-btn').addEventListener('click', async () => {
-            const pwd = document.getElementById('admin-pwd-input').value;
-            
-            if (pwd === 'luix0738') {
-                pwdMod.classList.add('hidden'); 
-                document.getElementById('main-landing').classList.add('hidden'); 
-                document.getElementById('admin-dashboard').classList.remove('hidden');
-                document.getElementById('tab-scanner').click();
-            } else if (pwd === 'reset0738') {
-                pwdMod.classList.add('hidden');
-                showAlert("Borrando Sistema...", "Eliminando alumnos y códigos...", false);
-                try {
-                    const qSnapAlumnos = await getDocs(registrosRef);
-                    const promsAlumnos = []; 
-                    qSnapAlumnos.forEach(d => promsAlumnos.push(deleteDoc(doc(registrosRef, d.id))));
-                    await Promise.all(promsAlumnos);
-                    
-                    const qSnapCodigos = await getDocs(codigosRef);
-                    const promsCodigos = [];
-                    qSnapCodigos.forEach(d => promsCodigos.push(deleteDoc(doc(codigosRef, d.id))));
-                    await Promise.all(promsCodigos);
-                    
-                    showAlert("Sistema Reiniciado", `Se eliminaron ${promsAlumnos.length} alumnos y ${promsCodigos.length} códigos. Listo para producción.`, false);
-                } catch(e) { 
-                    showAlert("Error Crítico", e.message || "Fallo al resetear.", true); 
-                }
-            } else { 
-                document.getElementById('admin-pwd-error').classList.remove('hidden'); 
+        admTrig.addEventListener('click', () => { 
+            document.getElementById('staff-code-input').value = ''; 
+            errP.classList.add('hidden'); 
+            pwdMod.classList.remove('hidden'); 
+        });
+        
+        document.getElementById('cancel-admin-btn').addEventListener('click', () => pwdMod.classList.add('hidden'));
+
+        // FUNCIÓN CENTRAL PARA ENTRAR AL PANEL SEGÚN EL ROL
+        function enterDashboard(role) {
+            pwdMod.classList.add('hidden'); 
+            document.getElementById('main-landing').classList.add('hidden'); 
+            document.getElementById('admin-dashboard').classList.remove('hidden');
+
+            const titleEl = document.getElementById('dashboard-main-title');
+
+            if (role === 'staff') {
+                // ROL DE COMITÉ (Sólo Escáner)
+                document.getElementById('tab-database').style.display = 'none';
+                document.getElementById('tab-attendance').style.display = 'none';
+                document.getElementById('tab-codes').style.display = 'none';
+                titleEl.innerHTML = '<span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Comité (Escáner)';
+                document.getElementById('tab-scanner').click(); // Auto-enfocar el escáner
+            } else {
+                // ROL DE ADMINISTRADOR (Acceso Total)
+                document.getElementById('tab-database').style.display = 'block';
+                document.getElementById('tab-attendance').style.display = 'block';
+                document.getElementById('tab-codes').style.display = 'block';
+                titleEl.innerHTML = '<span class="bg-blue-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Control (Admin)';
+                document.getElementById('tab-scanner').click(); 
+                
+                // Precargar Códigos de Staff para su vista
+                loadStaffCodesFromDB();
+            }
+        }
+
+        // 1. INICIAR SESIÓN CON GOOGLE (Administrador)
+        document.getElementById('btn-google-login').addEventListener('click', async () => {
+            errP.classList.add('hidden');
+            const provider = new GoogleAuthProvider();
+            try {
+                // Llamamos a la ventana emergente oficial de Google
+                const result = await signInWithPopup(auth, provider);
+                // Si la autenticación es exitosa, entra como Admin Total
+                enterDashboard('admin');
+            } catch (error) {
+                errP.textContent = "Error al conectar con Google: " + error.message;
+                errP.classList.remove('hidden');
             }
         });
 
+        // 2. INICIAR SESIÓN CON CÓDIGO (Staff / Comité)
+        document.getElementById('login-staff-btn').addEventListener('click', async () => {
+            errP.classList.add('hidden');
+            const code = document.getElementById('staff-code-input').value.trim().toUpperCase();
+            
+            if(!code) {
+                errP.textContent = "Por favor, ingresa el código del comité.";
+                errP.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                const docSnap = await getDoc(doc(staffCodesRef, code));
+                // Si el código existe en la colección de staff y está activo
+                if (docSnap.exists() && docSnap.data().activo) {
+                    enterDashboard('staff');
+                } else {
+                    errP.textContent = "Código de comité inválido o desactivado.";
+                    errP.classList.remove('hidden');
+                }
+            } catch(e) {
+                errP.textContent = "Error de conexión al verificar tu código.";
+                errP.classList.remove('hidden');
+            }
+        });
+
+        // SALIR DEL PANEL
         document.getElementById('exit-admin-btn').addEventListener('click', async () => { 
             if(typeof html5QrCode !== 'undefined' && html5QrCode !== null) {
                 try { await html5QrCode.stop(); } catch(e) {}
@@ -1471,7 +1535,7 @@
             window.scrollTo(0,0);
         });
 
-        // TABS
+        // TABS DEL DASHBOARD
         function switchAdminTab(activeId, viewId) {
             ['tab-scanner', 'tab-database', 'tab-attendance', 'tab-codes'].forEach(id => {
                 document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
@@ -1485,7 +1549,7 @@
         document.getElementById('tab-attendance').addEventListener('click', () => { switchAdminTab('tab-attendance', 'view-attendance'); generateAttendanceReport(); });
         document.getElementById('tab-codes').addEventListener('click', () => { switchAdminTab('tab-codes', 'view-codes'); loadAdminCodes(); });
 
-        // --- FUNCIONES DEL GENERADOR DE CÓDIGOS ---
+        // --- SISTEMA DE GENERACIÓN DE CÓDIGOS (Alumnos y Staff) ---
         function generateSecureCode() {
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let result = '';
@@ -1497,12 +1561,67 @@
             return result;
         }
 
+        // GENERAR CÓDIGOS PARA EL COMITÉ (STAFF)
+        document.getElementById('generate-staff-btn').addEventListener('click', async () => {
+             const btn = document.getElementById('generate-staff-btn');
+             btn.textContent = "Generando...";
+             btn.disabled = true;
+
+             try {
+                 // Primero eliminamos los viejos para que sólo existan los 6 nuevos
+                 const qSnap = await getDocs(query(staffCodesRef));
+                 const batch = writeBatch(db);
+                 qSnap.forEach(d => batch.delete(d.ref));
+
+                 const newCodes = [];
+                 for(let i = 0; i < 6; i++) {
+                     // Creamos códigos diferenciados para Staff
+                     const code = "STAFF-" + generateSecureCode().substring(0,4);
+                     newCodes.push(code);
+                     batch.set(doc(staffCodesRef, code), {
+                         codigo: code,
+                         creado: new Date().toISOString(),
+                         activo: true
+                     });
+                 }
+                 await batch.commit();
+                 showAlert("Comité Actualizado", "Se han generado 6 accesos nuevos. Todos los códigos anteriores ya no funcionarán.", false);
+                 renderStaffCodesUI(newCodes);
+             } catch(e) {
+                 showAlert("Error", "Fallo al generar códigos: " + e.message, true);
+             }
+             btn.textContent = "Generar 6 Códigos";
+             btn.disabled = false;
+        });
+
+        async function loadStaffCodesFromDB() {
+            try {
+                const snap = await getDocs(query(staffCodesRef));
+                const codes = [];
+                snap.forEach(d => codes.push(d.data().codigo));
+                renderStaffCodesUI(codes);
+            } catch(e) { console.error("Error al cargar códigos del comité", e); }
+        }
+
+        function renderStaffCodesUI(codes) {
+             const grid = document.getElementById('staff-codes-grid');
+             if(codes.length === 0) {
+                 grid.innerHTML = '<p class="text-sm text-indigo-500 col-span-full">Aún no hay códigos generados. Da clic en el botón superior.</p>';
+                 return;
+             }
+             let html = '';
+             codes.forEach(c => {
+                 html += `<div class="bg-white border border-indigo-200 rounded-lg p-3 text-center font-mono font-bold text-indigo-800 text-lg shadow-sm tracking-wider">${c}</div>`;
+             });
+             grid.innerHTML = html;
+        }
+
+        // GENERAR CÓDIGOS NORMALES (ALUMNOS)
         document.getElementById('generate-codes-btn').addEventListener('click', async () => {
             const btn = document.getElementById('generate-codes-btn');
             btn.disabled = true; btn.textContent = "Generando...";
 
             try {
-                // Obtener existentes para no duplicar
                 const existingSnap = await getDocs(codigosRef);
                 const existingCodes = new Set();
                 existingSnap.forEach(d => existingCodes.add(d.id));
@@ -1515,7 +1634,6 @@
                     }
                 }
 
-                // Escribir en batch
                 const batch = writeBatch(db);
                 newCodes.forEach(code => {
                     const docRef = doc(codigosRef, code);
@@ -1534,7 +1652,6 @@
                 showAlert("Éxito", "Se han generado 150 códigos nuevos correctamente.", false);
                 loadAdminCodes();
             } catch (e) {
-                console.error("Error al generar códigos:", e);
                 showAlert("Error", e.message || "Error al generar los códigos.", true);
             }
             
