@@ -1519,7 +1519,7 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
 
     } catch (error) {
         console.error("Error en login con Google:", error);
-        errP.textContent = "Error al conectar con Google: " + error.message;
+        errP.textContent = "No tienes permisos de Administrador: " + error.message;
         errP.classList.remove('hidden');
     }
 });
