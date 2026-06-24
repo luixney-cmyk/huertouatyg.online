@@ -991,7 +991,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         // IMPORTANTE: Ahora importamos GoogleAuthProvider y signInWithPopup
         import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch, query, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURACIÓN FIREBASE
         const externalFirebaseConfig = {
@@ -1032,7 +1032,12 @@
         const initApp = async () => {
             try {
                 const app = initializeApp(firebaseConfig);
-                db = getFirestore(app); 
+                
+                // INICIALIZACIÓN DE FIRESTORE CON SOPORTE OFFLINE (CACHÉ PERSISTENTE)
+                db = initializeFirestore(app, {
+                    localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()})
+                });
+                
                 auth = getAuth(app);
                 
                 // Login inicial para los alumnos o vista por defecto
@@ -1193,6 +1198,11 @@
             if(!auth || !auth.currentUser) return showAlert("Error", "Sistema desconectado. Revisa tu internet o recarga la página.", true);
             if(!validatedAccessCode) return showAlert("Error Crítico", "No hay código de acceso validado.", true);
 
+            // PREVENCIÓN DE DOBLE CLIC
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Procesando registro...";
+            document.getElementById('loading-spinner').classList.remove('hidden');
+
             const dataObj = {
                 nombre: document.getElementById('studentName').value.trim(),
                 matricula: document.getElementById('studentId').value.trim(),
@@ -1205,8 +1215,6 @@
                 codigoUtilizado: validatedAccessCode // Vinculación
             };
 
-            submitBtn.classList.add('hidden'); document.getElementById('loading-spinner').classList.remove('hidden');
-
             try {
                 // Doble chequeo de seguridad del código
                 const codeCheck = await getDoc(doc(codigosRef, validatedAccessCode));
@@ -1218,7 +1226,10 @@
                 const docRef = doc(registrosRef, dataObj.matricula);
                 if ((await getDoc(docRef)).exists()) {
                     showAlert("Registro Duplicado", `La matrícula ${dataObj.matricula} ya se encuentra registrada en el sistema.`, true);
-                    submitBtn.classList.remove('hidden'); document.getElementById('loading-spinner').classList.add('hidden');
+                    // RESTAURAR BOTÓN SI HAY ERROR
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Generar mi Pase QR";
+                    document.getElementById('loading-spinner').classList.add('hidden');
                     return;
                 }
                 
@@ -1255,7 +1266,10 @@
 
             } catch (error) {
                 showAlert("Error", error.message || "Hubo un fallo al registrar.", true);
-                submitBtn.classList.remove('hidden'); document.getElementById('loading-spinner').classList.add('hidden');
+                // RESTAURAR BOTÓN SI HAY ERROR
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Generar mi Pase QR";
+                document.getElementById('loading-spinner').classList.add('hidden');
             } 
         });
 
