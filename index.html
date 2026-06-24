@@ -1502,12 +1502,15 @@
             try {
                 // Llamamos a la ventana emergente oficial de Google
                 const result = await signInWithPopup(auth, provider);
-                // Si la autenticación es exitosa, entra como Admin Total
+                const user = result.user;
+
+                if (user.email === 'luixnay@gmail.com') {
                 enterDashboard('admin');
-            } catch (error) {
-                errP.textContent = "Error al conectar con Google: " + error.message;
-                errP.classList.remove('hidden');
-            }
+                } else {
+                    await auth.signOut();
+                    errP.textContent = "Acceso denegado. Esta cuenta no está autorizada como administrador.";
+                    errP.classList.remove('hidden');
+                        }
         });
 
         // 2. INICIAR SESIÓN CON CÓDIGO (Staff / Comité)
