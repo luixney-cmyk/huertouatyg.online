@@ -1855,6 +1855,16 @@
 
         async function onScanSuccess(text) {
             if(isProcessing || !text.startsWith('UATYG2026|')) return;
+            
+            // --- INICIO DE MITIGACIÓN ANTI-FRAUDE (VALIDACIÓN LOCAL) ---
+            // Verifica que el DOM esté en el estado esperado para un escaneo legítimo
+            const _0xDOMCheck = document.getElementById(atob('c2Nhbm5lci1jb250YWluZXItd3JhcHBlcg==')); // 'scanner-container-wrapper'
+            if (!_0xDOMCheck || _0xDOMCheck.classList.contains('hidden') || typeof html5QrCode === 'undefined') {
+                console.warn("🔒 Security Exception: Intento de inyección bloqueado.");
+                return;
+            }
+            // --- FIN DE MITIGACIÓN ---
+
             isProcessing = true;
 
             const mat  = text.split('|')[1];
@@ -1884,7 +1894,12 @@
                     } else if (type === 'salida' && (!data.asistencias || !data.asistencias.includes(`${act}_entrada`))) {
                         showScanResult('sin_entrada', type, mat, data.nombre);
                     } else {
-                        await updateDoc(docRef, { asistencias: arrayUnion(recordStr) });
+                        // --- OFUSCACIÓN DE PAYLOAD DE ACTUALIZACIÓN ---
+                        const _0xKey = atob('YXNpc3RlbmNpYXM='); // 'asistencias' codificado
+                        const _0xPayload = {};
+                        _0xPayload[_0xKey] = arrayUnion(recordStr);
+                        await updateDoc(docRef, _0xPayload);
+                        // ----------------------------------------------
                         showScanResult('ok_nuevo', type, mat, data.nombre);
                     }
                 }
