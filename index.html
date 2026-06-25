@@ -1448,7 +1448,12 @@
                         else if (tieneEntrada)  estado = '<span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">⏳ Falta salida</span>';
                         else                    estado = '<span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold">✗ Pendiente</span>';
                         detailHTML += `<div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-                            <span class="text-xs text-gray-700 font-medium flex-1 pr-2">🎤 ${info ? info.title : c}</span>${estado}</div>`;
+                            <div class="flex-1 pr-2">
+                                <span class="text-xs text-gray-800 font-bold block leading-tight">${info ? info.title : c}</span>
+                                ${info ? `<span class="text-[10px] font-black text-emerald-600 mt-0.5 inline-block">${info.badge}</span>` : ''}
+                            </div>
+                            <div>${estado}</div>
+                        </div>`;
                     });
                 }
                 // Talleres
@@ -1464,7 +1469,12 @@
                         else if (tieneEntrada) estado = '<span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">⏳ Falta salida</span>';
                         else                   estado = '<span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold">✗ Pendiente</span>';
                         detailHTML += `<div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-                            <span class="text-xs text-gray-700 font-medium flex-1 pr-2">🔧 ${info ? info.title : t}</span>${estado}</div>`;
+                            <div class="flex-1 pr-2">
+                                <span class="text-xs text-gray-800 font-bold block leading-tight">${info ? info.title : t}</span>
+                                ${info ? `<span class="text-[10px] font-black text-blue-600 mt-0.5 inline-block">${info.badge}</span>` : ''}
+                            </div>
+                            <div>${estado}</div>
+                        </div>`;
                     });
                 }
 
