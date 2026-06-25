@@ -1288,26 +1288,40 @@
                 const codeRef = doc(codigosRef, validatedAccessCode);
 
                 // Registro atómico: matrícula + consumo de código + cupos.
-                // Esto reduce carreras entre dos pestañas/personas usando el mismo código o el último cupo.
+                // IMPORTANTE FIRESTORE: dentro de una transacción, TODAS las lecturas deben ejecutarse
+                // antes de cualquier escritura. Por eso primero leemos código, matrícula y capacidades;
+                // después hacemos set/update.
                 await runTransaction(db, async (transaction) => {
                     const codeCheck = await transaction.get(codeRef);
+                    const existingStudent = await transaction.get(docRef);
+
+                    const capacityChecks = [];
+                    for (const activityId of selectedActivities) {
+                        const capRef = doc(capacidadesRef, activityId);
+                        const capSnap = await transaction.get(capRef);
+                        capacityChecks.push({ activityId, capRef, capSnap });
+                    }
+
+                    // Validaciones después de leer todo, antes de escribir.
                     if(!codeCheck.exists() || codeCheck.data().usado) {
                         throw new Error("El código fue utilizado en otra ventana mientras llenabas el formulario.");
                     }
 
-                    const existingStudent = await transaction.get(docRef);
                     if (existingStudent.exists()) {
                         throw new Error(`La matrícula ${dataObj.matricula} ya se encuentra registrada en el sistema.`);
                     }
 
-                    for (const activityId of selectedActivities) {
-                        const capRef = doc(capacidadesRef, activityId);
-                        const capSnap = await transaction.get(capRef);
+                    for (const { activityId, capSnap } of capacityChecks) {
                         const maximo = activityId.startsWith('conf-') ? MAX_CONF : MAX_TALLER;
                         const inscritos = capSnap.exists() ? (capSnap.data().inscritos || 0) : (currentCapacities[activityId] || 0);
                         if (inscritos >= maximo) {
                             throw new Error(`La actividad "${activitiesInfo[activityId]?.title || activityId}" se llenó mientras realizabas tu registro. Elige otra opción.`);
                         }
+                    }
+
+                    // Escrituras: ya no hay lecturas después de este punto.
+                    for (const { activityId, capRef, capSnap } of capacityChecks) {
+                        const maximo = activityId.startsWith('conf-') ? MAX_CONF : MAX_TALLER;
                         if (capSnap.exists()) {
                             transaction.update(capRef, { inscritos: increment(1), maximo, actualizado: nowIso });
                         } else {
@@ -1323,8 +1337,7 @@
                         nombre: dataObj.nombre,
                         grupo: dataObj.grupo
                     });
-                });
-                
+                });                
                 // Construir Pase visual
                 document.getElementById('res-name').textContent = dataObj.nombre;
                 document.getElementById('res-id').textContent = dataObj.matricula;
