@@ -680,7 +680,7 @@
                 <!-- LOGOS CON ESCUDO ANTI-FALLOS -->
                 <div class="cert-logos">
                     <img src="uan3.png" alt="UAN" class="cert-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBTjwvdGV4dD48L3N2Zz4=';">
-                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
+                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIx四十iIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
                     <img src="unidad.png" alt="UATyG" class="cert-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBVHlHPC90ZXh0Pjwvc3ZnPg==';">
                 </div>
                 <!-- Línea decorativa -->
@@ -787,7 +787,7 @@
         </div>
     </div>
 
-    <!-- DELETE CONFIRM MODAL -->
+    <!-- DELETE CONFIRM MODAL (Single Student) -->
     <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center backdrop-blur-sm">
         <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl">
             <h3 class="text-2xl font-bold text-gray-900 mb-2">¿Eliminar registro?</h3>
@@ -795,6 +795,23 @@
             <div class="flex gap-3">
                 <button id="cancel-delete-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition">Cancelar</button>
                 <button id="confirm-delete-btn" class="flex-1 rounded-xl px-4 py-3 bg-red-600 text-white hover:bg-red-700 transition">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE ALL DATABASE MODAL -->
+    <div id="delete-all-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[95] flex justify-center items-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl border-4 border-red-500">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+                <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-black text-red-600 mb-2">Peligro: Borrar Base de Datos</h3>
+            <p class="text-gray-600 mb-4 text-sm font-medium">Esta acción <strong>eliminará para siempre</strong> todos los registros de alumnos, todos los códigos de acceso y códigos de staff. <br><br>Escribe <strong class="text-gray-900 font-mono">borrar todo</strong> para confirmar:</p>
+            <input type="text" id="delete-all-input" class="w-full p-4 rounded-xl border-2 border-red-200 focus:ring-0 focus:border-red-500 bg-red-50 text-center font-bold text-xl tracking-wider text-red-900 mb-6" placeholder="borrar todo">
+            
+            <div class="flex gap-3">
+                <button id="cancel-delete-all-btn" class="flex-1 rounded-xl border border-gray-300 px-4 py-3 bg-white text-gray-700 hover:bg-gray-50 transition font-bold">Cancelar</button>
+                <button id="confirm-delete-all-btn" class="flex-1 rounded-xl px-4 py-3 bg-red-600 text-white hover:bg-red-700 transition font-bold">Destruir Datos</button>
             </div>
         </div>
     </div>
@@ -815,7 +832,6 @@
             <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8 overflow-x-auto">
                 <button id="tab-scanner"    class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
                 <button id="tab-database"   class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos</button>
-                <button id="tab-attendance" class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Por Actividad</button>
                 <button id="tab-codes"      class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Códigos</button>
             </div>
 
@@ -874,9 +890,11 @@
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-black text-gray-900">Reporte de Acreditación</h2>
                         <div class="flex gap-2 flex-wrap justify-end">
-                            <button id="rebuild-capacities-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition shadow-sm">Recalcular Cupos</button>
+                            <!-- BOTÓN DE ELIMINAR TODO RECUPERADO -->
+                            <button id="delete-all-db-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-red-700 transition shadow-sm">Borrar Todo</button>
+                            <button id="rebuild-capacities-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition shadow-sm" title="Vuelve a contar cuántos alumnos están en cada actividad para ajustar los cupos públicos.">Recalcular Cupos</button>
                             <button id="export-accredited-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Exportar CSV</button>
-                            <button id="refresh-db-btn" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition">Actualizar</button>
+                            <button id="refresh-db-btn" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition" title="Refresca los registros desde la base de datos">Actualizar</button>
                         </div>
                     </div>
                     <div class="mb-6 grid grid-cols-2 gap-4">
@@ -887,19 +905,6 @@
                         <thead><tr class="bg-gray-100 text-gray-700 text-sm"><th class="p-3 font-bold">Matrícula</th><th class="p-3 font-bold">Nombre</th><th class="p-3 font-bold text-center">Conf. (3)</th><th class="p-3 font-bold text-center">Taller (2)</th><th class="p-3 font-bold text-center">Estado</th><th class="p-3 font-bold text-center">Borrar</th></tr></thead>
                         <tbody id="db-table-body" class="text-sm"><tr><td colspan="6" class="p-4 text-center">Cargando base de datos...</td></tr></tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- ATTENDANCE BY ACTIVITY VIEW (Sólo Administrador Principal) -->
-            <div id="view-attendance" class="hidden">
-                <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-black text-gray-900">Asistencia por Actividad</h2>
-                        <button id="refresh-attendance-btn" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition">Actualizar</button>
-                    </div>
-                    <div id="attendance-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="col-span-full text-center p-8 text-gray-400 font-bold">Cargando estadísticas...</div>
-                    </div>
                 </div>
             </div>
 
@@ -1048,7 +1053,6 @@
         }
 
         function buildQrPayload(matricula, qrSecret) {
-            // Nuevo formato: menos predecible que UATYG2026|matricula
             return `UATYG2026|${normalizeMatricula(matricula)}|${qrSecret}`;
         }
 
@@ -1287,9 +1291,6 @@
                 const codeRef = doc(codigosRef, validatedAccessCode);
 
                 // Registro atómico: matrícula + consumo de código + cupos.
-                // IMPORTANTE FIRESTORE: dentro de una transacción, TODAS las lecturas deben ejecutarse
-                // antes de cualquier escritura. Por eso primero leemos código, matrícula y capacidades;
-                // después hacemos set/update.
                 await runTransaction(db, async (transaction) => {
                     const codeCheck = await transaction.get(codeRef);
                     const existingStudent = await transaction.get(docRef);
@@ -1578,14 +1579,12 @@
             if (role === 'staff') {
                 // ROL DE COMITÉ (Sólo Escáner)
                 document.getElementById('tab-database').style.display = 'none';
-                document.getElementById('tab-attendance').style.display = 'none';
                 document.getElementById('tab-codes').style.display = 'none';
                 titleEl.innerHTML = '<span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Comité (Escáner)';
                 document.getElementById('tab-scanner').click(); // Auto-enfocar el escáner
             } else {
                 // ROL DE ADMINISTRADOR (Acceso Total)
                 document.getElementById('tab-database').style.display = 'block';
-                document.getElementById('tab-attendance').style.display = 'block';
                 document.getElementById('tab-codes').style.display = 'block';
                 titleEl.innerHTML = '<span class="bg-blue-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Control (Admin)';
                 document.getElementById('tab-scanner').click(); 
@@ -1595,34 +1594,34 @@
             }
         }
 
-      // 1. INICIAR SESIÓN CON GOOGLE (Administrador)
-document.getElementById('btn-google-login').addEventListener('click', async () => {
-    errP.classList.add('hidden');
+        // 1. INICIAR SESIÓN CON GOOGLE (Administrador)
+        document.getElementById('btn-google-login').addEventListener('click', async () => {
+            errP.classList.add('hidden');
 
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({
-        prompt: 'select_account'
-    });
+            const provider = new GoogleAuthProvider();
+            provider.setCustomParameters({
+                prompt: 'select_account'
+            });
 
-    try {
-        // Llamamos a la ventana emergente oficial de Google
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
+            try {
+                // Llamamos a la ventana emergente oficial de Google
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
 
-        if (user.email === 'luixnay@gmail.com') {
-            enterDashboard('admin');
-        } else {
-            await signOut(auth);
-            errP.textContent = "Acceso denegado. Esta cuenta no está autorizada como administrador.";
-            errP.classList.remove('hidden');
-        }
+                if (user.email === 'luixnay@gmail.com') {
+                    enterDashboard('admin');
+                } else {
+                    await signOut(auth);
+                    errP.textContent = "Acceso denegado. Esta cuenta no está autorizada como administrador.";
+                    errP.classList.remove('hidden');
+                }
 
-    } catch (error) {
-        console.error("Error en login con Google:", error);
-        errP.textContent = "No tienes permisos de Administrador: " + error.message;
-        errP.classList.remove('hidden');
-    }
-});
+            } catch (error) {
+                console.error("Error en login con Google:", error);
+                errP.textContent = "No tienes permisos de Administrador: " + error.message;
+                errP.classList.remove('hidden');
+            }
+        });
 
         // 2. INICIAR SESIÓN CON CÓDIGO (Staff / Comité)
         document.getElementById('login-staff-btn').addEventListener('click', async () => {
@@ -1666,19 +1665,87 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
             window.scrollTo(0,0);
         });
 
-        // TABS DEL DASHBOARD
+        // TABS DEL DASHBOARD (Editado para remover tab-attendance)
         function switchAdminTab(activeId, viewId) {
-            ['tab-scanner', 'tab-database', 'tab-attendance', 'tab-codes'].forEach(id => {
+            ['tab-scanner', 'tab-database', 'tab-codes'].forEach(id => {
                 document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
             });
-            ['view-scanner', 'view-database', 'view-attendance', 'view-codes'].forEach(id => {
+            ['view-scanner', 'view-database', 'view-codes'].forEach(id => {
                 document.getElementById(id).classList.replace(id === viewId ? 'hidden' : 'block', id === viewId ? 'block' : 'hidden');
             });
         }
         document.getElementById('tab-scanner').addEventListener('click', () => switchAdminTab('tab-scanner', 'view-scanner'));
         document.getElementById('tab-database').addEventListener('click', () => { switchAdminTab('tab-database', 'view-database'); generateDbReport(); });
-        document.getElementById('tab-attendance').addEventListener('click', () => { switchAdminTab('tab-attendance', 'view-attendance'); generateAttendanceReport(); });
         document.getElementById('tab-codes').addEventListener('click', () => { switchAdminTab('tab-codes', 'view-codes'); loadAdminCodes(); });
+
+
+        // --- FUNCIONES PARA BORRAR TODA LA BASE DE DATOS ---
+        document.getElementById('delete-all-db-btn').addEventListener('click', () => {
+            document.getElementById('delete-all-input').value = '';
+            document.getElementById('delete-all-modal').classList.remove('hidden');
+        });
+        document.getElementById('cancel-delete-all-btn').addEventListener('click', () => {
+            document.getElementById('delete-all-modal').classList.add('hidden');
+        });
+
+        // Función de borrado en lotes para manejar grandes cantidades de documentos (límite de Firestore es 500)
+        async function deleteCollection(colRef) {
+            const snap = await getDocs(colRef);
+            let batches = [];
+            let currentBatch = writeBatch(db);
+            let count = 0;
+
+            snap.forEach(d => {
+                currentBatch.delete(d.ref);
+                count++;
+                if (count === 490) { // Cortamos antes del límite de 500
+                    batches.push(currentBatch);
+                    currentBatch = writeBatch(db);
+                    count = 0;
+                }
+            });
+            if (count > 0) batches.push(currentBatch);
+
+            for (let b of batches) {
+                await b.commit();
+            }
+        }
+
+        document.getElementById('confirm-delete-all-btn').addEventListener('click', async () => {
+            const inputVal = document.getElementById('delete-all-input').value.trim().toLowerCase();
+            if (inputVal !== 'borrar todo') {
+                showAlert("Atención", "Debes escribir exactamente 'borrar todo' para confirmar.", true);
+                return;
+            }
+
+            const btn = document.getElementById('confirm-delete-all-btn');
+            const originalText = btn.textContent;
+            btn.textContent = "Borrando Base de Datos...";
+            btn.disabled = true;
+
+            try {
+                // Borrar las 4 colecciones
+                await deleteCollection(registrosRef);
+                await deleteCollection(codigosRef);
+                await deleteCollection(staffCodesRef);
+                await deleteCollection(capacidadesRef);
+
+                document.getElementById('delete-all-modal').classList.add('hidden');
+                showAlert("Base de Datos Destruida", "Se han eliminado todos los registros, alumnos, y códigos del sistema.", false);
+                
+                // Actualizar las vistas para mostrar el sistema vacío
+                generateDbReport();
+                loadAdminCodes();
+                loadStaffCodesFromDB();
+
+            } catch (error) {
+                showAlert("Error Crítico", "No se pudo borrar todo: " + error.message, true);
+            }
+
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
+
 
         // --- SISTEMA DE GENERACIÓN DE CÓDIGOS (Alumnos y Staff) ---
         function generateSecureCode() {
@@ -2198,66 +2265,8 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
             btn.textContent = originalText;
         });
 
-        // ------------------ REPORTE POR ACTIVIDAD ------------------
-        async function generateAttendanceReport() {
-            const grid = document.getElementById('attendance-grid');
-            grid.innerHTML = '<div class="col-span-full text-center p-8 text-emerald-600 font-bold animate-pulse">Calculando estadísticas en tiempo real...</div>';
-            try {
-                const qSnap = await getDocs(registrosRef);
-                const stats = {};
-                Object.keys(activitiesInfo).forEach(k => { stats[k] = { registrados: 0, entradas: 0, salidas: 0 }; });
+        document.getElementById('refresh-db-btn').addEventListener('click', generateDbReport);
 
-                qSnap.forEach(d => {
-                    const data = d.data();
-                    const asis = data.asistencias || [];
-
-                    // Contar registrados
-                    if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => { if(stats[c]) stats[c].registrados++; });
-                    if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => { if(stats[t]) stats[t].registrados++; });
-                    if(stats['gran-cierre']) stats['gran-cierre'].registrados++;
-
-                    // Contar asistencias
-                    asis.forEach(a => {
-                        const [act, tipo] = a.split('_');
-                        if (stats[act]) {
-                            if (tipo === 'entrada') stats[act].entradas++;
-                            if (tipo === 'salida') stats[act].salidas++;
-                        }
-                    });
-                });
-
-                let html = '';
-                Object.keys(activitiesInfo).forEach(k => {
-                    const info = activitiesInfo[k];
-                    const s = stats[k];
-                    const pct = s.registrados > 0 ? Math.round((s.entradas / s.registrados) * 100) : 0;
-                    html += `
-                    <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
-                        <div class="flex justify-between items-start mb-3">
-                            <div><span class="text-xs font-bold ${info.type==='Conferencia'?'text-emerald-600 bg-emerald-100':'text-blue-600 bg-blue-100'} px-2 py-1 rounded uppercase">${info.type}</span></div>
-                            <span class="text-lg font-black text-gray-800">${pct}% <span class="text-xs text-gray-500 font-normal">asistencia</span></span>
-                        </div>
-                        <h4 class="font-bold text-gray-900 mb-4 leading-tight">${info.title}</h4>
-                        <div class="grid grid-cols-3 gap-2 text-center">
-                            <div class="bg-white border border-gray-200 p-2 rounded-xl">
-                                <p class="text-[10px] font-bold text-gray-400 uppercase">Inscritos</p>
-                                <p class="text-xl font-black text-gray-700">${s.registrados}</p>
-                            </div>
-                            <div class="bg-emerald-50 border border-emerald-100 p-2 rounded-xl">
-                                <p class="text-[10px] font-bold text-emerald-600 uppercase">Entradas</p>
-                                <p class="text-xl font-black text-emerald-700">${s.entradas}</p>
-                            </div>
-                            <div class="bg-red-50 border border-red-100 p-2 rounded-xl">
-                                <p class="text-[10px] font-bold text-red-600 uppercase">Salidas</p>
-                                <p class="text-xl font-black text-red-700">${s.salidas}</p>
-                            </div>
-                        </div>
-                    </div>`;
-                });
-                grid.innerHTML = html;
-            } catch (error) { grid.innerHTML = '<div class="col-span-full text-center p-8 text-red-500 font-bold">Error al cargar estadísticas.</div>'; }
-        }
-        document.getElementById('refresh-attendance-btn').addEventListener('click', generateAttendanceReport);
     </script>
 </body>
 </html>
