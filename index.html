@@ -999,6 +999,7 @@
         // IMPORTANTE: Ahora importamos GoogleAuthProvider y signInWithPopup
         import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch, query, runTransaction, increment, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
 
         // CONFIGURACIÓN FIREBASE
         const externalFirebaseConfig = {
@@ -1013,7 +1014,7 @@
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         
         // DECLARACION GLOBAL
-        let db, auth, registrosRef = null, codigosRef = null, staffCodesRef = null, capacidadesRef = null;
+        let db, auth, functions, registrosRef = null, codigosRef = null, staffCodesRef = null, capacidadesRef = null;
         let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
@@ -1088,6 +1089,7 @@
                 });
                 
                 auth = getAuth(app);
+                functions = getFunctions(app);
                 
                 // Login inicial para los alumnos o vista por defecto
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -2079,53 +2081,51 @@
             const mat  = parsedQr.matricula;
             const act  = document.getElementById('admin-activity-select').value;
             const type = document.querySelector('input[name="scan_type"]:checked').value;
-            const recordStr = `${act}_${type}`;
 
             try {
-                const docRef  = doc(registrosRef, mat);
-                const docSnap = await getDoc(docRef);
+                // LLAMADA SEGURA AL BACKEND (CLOUD FUNCTION)
+                const registrarAsistencia = httpsCallable(functions, 'registrarAsistencia');
+                const appId = typeof __app_id !== 'undefined' ? __app_id : null;
+                
+                const result = await registrarAsistencia({
+                    matricula: mat,
+                    activityId: act,
+                    tipo: type,
+                    qrSecret: parsedQr.qrSecret,
+                    appId: appId,
+                    staffCode: currentStaffCode // Identifica si la petición la hace un miembro del staff
+                });
 
-                if (!docSnap.exists()) {
-                    showScanResult('no_registrado', type, mat, '');
+                const status = result.data.status;
+                const studentName = result.data.nombre || '';
+
+                if (status === 'success') {
+                    showScanResult('ok_nuevo', type, mat, studentName);
+                } else if (status === 'ya_registrado') {
+                    showScanResult('ok_ya_registrado', type, mat, studentName);
                 } else {
-                    const data = docSnap.data();
-                    if (data.qrSecret && parsedQr.qrSecret !== data.qrSecret) {
-                        showScanResult('no_registrado', type, mat, 'QR inválido o alterado');
-                        return;
-                    }
-                    const actividadesAlumno = [
-                        ...(data.conferencias_seleccionadas || []),
-                        ...(data.talleres_seleccionados    || []),
-                        ...(act === 'gran-cierre' ? ['gran-cierre'] : [])
-                    ];
-                    const inscritoEnActividad = actividadesAlumno.includes(act);
-
-                    if (!inscritoEnActividad) {
-                        showScanResult('no_registrado', type, mat, data.nombre);
-                    } else if (data.asistencias && data.asistencias.includes(recordStr)) {
-                        showScanResult('ok_ya_registrado', type, mat, data.nombre);
-                    } else if (type === 'salida' && (!data.asistencias || !data.asistencias.includes(`${act}_entrada`))) {
-                        showScanResult('sin_entrada', type, mat, data.nombre);
-                    } else {
-                        // --- OFUSCACIÓN DE PAYLOAD DE ACTUALIZACIÓN ---
-                        const _0xKey = atob('YXNpc3RlbmNpYXM='); // 'asistencias' codificado
-                        const _0xPayload = {};
-                        _0xPayload[_0xKey] = arrayUnion(recordStr);
-                        _0xPayload.asistenciaLogs = arrayUnion({
-                            actividad: act,
-                            tipo: type,
-                            registro: recordStr,
-                            fecha: new Date().toISOString(),
-                            registradoPorRol: currentPanelRole,
-                            registradoPor: currentPanelRole === 'admin' ? (auth.currentUser?.email || 'admin') : (currentStaffCode || 'staff')
-                        });
-                        _0xPayload.ultimaAsistencia = { actividad: act, tipo: type, fecha: new Date().toISOString() };
-                        await updateDoc(docRef, _0xPayload);
-                        // ----------------------------------------------
-                        showScanResult('ok_nuevo', type, mat, data.nombre);
-                    }
+                    showScanResult('error', type, mat, 'Estado desconocido');
                 }
-            } catch(e) { showScanResult('error', type, mat, ''); }
+
+            } catch(e) { 
+                const errorMsg = e.message || '';
+                console.error("Error en Cloud Function:", errorMsg);
+                
+                // Manejo de errores controlados desde el Backend
+                if (errorMsg.includes("qr_invalido")) {
+                    showScanResult('no_registrado', type, mat, 'QR inválido o alterado');
+                } else if (errorMsg.includes("no_inscrito")) {
+                    showScanResult('no_registrado', type, mat, 'Alumno no inscrito');
+                } else if (errorMsg.includes("sin_entrada")) {
+                    showScanResult('sin_entrada', type, mat, 'Falta registrar entrada');
+                } else if (errorMsg.includes("registro_no_encontrado")) {
+                    showScanResult('no_registrado', type, mat, 'Matrícula no encontrada');
+                } else if (errorMsg.includes("no_autorizado")) {
+                    showScanResult('error', type, mat, 'No autorizado (Admin/Staff)');
+                } else {
+                    showScanResult('error', type, mat, 'Error de conexión'); 
+                }
+            }
 
             setTimeout(() => { document.getElementById('qr-reader').style.border = "4px solid #1f2937"; isProcessing = false; }, 3000);
         }
