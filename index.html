@@ -1195,18 +1195,13 @@
             btnValidateCode.disabled = true;
 
             try {
-                // MODIFICACIÓN 3: Previene Race Condition usando runTransaction para leer
-                const codeStatus = await runTransaction(db, async (transaction) => {
-                    const codeDoc = await transaction.get(doc(codigosRef, code));
-                    if (!codeDoc.exists()) return 'NOT_FOUND';
-                    if (codeDoc.data().usado) return 'USED';
-                    return 'VALID';
-                });
-
-                if (codeStatus === 'NOT_FOUND') {
+                const codeRef = doc(codigosRef, code);
+                const codeDoc = await getDoc(codeRef);
+                
+                if (!codeDoc.exists()) {
                     msgValidation.textContent = "El código ingresado no existe.";
                     msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
-                } else if (codeStatus === 'USED') {
+                } else if (codeDoc.data().usado) {
                     msgValidation.textContent = "Este código ya fue utilizado.";
                     msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
                 } else {
@@ -1449,6 +1444,8 @@
         document.getElementById('close-qr-btn').addEventListener('click', () => { 
             document.getElementById('qr-result-section').classList.add('hidden');
             document.getElementById('code-validation-section').classList.remove('hidden');
+            document.getElementById('validation-content').classList.remove('hidden');
+            document.getElementById('init-loading-state').classList.add('hidden');
             document.querySelectorAll('.user-input').forEach(i => i.value = '');
             document.querySelectorAll('.conf-checkbox').forEach(cb => cb.checked = false);
             document.querySelectorAll('.workshop-checkbox').forEach(cb => cb.checked = false);
