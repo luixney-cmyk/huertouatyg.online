@@ -846,10 +846,11 @@
             <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8 overflow-x-auto">
                 <button id="tab-scanner"    class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition">Modo Escáner</button>
                 <button id="tab-database"   class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Base de Datos</button>
+                <button id="tab-activity"   class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Por Actividad</button>
                 <button id="tab-codes"      class="flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition">Códigos</button>
             </div>
 
-            <!-- SCANNER VIEW (Vista disponible para Admin y Comité) -->
+            <!-- SCANNER VIEW -->
             <div id="view-scanner" class="block">
                 <div class="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200 text-center max-w-4xl mx-auto">
                     <h2 class="text-2xl font-black text-gray-900 mb-6">Control de Acceso</h2>
@@ -898,13 +899,12 @@
                 </div>
             </div>
 
-            <!-- DATABASE VIEW (Sólo Administrador Principal) -->
+            <!-- DATABASE VIEW -->
             <div id="view-database" class="hidden">
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 overflow-x-auto">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-black text-gray-900">Reporte de Acreditación</h2>
                         <div class="flex gap-2 flex-wrap justify-end">
-                            <!-- BOTÓN DE ELIMINAR TODO RECUPERADO -->
                             <button id="delete-all-db-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-red-700 transition shadow-sm">Borrar Todo</button>
                             <button id="rebuild-capacities-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition shadow-sm" title="Vuelve a contar cuántos alumnos están en cada actividad para ajustar los cupos públicos.">Recalcular Cupos</button>
                             <button id="export-accredited-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Exportar CSV</button>
@@ -922,7 +922,20 @@
                 </div>
             </div>
 
-            <!-- CODES VIEW (Sólo Administrador Principal) -->
+            <!-- ACTIVITY BREAKDOWN VIEW -->
+            <div id="view-activity" class="hidden">
+                <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-black text-gray-900">Participantes por Actividad</h2>
+                        <button onclick="generateActivityReport()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Refrescar Reporte</button>
+                    </div>
+                    <div id="activity-report-container" class="space-y-6">
+                        <p class="text-center p-4">Haz clic en Refrescar Reporte para cargar los datos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODES VIEW -->
             <div id="view-codes" class="hidden">
                 <!-- SECCIÓN: CÓDIGOS DE STAFF (NUEVO) -->
                 <div class="bg-indigo-50 rounded-3xl shadow-sm p-6 border border-indigo-200 mb-8">
@@ -1638,12 +1651,14 @@
             if (role === 'staff') {
                 // ROL DE COMITÉ (Sólo Escáner)
                 document.getElementById('tab-database').style.display = 'none';
+                document.getElementById('tab-activity').style.display = 'none';
                 document.getElementById('tab-codes').style.display = 'none';
                 titleEl.innerHTML = '<span class="bg-emerald-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Comité (Escáner)';
                 document.getElementById('tab-scanner').click(); // Auto-enfocar el escáner
             } else {
                 // ROL DE ADMINISTRADOR (Acceso Total)
                 document.getElementById('tab-database').style.display = 'block';
+                document.getElementById('tab-activity').style.display = 'block';
                 document.getElementById('tab-codes').style.display = 'block';
                 titleEl.innerHTML = '<span class="bg-blue-500 w-3 h-3 rounded-full mr-2 animate-pulse"></span> Panel de Control (Admin)';
                 document.getElementById('tab-scanner').click(); 
@@ -1724,18 +1739,103 @@
             window.scrollTo(0,0);
         });
 
-        // TABS DEL DASHBOARD (Editado para remover tab-attendance)
+        // TABS DEL DASHBOARD
         function switchAdminTab(activeId, viewId) {
-            ['tab-scanner', 'tab-database', 'tab-codes'].forEach(id => {
+            ['tab-scanner', 'tab-database', 'tab-activity', 'tab-codes'].forEach(id => {
                 document.getElementById(id).className = id === activeId ? "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg bg-emerald-50 text-emerald-700 transition" : "flex-1 py-3 px-4 min-w-[130px] text-sm font-bold rounded-lg text-gray-500 hover:bg-gray-50 transition";
             });
-            ['view-scanner', 'view-database', 'view-codes'].forEach(id => {
+            ['view-scanner', 'view-database', 'view-activity', 'view-codes'].forEach(id => {
                 document.getElementById(id).classList.replace(id === viewId ? 'hidden' : 'block', id === viewId ? 'block' : 'hidden');
             });
         }
         document.getElementById('tab-scanner').addEventListener('click', () => switchAdminTab('tab-scanner', 'view-scanner'));
         document.getElementById('tab-database').addEventListener('click', () => { switchAdminTab('tab-database', 'view-database'); generateDbReport(); });
+        document.getElementById('tab-activity').addEventListener('click', () => { switchAdminTab('tab-activity', 'view-activity'); generateActivityReport(); });
         document.getElementById('tab-codes').addEventListener('click', () => { switchAdminTab('tab-codes', 'view-codes'); loadAdminCodes(); });
+
+        // GENERAR REPORTE POR ACTIVIDAD (NUEVO)
+        window.generateActivityReport = async function() {
+            const container = document.getElementById('activity-report-container');
+            container.innerHTML = '<p class="text-center p-8 font-bold text-gray-500">Procesando inscripciones...</p>';
+            try {
+                const qSnap = await getDocs(registrosRef);
+                const report = {};
+
+                // Inicializar usando activitiesInfo global
+                Object.keys(activitiesInfo).forEach(id => {
+                    report[id] = { 
+                        title: activitiesInfo[id].title,
+                        type: activitiesInfo[id].type,
+                        students: [],
+                        max: id.startsWith('conf-') ? MAX_CONF : MAX_TALLER
+                    };
+                });
+                
+                // Añadir Gran Cierre si no está (Todos están invitados, capacidad alta)
+                if(report['gran-cierre']) {
+                   report['gran-cierre'].max = 999; 
+                }
+
+                qSnap.forEach(d => {
+                    const dt = d.data();
+                    const student = { nombre: dt.nombre, matricula: dt.matricula, grupo: dt.grupo };
+                    
+                    // Conferencias
+                    (dt.conferencias_seleccionadas || []).forEach(id => {
+                        if (report[id]) report[id].students.push(student);
+                    });
+                    
+                    // Talleres
+                    (dt.talleres_seleccionados || []).forEach(id => {
+                        if (report[id]) report[id].students.push(student);
+                    });
+
+                    // Gran Cierre (todos van)
+                    if (report['gran-cierre']) {
+                       report['gran-cierre'].students.push(student);
+                    }
+                });
+
+                let html = '';
+                for (const [id, data] of Object.entries(report)) {
+                    const currentCount = data.students.length;
+                    const isFull = currentCount >= data.max;
+                    const badgeClass = isFull ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700';
+                    
+                    html += `
+                        <div class="border border-gray-200 rounded-2xl p-5 bg-white shadow-sm hover:shadow-md transition">
+                            <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
+                                <div>
+                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${data.type}</span>
+                                    <h3 class="font-black text-lg text-gray-800">${escapeHtml(data.title)}</h3>
+                                </div>
+                                <div class="text-right">
+                                    <span class="${badgeClass} font-bold px-3 py-1 rounded-full text-sm">
+                                        ${currentCount} / ${data.max === 999 ? '∞' : data.max}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm max-h-60 overflow-y-auto pr-2">
+                                ${data.students.length > 0 ? 
+                                    data.students.map(s => `
+                                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 flex flex-col justify-center">
+                                        <span class="font-bold text-gray-800 truncate" title="${escapeHtml(s.nombre)}">${escapeHtml(s.nombre)}</span>
+                                        <div class="flex justify-between items-center mt-1">
+                                            <span class="text-xs text-gray-500 font-mono">${escapeHtml(s.matricula)}</span>
+                                            <span class="text-xs bg-gray-200 text-gray-600 px-2 rounded-sm font-bold">${escapeHtml(s.grupo)}</span>
+                                        </div>
+                                    </div>
+                                    `).join('') 
+                                    : '<p class="text-gray-400 italic col-span-full">Nadie ha seleccionado esta actividad aún.</p>'
+                                }
+                            </div>
+                        </div>`;
+                }
+                container.innerHTML = html;
+            } catch(e) { 
+                container.innerHTML = `<p class="text-red-500 text-center font-bold p-4">Error al generar reporte: ${e.message}</p>`; 
+            }
+        }
 
 
         // --- FUNCIONES PARA BORRAR TODA LA BASE DE DATOS ---
