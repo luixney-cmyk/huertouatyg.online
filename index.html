@@ -604,6 +604,7 @@
             <p class="text-gray-500 text-sm mb-6">Ingresa tu matrícula para revisar tus horas acreditadas, ver tu QR y descargar tu reconocimiento.</p>
             
             <input type="text" id="portal-matricula" class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-emerald-500 bg-gray-50 mb-4 text-center font-bold text-xl tracking-widest" placeholder="Tu Matrícula">
+            <p class="text-xs text-gray-500 mb-4 -mt-2">Solo necesitas tu matrícula para recuperar tu QR, revisar tu avance y descargar tu reconocimiento cuando acredites.</p>
             <button id="check-status-btn" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition shadow-lg">Consultar Estado</button>
             
             <!-- Area de Resultados -->
@@ -872,7 +873,8 @@
                 <div class="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 overflow-x-auto">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-black text-gray-900">Reporte de Acreditación</h2>
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 flex-wrap justify-end">
+                            <button id="rebuild-capacities-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition shadow-sm">Recalcular Cupos</button>
                             <button id="export-accredited-btn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700 transition shadow-sm">Exportar CSV</button>
                             <button id="refresh-db-btn" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition">Actualizar</button>
                         </div>
@@ -990,8 +992,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         // IMPORTANTE: Ahora importamos GoogleAuthProvider y signInWithPopup
-        import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch, query, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, arrayUnion, onSnapshot, deleteDoc, writeBatch, query, runTransaction, increment, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURACIÓN FIREBASE
         const externalFirebaseConfig = {
@@ -1006,7 +1008,7 @@
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : externalFirebaseConfig;
         
         // DECLARACION GLOBAL
-        let db, auth, registrosRef = null, codigosRef = null, staffCodesRef = null;
+        let db, auth, registrosRef = null, codigosRef = null, staffCodesRef = null, capacidadesRef = null;
         let html5QrCode = null; 
         const MAX_CONF = 90; 
         const MAX_TALLER = 40; 
@@ -1015,6 +1017,8 @@
         // CÓDIGO DE VALIDACIÓN
         let validatedAccessCode = null;
         let loadedAdminCodes = [];
+        let currentPanelRole = 'public';
+        let currentStaffCode = null;
 
         // ALERTS GLOBALES
         const alertModal = document.getElementById('custom-alert-modal');
@@ -1027,6 +1031,47 @@
             alertModal.classList.remove('hidden');
         }
         document.getElementById('alert-close-btn').addEventListener('click', () => alertModal.classList.add('hidden'));
+
+        // --- HELPERS DE SEGURIDAD Y NORMALIZACIÓN ---
+        function normalizeMatricula(value) {
+            return String(value || '').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+        }
+
+        function normalizeAccessCode(value) {
+            return String(value || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+        }
+
+        function generateSecretToken(bytes = 16) {
+            const arr = new Uint8Array(bytes);
+            crypto.getRandomValues(arr);
+            return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function buildQrPayload(matricula, qrSecret) {
+            // Nuevo formato: menos predecible que UATYG2026|matricula
+            return `UATYG2026|${normalizeMatricula(matricula)}|${qrSecret}`;
+        }
+
+        function parseQrPayload(text) {
+            const parts = String(text || '').split('|');
+            if (parts[0] !== 'UATYG2026' || parts.length < 2) return null;
+            return {
+                matricula: normalizeMatricula(parts[1]),
+                qrSecret: parts[2] || null,
+                legacy: parts.length === 2
+            };
+        }
+
+        function isValidStudentData(dataObj) {
+            if (!dataObj.nombre || dataObj.nombre.length < 5) return 'Escribe tu nombre completo.';
+            if (!/^[A-Z0-9_-]{3,20}$/.test(dataObj.matricula)) return 'Revisa tu matrícula. Usa sólo letras, números, guion o guion bajo.';
+            if (!dataObj.grupo || dataObj.grupo.length < 1 || dataObj.grupo.length > 6) return 'Revisa tu grupo.';
+            if (!dataObj.carrera) return 'Selecciona tu licenciatura.';
+            if ((dataObj.conferencias_seleccionadas || []).length !== 3) return 'Debes seleccionar exactamente 3 conferencias.';
+            if ((dataObj.talleres_seleccionados || []).length !== 2) return 'Debes seleccionar exactamente 2 talleres.';
+            return null;
+        }
+
 
         // --- INICIALIZACIÓN SEGURA DE FIREBASE ---
         const initApp = async () => {
@@ -1054,20 +1099,26 @@
                     registrosRef  = collection(db, 'artifacts', currentAppId, 'public', 'data', 'registros');
                     codigosRef    = collection(db, 'artifacts', currentAppId, 'public', 'data', 'codigos_acceso');
                     staffCodesRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'staff_codes');
+                    capacidadesRef = collection(db, 'artifacts', currentAppId, 'public', 'data', 'capacidades');
                 } else {
                     registrosRef  = collection(db, 'registros');
                     codigosRef    = collection(db, 'codigos_acceso');
                     staffCodesRef = collection(db, 'staff_codes');
+                    capacidadesRef = collection(db, 'capacidades');
                 }
                 
-                onSnapshot(registrosRef, (snapshot) => {
+                // Capacidad pública sin exponer la lista completa de alumnos.
+                // La colección /capacidades se actualiza dentro de la transacción de registro.
+                onSnapshot(capacidadesRef, (snapshot) => {
                     const newCaps = {};
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        if(data.conferencias_seleccionadas) data.conferencias_seleccionadas.forEach(c => newCaps[c] = (newCaps[c] || 0) + 1);
-                        if(data.talleres_seleccionados) data.talleres_seleccionados.forEach(t => newCaps[t] = (newCaps[t] || 0) + 1);
+                    snapshot.forEach(docSnap => {
+                        const data = docSnap.data();
+                        newCaps[docSnap.id] = Math.max(0, data.inscritos || 0);
                     });
                     currentCapacities = newCaps; 
+                    updateCapacityUI();
+                }, (error) => {
+                    console.warn("No se pudieron cargar capacidades públicas:", error);
                     updateCapacityUI();
                 });
             } catch(e) {
@@ -1082,7 +1133,7 @@
         const msgValidation = document.getElementById('code-validation-msg');
 
         btnValidateCode.addEventListener('click', async () => {
-            let code = inputCode.value.trim().toUpperCase();
+            let code = normalizeAccessCode(inputCode.value);
             if(code.length !== 6) {
                 msgValidation.textContent = "El código debe tener 6 caracteres.";
                 msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
@@ -1203,51 +1254,94 @@
             submitBtn.textContent = "Procesando registro...";
             document.getElementById('loading-spinner').classList.remove('hidden');
 
+            const selectedProgram = document.getElementById('program').value;
+            const nowIso = new Date().toISOString();
             const dataObj = {
-                nombre: document.getElementById('studentName').value.trim(),
-                matricula: document.getElementById('studentId').value.trim(),
-                grupo: document.getElementById('studentGroup').value.trim().toUpperCase(),
-                carrera: document.getElementById('program').options[document.getElementById('program').selectedIndex].text,
+                nombre: document.getElementById('studentName').value.trim().replace(/\s+/g, ' '),
+                matricula: normalizeMatricula(document.getElementById('studentId').value),
+                grupo: document.getElementById('studentGroup').value.trim().toUpperCase().replace(/\s+/g, ''),
+                carrera: selectedProgram,
+                carrera_nombre: document.getElementById('program').options[document.getElementById('program').selectedIndex].text,
                 conferencias_seleccionadas: Array.from(document.querySelectorAll('.conf-checkbox:checked')).map(cb=>cb.value),
                 talleres_seleccionados: Array.from(document.querySelectorAll('.workshop-checkbox:checked')).map(cb=>cb.value),
                 asistencias: [],
-                fecha_registro: new Date().toISOString(),
-                codigoUtilizado: validatedAccessCode // Vinculación
+                asistenciaLogs: [],
+                fecha_registro: nowIso,
+                codigoUtilizado: validatedAccessCode,
+                qrSecret: generateSecretToken(18),
+                versionRegistro: 2
             };
 
-            try {
-                // Doble chequeo de seguridad del código
-                const codeCheck = await getDoc(doc(codigosRef, validatedAccessCode));
-                if(!codeCheck.exists() || codeCheck.data().usado) {
-                    throw new Error("El código fue utilizado en otra ventana mientras llenabas el formulario.");
-                }
+            const validationError = isValidStudentData(dataObj);
+            if (validationError) {
+                showAlert("Datos incompletos", validationError, true);
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Generar mi Pase QR";
+                document.getElementById('loading-spinner').classList.add('hidden');
+                return;
+            }
 
-                // Chequeo de duplicado de matrícula
+            try {
+                const selectedActivities = [...dataObj.conferencias_seleccionadas, ...dataObj.talleres_seleccionados];
                 const docRef = doc(registrosRef, dataObj.matricula);
-                if ((await getDoc(docRef)).exists()) {
-                    showAlert("Registro Duplicado", `La matrícula ${dataObj.matricula} ya se encuentra registrada en el sistema.`, true);
-                    // RESTAURAR BOTÓN SI HAY ERROR
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "Generar mi Pase QR";
-                    document.getElementById('loading-spinner').classList.add('hidden');
-                    return;
-                }
-                
-                // GUARDADO SIMULTANEO
-                await setDoc(docRef, dataObj);
-                await updateDoc(doc(codigosRef, validatedAccessCode), {
-                    usado: true,
-                    fechaUso: new Date().toISOString(),
-                    matricula: dataObj.matricula,
-                    nombre: dataObj.nombre,
-                    grupo: dataObj.grupo
-                });
-                
+                const codeRef = doc(codigosRef, validatedAccessCode);
+
+                // Registro atómico: matrícula + consumo de código + cupos.
+                // IMPORTANTE FIRESTORE: dentro de una transacción, TODAS las lecturas deben ejecutarse
+                // antes de cualquier escritura. Por eso primero leemos código, matrícula y capacidades;
+                // después hacemos set/update.
+                await runTransaction(db, async (transaction) => {
+                    const codeCheck = await transaction.get(codeRef);
+                    const existingStudent = await transaction.get(docRef);
+
+                    const capacityChecks = [];
+                    for (const activityId of selectedActivities) {
+                        const capRef = doc(capacidadesRef, activityId);
+                        const capSnap = await transaction.get(capRef);
+                        capacityChecks.push({ activityId, capRef, capSnap });
+                    }
+
+                    // Validaciones después de leer todo, antes de escribir.
+                    if(!codeCheck.exists() || codeCheck.data().usado) {
+                        throw new Error("El código fue utilizado en otra ventana mientras llenabas el formulario.");
+                    }
+
+                    if (existingStudent.exists()) {
+                        throw new Error(`La matrícula ${dataObj.matricula} ya se encuentra registrada en el sistema.`);
+                    }
+
+                    for (const { activityId, capSnap } of capacityChecks) {
+                        const maximo = activityId.startsWith('conf-') ? MAX_CONF : MAX_TALLER;
+                        const inscritos = capSnap.exists() ? (capSnap.data().inscritos || 0) : (currentCapacities[activityId] || 0);
+                        if (inscritos >= maximo) {
+                            throw new Error(`La actividad "${activitiesInfo[activityId]?.title || activityId}" se llenó mientras realizabas tu registro. Elige otra opción.`);
+                        }
+                    }
+
+                    // Escrituras: ya no hay lecturas después de este punto.
+                    for (const { activityId, capRef, capSnap } of capacityChecks) {
+                        const maximo = activityId.startsWith('conf-') ? MAX_CONF : MAX_TALLER;
+                        if (capSnap.exists()) {
+                            transaction.update(capRef, { inscritos: increment(1), maximo, actualizado: nowIso });
+                        } else {
+                            transaction.set(capRef, { actividad: activityId, inscritos: 1, maximo, actualizado: nowIso });
+                        }
+                    }
+
+                    transaction.set(docRef, dataObj);
+                    transaction.update(codeRef, {
+                        usado: true,
+                        fechaUso: nowIso,
+                        matricula: dataObj.matricula,
+                        nombre: dataObj.nombre,
+                        grupo: dataObj.grupo
+                    });
+                });                
                 // Construir Pase visual
                 document.getElementById('res-name').textContent = dataObj.nombre;
                 document.getElementById('res-id').textContent = dataObj.matricula;
                 document.getElementById('res-group').textContent = dataObj.grupo;
-                document.getElementById('res-program').textContent = dataObj.carrera;
+                document.getElementById('res-program').textContent = dataObj.carrera_nombre || dataObj.carrera;
                 
                 const badgesDiv = document.getElementById('badges-container');
                 badgesDiv.innerHTML = '';
@@ -1256,7 +1350,7 @@
                 });
 
                 document.getElementById('qrcode').innerHTML = "";
-                new QRCode(document.getElementById("qrcode"), { text: `UATYG2026|${dataObj.matricula}`, width: 200, height: 200, colorDark: "#064e3b" });
+                new QRCode(document.getElementById("qrcode"), { text: buildQrPayload(dataObj.matricula, dataObj.qrSecret), width: 200, height: 200, colorDark: "#064e3b" });
 
                 document.getElementById('registration-form-section').classList.add('hidden');
                 document.getElementById('qr-result-section').classList.remove('hidden');
@@ -1319,10 +1413,13 @@
             document.getElementById('portal-matricula').value = '';
         });
         document.getElementById('close-portal-btn').addEventListener('click', () => portalModal.classList.add('hidden'));
+        document.getElementById('portal-matricula').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('check-status-btn').click();
+        });
         
         document.getElementById('check-status-btn').addEventListener('click', async () => {
-            const mat = document.getElementById('portal-matricula').value.trim();
-            if(!mat || !registrosRef) return;
+            const mat = normalizeMatricula(document.getElementById('portal-matricula').value);
+            if(!mat || !registrosRef) return showAlert("Matrícula requerida", "Ingresa tu matrícula para consultar tu avance y recuperar tu QR.", true);
             document.getElementById('check-status-btn').textContent = "Buscando...";
             try {
                 const docSnap = await getDoc(doc(registrosRef, mat));
@@ -1383,6 +1480,7 @@
                 // Guardar datos para recuperar QR
                 document.getElementById('recover-qr-btn').dataset.mat = mat;
                 document.getElementById('recover-qr-btn').dataset.nombre = data.nombre;
+                document.getElementById('recover-qr-btn').dataset.qrSecret = data.qrSecret || '';
 
                 document.getElementById('portal-result').classList.remove('hidden');
             } catch(e) { showAlert("Error", "Error al conectar.", true); }
@@ -1393,10 +1491,11 @@
         document.getElementById('recover-qr-btn').addEventListener('click', () => {
             const mat    = document.getElementById('recover-qr-btn').dataset.mat;
             const nombre = document.getElementById('recover-qr-btn').dataset.nombre;
+            const qrSecret = document.getElementById('recover-qr-btn').dataset.qrSecret;
             if (!mat) return;
             document.getElementById('recover-qrcode').innerHTML = '';
             new QRCode(document.getElementById('recover-qrcode'), {
-                text: `UATYG2026|${mat}`, width: 200, height: 200, colorDark: "#064e3b"
+                text: qrSecret ? buildQrPayload(mat, qrSecret) : `UATYG2026|${mat}`, width: 200, height: 200, colorDark: "#064e3b"
             });
             document.getElementById('recover-qr-name').textContent = `${nombre} · ${mat}`;
             document.getElementById('recover-qr-modal').classList.remove('hidden');
@@ -1469,6 +1568,7 @@
 
         // FUNCIÓN CENTRAL PARA ENTRAR AL PANEL SEGÚN EL ROL
         function enterDashboard(role) {
+            currentPanelRole = role;
             pwdMod.classList.add('hidden'); 
             document.getElementById('main-landing').classList.add('hidden'); 
             document.getElementById('admin-dashboard').classList.remove('hidden');
@@ -1527,7 +1627,7 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
         // 2. INICIAR SESIÓN CON CÓDIGO (Staff / Comité)
         document.getElementById('login-staff-btn').addEventListener('click', async () => {
             errP.classList.add('hidden');
-            const code = document.getElementById('staff-code-input').value.trim().toUpperCase();
+            const code = normalizeAccessCode(document.getElementById('staff-code-input').value);
             
             if(!code) {
                 errP.textContent = "Por favor, ingresa el código del comité.";
@@ -1539,6 +1639,7 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
                 const docSnap = await getDoc(doc(staffCodesRef, code));
                 // Si el código existe en la colección de staff y está activo
                 if (docSnap.exists() && docSnap.data().activo) {
+                    currentStaffCode = code;
                     enterDashboard('staff');
                 } else {
                     errP.textContent = "Código de comité inválido o desactivado.";
@@ -1560,6 +1661,8 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
             document.getElementById('admin-activity-select').disabled = false;
             document.getElementById('admin-dashboard').classList.add('hidden');
             document.getElementById('main-landing').classList.remove('hidden');
+            currentPanelRole = 'public';
+            currentStaffCode = null;
             window.scrollTo(0,0);
         });
 
@@ -1882,7 +1985,8 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
         }
 
         async function onScanSuccess(text) {
-            if(isProcessing || !text.startsWith('UATYG2026|')) return;
+            const parsedQr = parseQrPayload(text);
+            if(isProcessing || !parsedQr) return;
             
             // --- INICIO DE MITIGACIÓN ANTI-FRAUDE (VALIDACIÓN LOCAL) ---
             // Verifica que el DOM esté en el estado esperado para un escaneo legítimo
@@ -1895,7 +1999,7 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
 
             isProcessing = true;
 
-            const mat  = text.split('|')[1];
+            const mat  = parsedQr.matricula;
             const act  = document.getElementById('admin-activity-select').value;
             const type = document.querySelector('input[name="scan_type"]:checked').value;
             const recordStr = `${act}_${type}`;
@@ -1908,6 +2012,10 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
                     showScanResult('no_registrado', type, mat, '');
                 } else {
                     const data = docSnap.data();
+                    if (data.qrSecret && parsedQr.qrSecret !== data.qrSecret) {
+                        showScanResult('no_registrado', type, mat, 'QR inválido o alterado');
+                        return;
+                    }
                     const actividadesAlumno = [
                         ...(data.conferencias_seleccionadas || []),
                         ...(data.talleres_seleccionados    || []),
@@ -1926,6 +2034,15 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
                         const _0xKey = atob('YXNpc3RlbmNpYXM='); // 'asistencias' codificado
                         const _0xPayload = {};
                         _0xPayload[_0xKey] = arrayUnion(recordStr);
+                        _0xPayload.asistenciaLogs = arrayUnion({
+                            actividad: act,
+                            tipo: type,
+                            registro: recordStr,
+                            fecha: new Date().toISOString(),
+                            registradoPorRol: currentPanelRole,
+                            registradoPor: currentPanelRole === 'admin' ? (auth.currentUser?.email || 'admin') : (currentStaffCode || 'staff')
+                        });
+                        _0xPayload.ultimaAsistencia = { actividad: act, tipo: type, fecha: new Date().toISOString() };
                         await updateDoc(docRef, _0xPayload);
                         // ----------------------------------------------
                         showScanResult('ok_nuevo', type, mat, data.nombre);
@@ -1971,6 +2088,16 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
                     const docSnap = await getDoc(doc(registrosRef, recToDelete));
                     const codUtilizado = docSnap.exists() ? docSnap.data().codigoUtilizado : null;
                     await deleteDoc(doc(registrosRef, recToDelete)); 
+
+                    const deletedData = docSnap.exists() ? docSnap.data() : {};
+                    const deletedActivities = [...(deletedData.conferencias_seleccionadas || []), ...(deletedData.talleres_seleccionados || [])];
+                    if (deletedActivities.length && capacidadesRef) {
+                        const capBatch = writeBatch(db);
+                        deletedActivities.forEach(activityId => {
+                            capBatch.set(doc(capacidadesRef, activityId), { inscritos: increment(-1), actualizado: new Date().toISOString() }, { merge: true });
+                        });
+                        await capBatch.commit();
+                    }
                     
                     if (codUtilizado && codigosRef) {
                         await updateDoc(doc(codigosRef, codUtilizado), { usado: false, fechaUso: null, matricula: null, nombre: null, grupo: null });
@@ -2007,6 +2134,40 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
             } catch(e) { tbody.innerHTML='Error al cargar'; }
         }
 
+        // FUNCION: Reconstruir cupos públicos desde registros existentes (útil al migrar desde la versión anterior)
+        document.getElementById('rebuild-capacities-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('rebuild-capacities-btn');
+            const originalText = btn.textContent;
+            btn.textContent = "Recalculando...";
+            btn.disabled = true;
+            try {
+                const stats = {};
+                ['conf-1','conf-2','conf-3','conf-4','taller-1','taller-2','taller-3','taller-4'].forEach(id => stats[id] = 0);
+                const qSnap = await getDocs(registrosRef);
+                qSnap.forEach(d => {
+                    const dt = d.data();
+                    (dt.conferencias_seleccionadas || []).forEach(id => { if (stats[id] !== undefined) stats[id]++; });
+                    (dt.talleres_seleccionados || []).forEach(id => { if (stats[id] !== undefined) stats[id]++; });
+                });
+
+                const batch = writeBatch(db);
+                Object.keys(stats).forEach(id => {
+                    batch.set(doc(capacidadesRef, id), {
+                        actividad: id,
+                        inscritos: stats[id],
+                        maximo: id.startsWith('conf-') ? MAX_CONF : MAX_TALLER,
+                        actualizado: new Date().toISOString()
+                    }, { merge: true });
+                });
+                await batch.commit();
+                showAlert("Cupos actualizados", "Se reconstruyó la colección pública de capacidades desde los registros actuales.", false);
+            } catch(e) {
+                showAlert("Error", "No se pudieron recalcular los cupos: " + e.message, true);
+            }
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
+
         // FUNCION: Exportar alumnos acreditados
         document.getElementById('export-accredited-btn').addEventListener('click', async () => {
             const btn = document.getElementById('export-accredited-btn');
@@ -2023,7 +2184,7 @@ document.getElementById('btn-google-login').addEventListener('click', async () =
                     if(dt.talleres_seleccionados) dt.talleres_seleccionados.forEach(t => { if(asis.includes(t+'_entrada') && asis.includes(t+'_salida')) tall++; });
                     const estado = (conf >= 3 && tall >= 2) ? "ACREDITADO" : "NO ACREDITADO";
 
-                    const row = [ dt.matricula || "", dt.nombre || "", dt.grupo || "", dt.carrera || "", conf, tall, estado ].map(item => `"${String(item).replace(/"/g, '""')}"`).join(",");
+                    const row = [ dt.matricula || "", dt.nombre || "", dt.grupo || "", dt.carrera_nombre || dt.carrera || "", conf, tall, estado ].map(item => `"${String(item).replace(/"/g, '""')}"`).join(",");
                     csvContent += row + "\r\n";
                 });
                 const encodedUri = encodeURI(csvContent);
