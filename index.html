@@ -364,41 +364,55 @@
             
             <!-- 1. PANTALLA DE VALIDACIÓN DE CÓDIGO -->
             <div id="code-validation-section" class="max-w-lg w-full mx-auto bg-white rounded-3xl p-8 border border-gray-200 shadow-2xl text-center transition-all duration-500">
-                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6 shadow-inner">
-                    <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                </div>
-                <h3 class="text-2xl font-black text-gray-900 mb-2 tracking-tight">Inscripción y Acceso</h3>
-                <p class="text-gray-600 mb-6 text-sm">Para continuar con tu registro oficial, necesitas un código único de acceso.</p>
-
-                <!-- INFO DE PAGO Y CÓDIGO -->
-                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 text-left shadow-sm">
-                    <h4 class="font-extrabold text-emerald-800 flex items-center gap-2 mb-2 text-lg">
-                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08-.402-2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Costo de Inscripción: $150 MXN
-                    </h4>
-                    <p class="text-sm text-emerald-700 mb-4 leading-relaxed">
-                        Esta cuota de recuperación se utiliza íntegramente para cubrir los gastos de materiales en los talleres prácticos, actividades del huerto y logística de las conferencias.
-                    </p>
-                    <div class="bg-white rounded-xl p-4 border border-emerald-100">
-                        <p class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-2">
-                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            ¿Cómo obtener tu código de acceso?
-                        </p>
-                        <ul class="text-sm text-gray-600 space-y-2 ml-1">
-                            <li><span class="font-bold text-emerald-600">1.</span> Realiza tu pago directamente con <strong>Tania</strong> en el área de <strong>Dirección</strong>.</li>
-                            <li><span class="font-bold text-emerald-600">2.</span> Ella te entregará un ticket con tu <strong>Código Único de 6 caracteres</strong>.</li>
-                            <li><span class="font-bold text-emerald-600">3.</span> Ingrésalo aquí abajo para desbloquear el formulario de horarios.</li>
-                        </ul>
+                
+                <!-- NUEVO: ESTADO DE CARGA GLOBAL -->
+                <div id="init-loading-state" class="py-8">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6 shadow-inner animate-pulse">
+                        <svg class="h-8 w-8 text-emerald-600 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Conectando con el sistema...</h3>
+                    <p class="text-sm text-gray-500" id="init-error-msg">Estableciendo conexión segura</p>
+                    <button id="retry-init-btn" class="hidden mt-4 mx-auto bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-emerald-700">Reintentar</button>
                 </div>
 
-                <div class="mb-4 relative">
-                    <input type="text" id="access-code-input" class="w-full p-4 rounded-xl border-2 border-gray-300 focus:ring-0 focus:border-emerald-500 bg-gray-50 text-center font-bold text-3xl tracking-[0.25em] uppercase text-emerald-900" placeholder="XXXXXX" maxlength="6">
+                <!-- CONTENIDO ORIGINAL OCULTO HASTA CARGAR -->
+                <div id="validation-content" class="hidden">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-6 shadow-inner">
+                        <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 mb-2 tracking-tight">Inscripción y Acceso</h3>
+                    <p class="text-gray-600 mb-6 text-sm">Para continuar con tu registro oficial, necesitas un código único de acceso.</p>
+
+                    <!-- INFO DE PAGO Y CÓDIGO -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 text-left shadow-sm">
+                        <h4 class="font-extrabold text-emerald-800 flex items-center gap-2 mb-2 text-lg">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08-.402-2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Costo de Inscripción: $150 MXN
+                        </h4>
+                        <p class="text-sm text-emerald-700 mb-4 leading-relaxed">
+                            Esta cuota de recuperación se utiliza íntegramente para cubrir los gastos de materiales en los talleres prácticos, actividades del huerto y logística de las conferencias.
+                        </p>
+                        <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                            <p class="text-sm font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                ¿Cómo obtener tu código de acceso?
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-2 ml-1">
+                                <li><span class="font-bold text-emerald-600">1.</span> Realiza tu pago directamente con <strong>Tania</strong> en el área de <strong>Dirección</strong>.</li>
+                                <li><span class="font-bold text-emerald-600">2.</span> Ella te entregará un ticket con tu <strong>Código Único de 6 caracteres</strong>.</li>
+                                <li><span class="font-bold text-emerald-600">3.</span> Ingrésalo aquí abajo para desbloquear el formulario de horarios.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 relative">
+                        <input type="text" id="access-code-input" autocapitalize="characters" autocorrect="off" spellcheck="false" class="w-full p-4 rounded-xl border-2 border-gray-300 focus:ring-0 focus:border-emerald-500 bg-gray-50 text-center font-bold text-3xl tracking-[0.25em] uppercase text-emerald-900" placeholder="XXXXXX" maxlength="6">
+                    </div>
+                    <button id="validate-code-btn" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition shadow-lg text-lg flex items-center justify-center gap-2">
+                        Validar Código
+                    </button>
+                    <p id="code-validation-msg" class="mt-4 text-sm font-bold hidden"></p>
                 </div>
-                <button id="validate-code-btn" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition shadow-lg text-lg flex items-center justify-center gap-2">
-                    Validar Código
-                </button>
-                <p id="code-validation-msg" class="mt-4 text-sm font-bold hidden"></p>
             </div>
 
             <!-- 2. FORMULARIO DE REGISTRO (Oculto inicialmente) -->
@@ -603,7 +617,7 @@
             <h3 class="text-2xl font-black text-emerald-700 mb-2">Portal del Alumno</h3>
             <p class="text-gray-500 text-sm mb-6">Ingresa tu matrícula para revisar tus horas acreditadas, ver tu QR y descargar tu reconocimiento.</p>
             
-            <input type="text" id="portal-matricula" class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-emerald-500 bg-gray-50 mb-4 text-center font-bold text-xl tracking-widest" placeholder="Tu Matrícula">
+            <input type="text" id="portal-matricula" autocapitalize="characters" autocorrect="off" spellcheck="false" class="w-full p-4 rounded-xl border-2 border-gray-200 focus:ring-0 focus:border-emerald-500 bg-gray-50 mb-4 text-center font-bold text-xl tracking-widest" placeholder="Tu Matrícula">
             <p class="text-xs text-gray-500 mb-4 -mt-2">Solo necesitas tu matrícula para recuperar tu QR, revisar tu avance y descargar tu reconocimiento cuando acredites.</p>
             <button id="check-status-btn" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition shadow-lg">Consultar Estado</button>
             
@@ -680,7 +694,7 @@
                 <!-- LOGOS CON ESCUDO ANTI-FALLOS -->
                 <div class="cert-logos">
                     <img src="uan3.png" alt="UAN" class="cert-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBTjwvdGV4dD48L3N2Zz4=';">
-                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIx四十iIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
+                    <img src="cetyg.png" alt="CETYG" class="cert-logo-img cert-logo-center" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPkNFVFlHPC90ZXh0Pjwvc3ZnPg==';">
                     <img src="unidad.png" alt="UATyG" class="cert-logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmZGY0IiByeD0iOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDY0ZTNiIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZvbnQtc2l6ZT0iMjAiPlVBVHlHPC90ZXh0Pjwvc3ZnPg==';">
                 </div>
                 <!-- Línea decorativa -->
@@ -768,7 +782,7 @@
                 </div>
 
                 <!-- ACCESO STAFF COMITÉ (Código) -->
-                <input type="text" id="staff-code-input" class="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-emerald-400 font-mono text-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-center tracking-widest uppercase" placeholder="CÓDIGO DE STAFF">
+                <input type="text" id="staff-code-input" autocapitalize="characters" autocorrect="off" spellcheck="false" class="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-emerald-400 font-mono text-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-center tracking-widest uppercase" placeholder="CÓDIGO DE STAFF">
                 <button id="login-staff-btn" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-500 transition shadow-lg">
                     Entrar como Comité
                 </button>
@@ -1080,6 +1094,11 @@
 
         // --- INICIALIZACIÓN SEGURA DE FIREBASE ---
         const initApp = async () => {
+            const loadingState = document.getElementById('init-loading-state');
+            const valContent = document.getElementById('validation-content');
+            const errMsg = document.getElementById('init-error-msg');
+            const retryBtn = document.getElementById('retry-init-btn');
+
             try {
                 const app = initializeApp(firebaseConfig);
                 
@@ -1123,14 +1142,40 @@
                     });
                     currentCapacities = newCaps; 
                     updateCapacityUI();
+                    
+                    // Ocultar la pantalla de carga global y mostrar contenido
+                    if (loadingState && valContent) {
+                        loadingState.classList.add('hidden');
+                        valContent.classList.remove('hidden');
+                    }
                 }, (error) => {
                     console.warn("No se pudieron cargar capacidades públicas:", error);
                     updateCapacityUI();
+                    
+                    if (loadingState && valContent) {
+                        loadingState.classList.add('hidden');
+                        valContent.classList.remove('hidden');
+                    }
                 });
             } catch(e) {
                 console.error("Error al conectar con la base de datos:", e);
+                if (errMsg) errMsg.textContent = "Error de conexión. Revisa tu internet.";
+                if (retryBtn) retryBtn.classList.remove('hidden');
             }
         };
+
+        // Lógica de Reintento de Conexión
+        document.addEventListener('DOMContentLoaded', () => {
+            const retryBtn = document.getElementById('retry-init-btn');
+            if (retryBtn) {
+                retryBtn.addEventListener('click', () => {
+                    document.getElementById('init-error-msg').textContent = "Reintentando conexión segura...";
+                    retryBtn.classList.add('hidden');
+                    initApp();
+                });
+            }
+        });
+
         initApp(); 
 
         // --- SISTEMA DE VALIDACIÓN DE CÓDIGO ALUMNO (PÚBLICO) ---
@@ -1150,21 +1195,25 @@
             btnValidateCode.disabled = true;
 
             try {
-                const codeDoc = await getDoc(doc(codigosRef, code));
-                if (!codeDoc.exists()) {
+                // MODIFICACIÓN 3: Previene Race Condition usando runTransaction para leer
+                const codeStatus = await runTransaction(db, async (transaction) => {
+                    const codeDoc = await transaction.get(doc(codigosRef, code));
+                    if (!codeDoc.exists()) return 'NOT_FOUND';
+                    if (codeDoc.data().usado) return 'USED';
+                    return 'VALID';
+                });
+
+                if (codeStatus === 'NOT_FOUND') {
                     msgValidation.textContent = "El código ingresado no existe.";
                     msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
+                } else if (codeStatus === 'USED') {
+                    msgValidation.textContent = "Este código ya fue utilizado.";
+                    msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
                 } else {
-                    const codeData = codeDoc.data();
-                    if (codeData.usado) {
-                        msgValidation.textContent = "Este código ya fue utilizado.";
-                        msgValidation.className = "mt-4 text-sm font-bold text-red-600 block";
-                    } else {
-                        validatedAccessCode = code;
-                        document.getElementById('code-validation-section').classList.add('hidden');
-                        document.getElementById('registration-form-section').classList.remove('hidden');
-                        window.scrollTo({ top: document.getElementById('registration-form-section').offsetTop - 50, behavior: 'smooth' });
-                    }
+                    validatedAccessCode = code;
+                    document.getElementById('code-validation-section').classList.add('hidden');
+                    document.getElementById('registration-form-section').classList.remove('hidden');
+                    window.scrollTo({ top: document.getElementById('registration-form-section').offsetTop - 50, behavior: 'smooth' });
                 }
             } catch (e) {
                 msgValidation.textContent = "Error de conexión. Intenta de nuevo.";
@@ -1367,6 +1416,7 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Generar mi Pase QR";
                 document.getElementById('loading-spinner').classList.add('hidden');
+                updateCapacityUI(); // MODIFICACIÓN 5: Restablecer interfaz visual según capacidades reales.
             } 
         });
 
@@ -1910,12 +1960,13 @@
                         : '<span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs font-bold whitespace-nowrap">Disponible</span>';
                     const fechaFmt = c.fechaUso ? new Date(c.fechaUso).toLocaleString() : '-';
                     
+                    // MODIFICACIÓN 1: Sanitización XSS en tabla de códigos
                     html += `<tr class="border-b hover:bg-gray-50 transition">
-                        <td class="p-3 font-mono font-bold text-gray-800">${c.codigo}</td>
+                        <td class="p-3 font-mono font-bold text-gray-800">${escapeHtml(c.codigo)}</td>
                         <td class="p-3">${statusBadge}</td>
-                        <td class="p-3 font-medium text-gray-600">${c.nombre || '-'}</td>
-                        <td class="p-3">${c.matricula || '-'}</td>
-                        <td class="p-3">${c.grupo || '-'}</td>
+                        <td class="p-3 font-medium text-gray-600">${escapeHtml(c.nombre || '-')}</td>
+                        <td class="p-3">${escapeHtml(c.matricula || '-')}</td>
+                        <td class="p-3">${escapeHtml(c.grupo || '-')}</td>
                         <td class="p-3 text-right text-xs text-gray-500">${fechaFmt}</td>
                     </tr>`;
                 });
@@ -2043,8 +2094,9 @@
             badge.className   = typeCls;
             badge.textContent = type ? `⬆ ${type.toUpperCase()}` : '';
 
+            // MODIFICACIÓN 1: Sanitización XSS en pantalla de Escáner
             if (matricula) {
-                alumno.innerHTML = `<span class="font-black">${matricula}</span><br><span class="text-base font-normal text-gray-600">${nombre || ''}</span>`;
+                alumno.innerHTML = `<span class="font-black">${escapeHtml(matricula)}</span><br><span class="text-base font-normal text-gray-600">${escapeHtml(nombre || '')}</span>`;
             } else { alumno.textContent = '-'; }
 
             qrBox.style.border = s.border;
@@ -2189,6 +2241,16 @@
         document.getElementById('cancel-delete-btn').addEventListener('click', () => { document.getElementById('delete-confirm-modal').classList.add('hidden'); recToDelete = null; });
         window.openDeleteModal = function(matricula) { recToDelete = matricula; document.getElementById('delete-confirm-modal').classList.remove('hidden'); };
         
+        // MODIFICACIÓN 1: Función de Sanitización XSS
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         async function generateDbReport() {
             const tbody = document.getElementById('db-table-body'); tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4">Cargando...</td></tr>';
             try {
@@ -2200,11 +2262,13 @@
                     if(dt.talleres_seleccionados) dt.talleres_seleccionados.forEach(t => { if(asis.includes(t+'_entrada') && asis.includes(t+'_salida')) tall++; });
                     const isOk = (conf>=3 && tall>=2);
                     if(isOk) ok++; else no++;
+                    
+                    // MODIFICACIÓN 1: Sanitización XSS en tabla principal de DB
                     html += `<tr class="border-b">
-                        <td class="p-3 font-mono">${dt.matricula}</td><td class="p-3"><b>${dt.nombre}</b></td>
+                        <td class="p-3 font-mono">${escapeHtml(dt.matricula)}</td><td class="p-3"><b>${escapeHtml(dt.nombre)}</b></td>
                         <td class="p-3 text-center ${conf>=3?'text-green-600 font-bold':''}">${conf}/3</td><td class="p-3 text-center ${tall>=2?'text-green-600 font-bold':''}">${tall}/2</td>
                         <td class="p-3 text-center">${isOk?'<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">OK</span>':'<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">FALTA</span>'}</td>
-                        <td class="p-3 text-center"><button class="text-red-500 bg-red-50 p-2 rounded hover:bg-red-100 transition" onclick="window.openDeleteModal('${dt.matricula}')">🗑️</button></td>
+                        <td class="p-3 text-center"><button class="text-red-500 bg-red-50 p-2 rounded hover:bg-red-100 transition" onclick="window.openDeleteModal('${escapeHtml(dt.matricula)}')">🗑️</button></td>
                     </tr>`;
                 });
                 tbody.innerHTML=html; document.getElementById('count-accredited').textContent=ok; document.getElementById('count-failed').textContent=no;
