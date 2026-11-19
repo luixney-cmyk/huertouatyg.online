@@ -904,7 +904,20 @@
 
                     <div id="scanner-container-wrapper" class="hidden">
                         <p class="text-sm text-slate-500 mb-4 font-bold" id="scanner-status-text">Apunta la cámara al Pase QR del estudiante...</p>
-                        <div id="qr-reader" class="mx-auto w-full max-w-sm rounded-2xl overflow-hidden border-4 border-slate-800 shadow-2xl bg-black"></div>
+                        <!-- CONTENEDOR RELATIVO DEL ESCÁNER CON AVISO FLOTANTE ENCIMA PARA CELULARES -->
+                        <div class="relative mx-auto w-full max-w-sm">
+                            <div id="qr-reader" class="w-full rounded-2xl overflow-hidden border-4 border-slate-800 shadow-2xl bg-black"></div>
+                            <!-- AVISO INSTANTÁNEO SOBRE EL ESCÁNER (SE OCULTA AUTOMÁTICAMENTE) -->
+                            <div id="scan-overlay-feedback" class="hidden absolute inset-0 z-30 rounded-2xl flex flex-col items-center justify-center p-4 text-center backdrop-blur-sm transition-opacity duration-300 pointer-events-none">
+                                <div id="overlay-status-icon" class="text-6xl mb-1 drop-shadow-md">✅</div>
+                                <div id="overlay-status-label" class="text-xl font-black uppercase tracking-wide leading-tight mb-2">ALUMNO REGISTRADO</div>
+                                <div id="overlay-type-badge" class="inline-block px-3.5 py-0.5 rounded-full text-xs font-extrabold mb-3">ENTRADA</div>
+                                <div class="bg-white/95 rounded-xl px-4 py-2.5 shadow-lg w-full max-w-[270px]">
+                                    <p id="overlay-student-name" class="text-sm font-black text-slate-900 leading-tight break-words">-</p>
+                                    <p id="overlay-student-id" class="text-xs font-mono font-bold text-slate-600 mt-0.5">-</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="mt-6 flex justify-center"><button id="stop-scan-btn" class="bg-red-100 text-red-700 font-bold py-3 px-6 rounded-xl hover:bg-red-200">Detener Cámara</button></div>
                         
                         <!-- PANEL DE RESULTADO DEL SCAN -->
@@ -1841,37 +1854,107 @@
             ).join('');
         }
 
-        // --- SISTEMA DEL ESCÁNER QR ---
+        // --- SISTEMA DEL ESCÁNER QR (SONIDO COMPATIBLE CON CELULARES + AVISO FLOTANTE SOBRE EL ESCÁNER) ---
         let isProcessing = false;
+        let scannerAudioCtx = null;
+
+        // Desbloquea el motor de audio en celulares (iOS Safari / Android Chrome) mediante interacción directa del usuario
+        function unlockScannerAudio() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                if (!scannerAudioCtx) {
+                    scannerAudioCtx = new AudioCtx();
+                }
+                if (scannerAudioCtx.state === 'suspended') {
+                    scannerAudioCtx.resume();
+                }
+                // Buffer silencioso de 1 muestra para desbloquear audio en iOS
+                const buffer = scannerAudioCtx.createBuffer(1, 1, 22050);
+                const source = scannerAudioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(scannerAudioCtx.destination);
+                source.start(0);
+            } catch(e) {}
+        }
 
         function playBeep(type) {
             try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain); gain.connect(ctx.destination);
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                if (!scannerAudioCtx) {
+                    scannerAudioCtx = new AudioCtx();
+                }
+                if (scannerAudioCtx.state === 'suspended') {
+                    scannerAudioCtx.resume();
+                }
+
+                const ctx = scannerAudioCtx;
+                const now = ctx.currentTime;
+
                 if (type === 'ok') {
-                    osc.frequency.setValueAtTime(880, ctx.currentTime);
-                    osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.08);
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-                    osc.start(); osc.stop(ctx.currentTime + 0.25);
+                    // Sonido nítido de aprobación (dos tonos ascendentes tipo "ding-ding" de registro exitoso)
+                    const osc1 = ctx.createOscillator();
+                    const gain1 = ctx.createGain();
+                    osc1.type = 'sine';
+                    osc1.frequency.setValueAtTime(880, now);
+                    gain1.gain.setValueAtTime(0.65, now);
+                    gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+                    osc1.connect(gain1); gain1.connect(ctx.destination);
+                    osc1.start(now); osc1.stop(now + 0.14);
+
+                    const osc2 = ctx.createOscillator();
+                    const gain2 = ctx.createGain();
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(1318.5, now + 0.12);
+                    gain2.gain.setValueAtTime(0.7, now + 0.12);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.34);
+                    osc2.connect(gain2); gain2.connect(ctx.destination);
+                    osc2.start(now + 0.12); osc2.stop(now + 0.34);
+
+                    if (navigator.vibrate) navigator.vibrate(140);
                 } else if (type === 'warn') {
-                    osc.frequency.setValueAtTime(440, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-                    osc.start(); osc.stop(ctx.currentTime + 0.3);
+                    // Sonido de aviso (ya estaba registrado: doble tono medio)
+                    const osc1 = ctx.createOscillator();
+                    const gain1 = ctx.createGain();
+                    osc1.type = 'triangle';
+                    osc1.frequency.setValueAtTime(520, now);
+                    gain1.gain.setValueAtTime(0.6, now);
+                    gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+                    osc1.connect(gain1); gain1.connect(ctx.destination);
+                    osc1.start(now); osc1.stop(now + 0.14);
+
+                    const osc2 = ctx.createOscillator();
+                    const gain2 = ctx.createGain();
+                    osc2.type = 'triangle';
+                    osc2.frequency.setValueAtTime(520, now + 0.18);
+                    gain2.gain.setValueAtTime(0.6, now + 0.18);
+                    gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.34);
+                    osc2.connect(gain2); gain2.connect(ctx.destination);
+                    osc2.start(now + 0.18); osc2.stop(now + 0.34);
+
+                    if (navigator.vibrate) navigator.vibrate([80, 60, 80]);
                 } else {
-                    osc.frequency.setValueAtTime(220, ctx.currentTime);
-                    osc.frequency.setValueAtTime(180, ctx.currentTime + 0.1);
-                    gain.gain.setValueAtTime(0.4, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-                    osc.start(); osc.stop(ctx.currentTime + 0.4);
+                    // Sonido de error / rechazo (tono grave descendente)
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(240, now);
+                    osc.frequency.linearRampToValueAtTime(150, now + 0.35);
+                    gain.gain.setValueAtTime(0.55, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.38);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(now); osc.stop(now + 0.38);
+
+                    if (navigator.vibrate) navigator.vibrate([200, 80, 200]);
                 }
             } catch(e) {}
         }
 
         let scanFadeTimer = null;
+        let overlayFadeTimer = null;
+        let overlayHideTimer = null;
+
         function showScanResult(status, type, matricula, nombre) {
             const panel  = document.getElementById('last-scan-info');
             const icon   = document.getElementById('scan-status-icon');
@@ -1880,15 +1963,55 @@
             const alumno = document.getElementById('scan-result-matricula');
             const qrBox  = document.getElementById('qr-reader');
 
+            // Elementos del aviso flotante sobre el escáner
+            const overlay      = document.getElementById('scan-overlay-feedback');
+            const overlayIcon  = document.getElementById('overlay-status-icon');
+            const overlayLabel = document.getElementById('overlay-status-label');
+            const overlayBadge = document.getElementById('overlay-type-badge');
+            const overlayName  = document.getElementById('overlay-student-name');
+            const overlayId    = document.getElementById('overlay-student-id');
+
             const styles = {
-                ok_nuevo:         { panelCls: 'bg-lime-50 border-lime-500',   ic: '✅', lbl: 'ASISTENCIA REGISTRADA',        lblCls: 'text-[#1e6b24]', border: '4px solid #76b82a' },
-                ok_ya_registrado: { panelCls: 'bg-sky-50 border-sky-400',     ic: '🔁', lbl: 'YA ESTABA REGISTRADO',         lblCls: 'text-[#0c3b60]', border: '4px solid #0c3b60' },
-                no_registrado:    { panelCls: 'bg-red-50 border-red-500',     ic: '🚫', lbl: 'ALUMNO NO ENCONTRADO',         lblCls: 'text-red-700',   border: '4px solid #ef4444' },
-                sin_entrada:      { panelCls: 'bg-amber-50 border-amber-400', ic: '⚠️', lbl: 'FALTA REGISTRAR ENTRADA\nPRIMERO', lblCls: 'text-amber-800', border: '4px solid #f59e0b' },
-                error:            { panelCls: 'bg-slate-100 border-slate-400',ic: '❌', lbl: 'ERROR DE CONEXIÓN',            lblCls: 'text-slate-700', border: '4px solid #64748b' },
+                ok_nuevo:         { panelCls: 'bg-lime-50 border-lime-500',   overlayCls: 'bg-emerald-600/90 text-white', ic: '✅', lbl: 'ALUMNO REGISTRADO',              lblCls: 'text-[#1e6b24]', border: '4px solid #76b82a' },
+                ok_ya_registrado: { panelCls: 'bg-sky-50 border-sky-400',     overlayCls: 'bg-sky-700/90 text-white',     ic: '🔁', lbl: 'YA ESTABA REGISTRADO',           lblCls: 'text-[#0c3b60]', border: '4px solid #0c3b60' },
+                no_registrado:    { panelCls: 'bg-red-50 border-red-500',     overlayCls: 'bg-red-600/90 text-white',     ic: '🚫', lbl: 'ALUMNO NO ENCONTRADO',           lblCls: 'text-red-700',   border: '4px solid #ef4444' },
+                sin_entrada:      { panelCls: 'bg-amber-50 border-amber-400', overlayCls: 'bg-amber-600/95 text-white',   ic: '⚠️', lbl: 'FALTA REGISTRAR ENTRADA\nPRIMERO', lblCls: 'text-amber-800', border: '4px solid #f59e0b' },
+                error:            { panelCls: 'bg-slate-100 border-slate-400',overlayCls: 'bg-slate-800/90 text-white',   ic: '❌', lbl: 'ERROR DE CONEXIÓN',              lblCls: 'text-slate-700', border: '4px solid #64748b' },
             };
             const s = styles[status] || styles.error;
 
+            // 1. Mostrar aviso instantáneo SOBRE el escáner (ideal para celulares)
+            if (overlay) {
+                if (overlayFadeTimer) clearTimeout(overlayFadeTimer);
+                if (overlayHideTimer) clearTimeout(overlayHideTimer);
+
+                overlay.className = `absolute inset-0 z-30 rounded-2xl flex flex-col items-center justify-center p-4 text-center backdrop-blur-sm transition-opacity duration-300 pointer-events-none ${s.overlayCls}`;
+                overlayIcon.textContent = s.ic;
+                overlayLabel.textContent = s.lbl;
+                overlayLabel.className = 'text-xl font-black uppercase tracking-wide leading-tight mb-2 whitespace-pre-line drop-shadow';
+
+                overlayBadge.className = type === 'entrada'
+                    ? 'inline-block px-3.5 py-0.5 rounded-full text-xs font-extrabold mb-3 bg-white text-[#1e6b24] shadow'
+                    : 'inline-block px-3.5 py-0.5 rounded-full text-xs font-extrabold mb-3 bg-white text-[#0c3b60] shadow';
+                overlayBadge.textContent = type ? `⬆ ${type.toUpperCase()}` : '';
+
+                overlayName.textContent = nombre || (matricula ? 'Sin nombre' : '-');
+                overlayId.textContent = matricula || '-';
+
+                overlay.style.opacity = '1';
+                overlay.classList.remove('hidden');
+
+                // Se oculta automáticamente después de 1.7 segundos para seguir escaneando rápido
+                overlayFadeTimer = setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    overlayHideTimer = setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        overlay.style.opacity = '1';
+                    }, 300);
+                }, 1700);
+            }
+
+            // 2. Actualizar panel inferior (respaldo visual)
             panel.className = `mt-6 rounded-2xl border-4 p-5 text-center transition-all duration-300 ${s.panelCls}`;
             icon.textContent  = s.ic;
             label.className   = `text-2xl font-black uppercase tracking-wide mb-3 whitespace-pre-line ${s.lblCls}`;
@@ -1909,6 +2032,7 @@
             panel.classList.remove('hidden');
             panel.style.opacity = '1';
 
+            // 3. Emitir sonido correspondiente
             if (status === 'ok_nuevo') playBeep('ok');
             else if (status === 'ok_ya_registrado') playBeep('warn');
             else playBeep('error');
@@ -1993,11 +2117,13 @@
             setTimeout(() => {
                 document.getElementById('qr-reader').style.border = "4px solid #1e293b";
                 isProcessing = false;
-            }, 2600);
+            }, 2100);
         }
 
         document.getElementById('start-scan-btn').addEventListener('click', async () => {
             if(!document.getElementById('admin-activity-select').value) return showAlert("Selecciona la sesión", "Elige primero qué Conferencia o Taller vas a escanear.", true);
+            // Desbloquear audio inmediatamente al tocar el botón para que los beeps suenen en celulares
+            unlockScannerAudio();
             document.getElementById('admin-activity-select').disabled = true;
             document.querySelectorAll('input[name="scan_type"]').forEach(r => r.disabled = true);
             document.getElementById('start-scan-btn').classList.add('hidden'); 
